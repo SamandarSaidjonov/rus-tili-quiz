@@ -173,6 +173,36 @@ table.book{width:100%;border-collapse:collapse;font-size:16px}
 .panel-body .sub:first-child{margin-top:0}
 .note{margin:0;font-size:14px;color:var(--muted)}
 
+.group-title{margin:14px 0 -6px;font-family:var(--f-display);font-size:20px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.word.drill{font-size:25px;line-height:1.4;font-weight:400}
+.word.drill.uz{font-weight:700}
+.gap{display:inline-block;min-width:1.8em;padding:0 .15em;border-bottom:2px solid var(--accent);color:var(--accent);text-align:center;line-height:1.05;font-family:var(--f-uz);font-size:.8em}
+.bracket{color:var(--accent);font-weight:700}
+mark.hl{background:transparent;color:var(--accent);font-weight:700;border-bottom:2px solid var(--accent)}
+.hints{display:flex;flex-direction:column;gap:4px;margin-top:-4px}
+.hints ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.hints li{font-size:14px;border:1px solid var(--rule);border-radius:6px;padding:3px 8px}
+.answer{display:flex;flex-direction:column;gap:6px}
+.answer .row{display:flex;gap:8px;align-items:stretch}
+.answer input{flex:1;min-width:0;font-family:var(--f-ru);font-size:19px;padding:10px 12px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink)}
+.answer input:focus{border-color:var(--ink)}
+.formmsg{margin:0;font-size:14px;color:var(--accent)}
+.formmsg:empty{display:none}
+.linkbtn.left{align-self:flex-start}
+.given{display:flex;flex-direction:column;gap:2px;border-left:3px solid var(--rule);padding-left:10px}
+.given.ok{border-color:var(--good)}
+.given.no{border-color:var(--accent)}
+.given p{margin:0;font-family:var(--f-ru);font-size:19px}
+.right{display:flex;flex-direction:column;gap:2px}
+.right-ans{margin:0;font-family:var(--f-ru);font-size:19px;line-height:1.4}
+.right-ans b{color:var(--good)}
+.right-ans mark{background:var(--good-bg);color:var(--good);font-weight:700;border-radius:3px;padding:0 2px}
+.right-ans .say{width:30px;height:30px;vertical-align:middle;margin-left:8px}
+.right-ans .say svg{width:15px;height:15px}
+.cheat td{font-size:15px}
+.book.cheat td.ru,.book.mistakes td.ru{width:auto}
+.mistakes td b{color:var(--good)}
+
 /* motion */
 .page.enter{animation:enter .22s ease-out}
 .page.tear{animation:tear .36s ease-in forwards}
@@ -203,7 +233,7 @@ table.book{width:100%;border-collapse:collapse;font-size:16px}
     <div class="progress" id="prog" aria-live="polite"></div>
     <div class="pad" id="pad"></div>
     <details class="panel" id="list">
-      <summary><span>Сўзлар рўйхати</span><span class="cur" id="listcount"></span></summary>
+      <summary><span id="listtitle">Сўзлар рўйхати</span><span class="cur" id="listcount"></span></summary>
       <div class="panel-body" id="listbody"></div>
     </details>
   </section>
@@ -212,8 +242,9 @@ table.book{width:100%;border-collapse:collapse;font-size:16px}
 <script>
 "use strict";
 const LESSONS=[
-  {id:"1",no:1,title:"Вақт ва об-ҳаво",pages:"23–30-бетлар",unit:"сўз ва ибора",topics:{v:"Вақт",h:"Об-ҳаво"},note:""},
-  {id:"2",no:2,title:"Феъллар",pages:"37–40-бетлар",unit:"феъл",topics:{f:"Феъллар"},extra:" Ҳар бир феълга мисол гап ва изоҳ ёзилган.",note:"Жуфтликда (масалан, чита́ть / прочита́ть) биринчиси — несовершенный вид: жараён ёки такрорланадиган иш. Иккинчиси — совершенный вид: иш тугаган, натижа бор. Дафтардаги 80 та қатордан 5 таси такрор (доказывать, отправлять, отвечать, переводить, поставить), улар бир марта олинган."}
+  {id:"1",kind:"vocab",hash:"dars-1",no:1,title:"Вақт ва об-ҳаво",pages:"23–30-бетлар",unit:"сўз ва ибора",topics:{v:"Вақт",h:"Об-ҳаво"},note:""},
+  {id:"2",kind:"vocab",hash:"dars-2",no:2,title:"Феъллар",pages:"37–40-бетлар",unit:"феъл",topics:{f:"Феъллар"},extra:" Ҳар бир феълга мисол гап ва изоҳ ёзилган.",note:"Жуфтликда (масалан, чита́ть / прочита́ть) биринчиси — несовершенный вид: жараён ёки такрорланадиган иш. Иккинчиси — совершенный вид: иш тугаган, натижа бор. Дафтардаги 80 та қатордан 5 таси такрор (доказывать, отправлять, отвечать, переводить, поставить), улар бир марта олинган."},
+  {id:"m1",kind:"drill",hash:"mashq-1",no:1,title:"Падежлар",pages:"Жавобни ўзингиз ёзасиз",unit:"машқ",topics:{},note:""}
 ];
 const LES={};LESSONS.forEach(l=>{LES[l.id]=l;});
 const TOPIC_LESSON={v:"1",h:"1",f:"2"};
@@ -452,23 +483,167 @@ function buildQs(cfg,ids){
 }
 /* every question: Uzbek prompt, four Russian answers */
 function makeQ(w,pool){return {id:w.id,dir:"uz",opts:pickOpts(w,"ru",pool)};}
+/* ---- Машқлар: падежлар ---- */
+const CASES={И:"именительный",Р:"родительный",Д:"дательный",В:"винительный",Т:"творительный",П:"предложный"};
+const DTYPES={
+  tr:{name:"Таржима",ask:"Русчага таржима қилинг",long:true},
+  fix:{name:"Хатони тўғриланг",ask:"Гапда падеж хатоси бор. Тўғри гапни тўлиқ ёзинг",long:true},
+  end:{name:"Қўшимча",ask:"Тушиб қолган қўшимчани ёзинг"},
+  br:{name:"Қавсдаги сўз",ask:"Қавсдаги сўзни керакли падежда ёзинг"},
+  pr:{name:"Предлог",ask:"Тушиб қолган предлогни ёзинг"},
+  pn:{name:"Олмош",ask:"Олмошни керакли падежда ёзинг"},
+  adj:{name:"Сифат",ask:"Сифатни (прилагательное) керакли шаклда ёзинг"},
+  id:{name:"Падежни топинг",ask:"Белгиланган сўз қайси падежда? Масалан: дательный ёки Д.п."}
+};
+/* [id, type, case, prompt, accepted answers separated by |, word hints (translation only), explanation]
+   prompt marks: ___ = gap, (сўз) = word to put in the right form, [[сўз]] = word to analyse */
+const DRAW=[
+["d01","tr","В","Мен китоб ўқияпман.","Я читаю книгу.","мен — я · ўқияпман — читаю · китоб — книга","читать что? — винительный падеж. книга → книгу: охиридаги -а ўрнига -у."],
+["d02","tr","П","Мен Тошкентда яшайман.","Я живу в Ташкенте.","мен — я · яшайман — живу · Тошкент — Ташкент · -да — в","Қаерда? — в + предложный падеж. Ташкент → Ташкенте: ундош билан тугаган сўзга -е қўшилади."],
+["d03","tr","Р","Бу акамнинг машинаси.","Это машина брата.|Это машина моего брата.","бу — это · машина — машина · ака — брат","Кимнинг? — родительный падеж. брат → брата: ундош билан тугаган сўзга -а қўшилади."],
+["d04","tr","Д","Мен онамга қўнғироқ қиламан.","Я звоню маме.|Я позвоню маме.|Я маме звоню.|Я маме позвоню.","мен — я · қўнғироқ қиламан — звоню · она — мама","звонить кому? — дательный падеж. мама → маме: -а ўрнига -е."],
+["d05","tr","Т","Мен ручка билан ёзаман.","Я пишу ручкой.","мен — я · ёзаман — пишу · ручка — ручка · билан (нима билан?) — предлог керак эмас","Нима билан ёзаман? (асбоб) — творительный падеж, предлогсиз. ручка → ручкой: -а ўрнига -ой."],
+["d06","tr","Т","Мен дўстим билан кинога бораман.","Я иду в кино с другом.|Я иду с другом в кино.|Я с другом иду в кино.|Я пойду в кино с другом.|Я пойду с другом в кино.","мен — я · бораман — иду · дўст — друг · кино — кино · билан — с · -га — в","с + творительный падеж (… билан): друг → другом, ундошга -ом. «кино» ўзгармайди: в кино."],
+["d07","tr","Р","Менда машина йўқ.","У меня нет машины.","менда — у меня · йўқ — нет · машина — машина","нет + родительный падеж. машина → машины: -а ўрнига -ы."],
+["d08","tr","П","Биз ишда кофе ичамиз.","Мы пьём кофе на работе.|На работе мы пьём кофе.|Мы на работе пьём кофе.","биз — мы · ичамиз — пьём · иш — работа · кофе — кофе · -да — на","Қаерда? — на + предложный падеж. работа → работе: -а ўрнига -е. «кофе» ўзгармайди."],
+["d09","tr","Д","Мен сенга китоб бераман.","Я дам тебе книгу.|Я тебе дам книгу.|Я дам книгу тебе.|Я даю тебе книгу.|Я тебе даю книгу.","мен — я · бераман — дам · сен — ты · китоб — книга","Кимга? — дательный: ты → тебе. Нимани? — винительный: книга → книгу."],
+["d10","tr","П","Мен оилам ҳақида ўйлайман.","Я думаю о семье.|Я думаю о своей семье.|Я думаю о моей семье.","мен — я · ўйлайман — думаю · оила — семья · ҳақида — о","о + предложный падеж (… ҳақида). семья → семье: -я ўрнига -е."],
+["d11","tr","Р","Бу совға онам учун.","Это подарок для мамы.","бу — это · совға — подарок · она — мама · учун — для","для + родительный падеж (… учун). мама → мамы: -а ўрнига -ы."],
+["d12","tr","В","Мен дўстимни кўрдим.","Я увидел друга.|Я увидела друга.|Я видел друга.|Я видела друга.","мен — я · кўрдим — увидел · дўст — друг","видеть кого? — винительный падеж. Жонли эркак сўзга -а қўшилади: друг → друга. Жонсиз бўлса ўзгармайди: вижу стол."],
+
+["d13","fix","П","Я живу в Москва.","Я живу в Москве.","","в + предложный (қаерда?): Москва → Москве, -а ўрнига -е."],
+["d14","fix","Р","У меня нет время.","У меня нет времени.","","нет + родительный падеж. время — алоҳида сўз: время → времени (имя → имени ҳам шундай)."],
+["d15","fix","Д","Я звоню мой брат.","Я звоню моему брату.","","звонить кому? — дательный падеж: мой брат → моему брату. Олмош ҳам ўзгаради: мой → моему."],
+["d16","fix","П","Мы говорим о работа.","Мы говорим о работе.","","о + предложный падеж: работа → работе, -а ўрнига -е."],
+["d17","fix","Т","Я пью чай с сахар.","Я пью чай с сахаром.","","с + творительный (… билан): сахар → сахаром, ундошга -ом."],
+["d18","fix","В","Я вижу мама.","Я вижу маму.","","видеть кого? — винительный падеж: мама → маму, -а ўрнига -у."],
+["d19","fix","П","Он работает в банк.","Он работает в банке.","","в + предложный (қаерда?): банк → банке, ундошга -е."],
+["d20","fix","Д","Я иду к врач.","Я иду к врачу.","","к + дательный падеж (кимнинг олдига): врач → врачу, ундошга -у."],
+["d21","fix","Р","Это книга мой друг.","Это книга моего друга.","","Кимнинг? — родительный падеж: мой друг → моего друга. Олмош ҳам ўзгаради: мой → моего."],
+["d22","fix","Т","Я интересуюсь музыка.","Я интересуюсь музыкой.","","интересоваться чем? — творительный падеж: музыка → музыкой, -а ўрнига -ой."],
+
+["d23","end","П","Я живу в Ташкент___.","е","","в + предложный (қаерда?): ундош билан тугаган сўзга -е: в Ташкенте."],
+["d24","end","В","Я читаю книг___.","у","","читать что? — винительный: -а ўрнига -у: книгу."],
+["d25","end","Т","Я пишу ручк___.","ой","","Нима билан? — творительный: -а ўрнига -ой: ручкой."],
+["d26","end","Р","У меня нет сестр___.","ы","","нет + родительный: -а ўрнига -ы: сестры."],
+["d27","end","Д","Я помогаю брат___.","у","","помогать кому? — дательный: ундошга -у: брату."],
+["d28","end","П","Мы говорили о погод___.","е","","о + предложный: -а ўрнига -е: о погоде."],
+["d29","end","Р","Он пришёл с работ___.","ы","","Қаердан? — с + родительный: -а ўрнига -ы: с работы. Эътибор: с + родительный = «…дан», с + творительный = «… билан»."],
+["d30","end","Т","Я доволен работ___.","ой","","доволен чем? — творительный: -а ўрнига -ой: работой."],
+["d31","end","Д","Я дал книгу сестр___.","е","","дать кому? — дательный: -а ўрнига -е: сестре."],
+["d32","end","П","Мы живём в деревн___.","е","","в + предложный: -я ўрнига -е: в деревне."],
+["d33","end","Р","Я пью чай без сахар___.","а","","без + родительный: ундошга -а: без сахара."],
+["d34","end","В","Я иду в библиотек___.","у","","Қаерга? — в + винительный: -а ўрнига -у: в библиотеку. Қаерда? бўлганда — в библиотеке."],
+
+["d35","br","Д","Я пишу письмо (мама).","маме","","писать кому? — дательный: мама → маме, -а ўрнига -е."],
+["d36","br","В","Мы ходим в (театр) каждый месяц.","театр","","Қаерга? — в + винительный. Жонсиз эркак сўз винительныйда ўзгармайди: в театр."],
+["d37","br","П","Я думаю о (сестра).","сестре","","о + предложный: сестра → сестре, -а ўрнига -е."],
+["d38","br","Т","Я горжусь (сын).","сыном","","гордиться кем? — творительный: сын → сыном, ундошга -ом."],
+["d39","br","Р","У (брат) есть машина.","брата","","у + родительный (кимда бор?): брат → брата, ундошга -а."],
+["d40","br","В","Я вижу (папа) на улице.","папу","","видеть кого? — винительный: папа → папу. -а билан тугаган эркак сўзлар (папа, дедушка) аёл сўзлардек ўзгаради."],
+["d41","br","В","Я читаю (журнал).","журнал","","читать что? — винительный. Жонсиз эркак сўз ўзгармайди: читаю журнал."],
+["d42","br","Т","Он работает (врач).","врачом","","работать кем? — творительный: врач → врачом, ундошга -ом."],
+["d43","br","Р","Это подарок для (бабушка).","бабушки","","для + родительный: бабушка → бабушки. г, к, х, ж, ш, ч, щ дан кейин -ы эмас, -и ёзилади."],
+["d44","br","Д","Мы говорили по (телефон).","телефону","","по + дательный: телефон → телефону, ундошга -у."],
+["d45","br","П","Я живу на (улица) Навои.","улице","","на + предложный (қаерда?): улица → улице, -а ўрнига -е."],
+["d46","br","В","Я встретил (друг) в парке.","друга","","встретить кого? — винительный. Жонли эркак сўзга -а: друг → друга."],
+
+["d47","pr","В","Я иду ___ магазин.","в","","Қаерга? (бино ичига) — в + винительный: в магазин."],
+["d48","pr","П","Книга лежит ___ столе.","на","","Устида — на + предложный: на столе. Ичида бўлса — в столе."],
+["d49","pr","Т","Я пью кофе ___ молоком.","с","","… билан — с + творительный: с молоком."],
+["d50","pr","П","Мы говорим ___ погоде.","о","","… ҳақида — о + предложный: о погоде."],
+["d51","pr","Д","Я иду ___ другу.","к","","Кимнинг олдига — к + дательный: к другу."],
+["d52","pr","Р","___ меня есть брат.","у","","Кимда бор? — у + родительный: у меня есть — менда бор."],
+["d53","pr","Р","Я родом ___ Бухары.","из","","Қаердан (шаҳар, мамлакат)? — из + родительный: из Бухары."],
+["d54","pr","Р","Я вернулся ___ бабушки.","от","","Кимдан (одамдан)? — от + родительный: от бабушки. Шаҳар ёки бинодан бўлса — из."],
+
+["d55","pn","В","Я вижу (он) каждый день.","его","","видеть кого? — винительный: он → его."],
+["d56","pn","Д","Позвони (я) вечером.","мне","","звонить кому? — дательный: я → мне."],
+["d57","pn","П","Мы говорили о (ты).","тебе","","о + предложный: ты → тебе."],
+["d58","pn","Т","Я пойду в кино с (она).","ней","","с + творительный: она → ей. Предлогдан кейин олдига н- қўшилади: с ней."],
+["d59","pn","Р","У (мы) нет времени.","нас","","у + родительный: мы → нас."],
+["d60","pn","Д","Этот дом принадлежит (они).","им","","принадлежать кому? — дательный: они → им."],
+["d61","pn","П","Я думаю о (вы).","вас","","о + предложный: вы → вас."],
+["d62","pn","Д","Расскажи (она) о поездке.","ей","","рассказать кому? — дательный: она → ей. Предлог йўқ, шунинг учун н- қўшилмайди."],
+["d63","pn","Д","Я пойду к (он).","нему","","к + дательный: он → ему. Предлогдан кейин н- қўшилади: к нему."],
+
+["d64","adj","П","Я живу в (большой) городе.","большом","","предложный, мужской род: -ой ўрнига -ом: большой → большом."],
+["d65","adj","Р","У меня нет (новая) машины.","новой","","родительный, женский род: -ая ўрнига -ой: новая → новой."],
+["d66","adj","В","Я читаю (интересная) книгу.","интересную","","винительный, женский род: -ая ўрнига -ую: интересная → интересную."],
+["d67","adj","Т","Мы говорили со (старый) другом.","старым","","творительный, мужской род: -ый ўрнига -ым: старый → старым."],
+["d68","adj","Д","Я звоню (младший) брату.","младшему","","дательный, мужской род: -ий ўрнига -ему: младший → младшему."],
+["d69","adj","П","Она живёт в (красивая) квартире.","красивой","","предложный, женский род: -ая ўрнига -ой: красивая → красивой."],
+["d70","adj","Р","Я купил подарок для (маленький) сына.","маленького","","родительный, мужской род: -ий ўрнига -ого: маленький → маленького."],
+["d71","adj","И","Сегодня (хорошая) погода.","хорошая","","«погода» — гапнинг эгаси (подлежащее), именительный падеж. Шунинг учун сифат ҳам ўзгармайди."],
+
+["d72","id","Т","Я пишу [[ручкой]].","Т","","Нима билан? — творительный. Белгиси: -ой қўшимчаси."],
+["d73","id","Р","У меня нет [[машины]].","Р","","«нет» дан кейин доим родительный келади."],
+["d74","id","Д","Я звоню [[маме]].","Д","","звонить кому? — дательный. «маме» предложныйда ҳам шундай ёзилади, падежни савол ва предлогдан биламиз."],
+["d75","id","П","Я живу в [[Ташкенте]].","П","","Қаерда? — в + предложный."],
+["d76","id","В","Я читаю [[книгу]].","В","","читать что? — винительный. Белгиси: -у қўшимчаси."],
+["d77","id","И","[[Мама]] готовит плов.","И","","Ким тайёрлаяпти? — гапнинг эгаси (подлежащее), именительный падеж."],
+["d78","id","П","Мы говорили о [[погоде]].","П","","«о» дан кейин доим предложный келади."],
+["d79","id","Д","Я иду к [[другу]].","Д","","«к» дан кейин доим дательный келади."],
+["d80","id","Р","Это машина [[брата]].","Р","","Кимнинг? — родительный."],
+["d81","id","Т","Он работает [[врачом]].","Т","","работать кем? — творительный. Белгиси: -ом қўшимчаси."]
+];
+const DRILL=DRAW.map(([id,t,c,q,a,h,x])=>({id,t,c,q,a,h,x}));
+const DR={};DRILL.forEach(d=>{DR[d.id]=d;});
+function drillAnswers(d){return d.a.split("|");}
+function toks(s){return norm(s).split(" ").filter(Boolean);}
+function parseCase(s){
+  const n=norm(s).replace(/\s+/g,"");
+  const m=[["им","И"],["род","Р"],["дат","Д"],["вин","В"],["тв","Т"],["пред","П"]].find(([p])=>n.startsWith(p));
+  if(m)return m[1];
+  const one=/^([ирдвтп])п?$/.exec(n);return one?one[1].toUpperCase():null;
+}
+/* words the learner has to change in a "fix" sentence */
+function fixWords(d){const q=new Set(toks(d.q));return toks(drillAnswers(d)[0]).filter(w=>!q.has(w)).join(" ");}
+function checkDrill(d,input){
+  if(d.t==="id")return parseCase(input)===d.a;
+  const n=norm(input);
+  if(drillAnswers(d).some(a=>norm(a)===n))return true;
+  return d.t==="fix"&&n===fixWords(d);
+}
+/* longest common subsequence of word lists: marks which words of the right answer the learner missed */
+function lcsMask(user,ans){
+  const m=user.length,n=ans.length,T=Array.from({length:m+1},()=>new Array(n+1).fill(0));
+  for(let i=m-1;i>=0;i--)for(let j=n-1;j>=0;j--)T[i][j]=user[i]===ans[j]?T[i+1][j+1]+1:Math.max(T[i+1][j],T[i][j+1]);
+  const hit=new Array(n).fill(false);let i=0,j=0;
+  while(i<m&&j<n){if(user[i]===ans[j]){hit[j]=true;i++;j++;}else if(T[i+1][j]>=T[i][j+1])i++;else j++;}
+  return {hit,score:T[0][0]};
+}
+function buildDrill(cfg,ids){
+  if(ids)return shuffle(ids.slice()).map(id=>({id}));
+  const pool=DRILL.filter(d=>cfg.type==="all"||d.t===cfg.type);
+  /* deal the types out round by round, so a session mixes them */
+  const by={};shuffle(pool.slice()).forEach(d=>(by[d.t]||(by[d.t]=[])).push(d));
+  const out=[];
+  while(out.length<pool.length)for(const k of shuffle(Object.keys(by))){const d=by[k].pop();if(d)out.push(d);}
+  const n=cfg.count==="all"?out.length:Math.min(+cfg.count,out.length);
+  return out.slice(0,n).map(d=>({id:d.id}));
+}
 // ---- UI ----
-const DEF=l=>({lesson:l,topic:"all",count:"all"});
+const isDrill=l=>!!(LES[l]&&LES[l].kind==="drill");
+const DEF=l=>isDrill(l)?{lesson:l,type:"all",count:"20"}:{lesson:l,topic:"all",count:"all"};
 const KEY=l=>"rus-quiz-v2-dars-"+l, OLD_KEY="rus-vaqt-havo-quiz-v1";
 const $=id=>document.getElementById(id);
 const topEl=$("top"),home=$("home"),lessonSec=$("lesson"),pad=$("pad"),prog=$("prog"),setbody=$("setbody"),sum=$("sum"),settings=$("settings");
 const RM=window.matchMedia?window.matchMedia("(prefers-reduced-motion: reduce)"):{matches:false};
+const FINE=window.matchMedia?window.matchMedia("(hover: hover)"):{matches:false};
 const TTS=("speechSynthesis" in window)&&typeof SpeechSynthesisUtterance!=="undefined";
 const SPK='<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 9.5h3.5L12.5 5v14l-5-4.5H4z" fill="currentColor"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.8 7.8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
 const BIND='<div class="binding" aria-hidden="true"><span></span><span></span></div>';
-const MODE={mix:"Аралаш",ru:"Рус → Ўзб",uz:"Ўзб → Рус"};
-const MEM={}; /* each lesson's quiz, kept even where browser storage is unavailable */
+const MEM={}; /* each section's quiz, kept even where browser storage is unavailable */
 let L=null,S=null,pend=null,busy=false,view=null; /* view: index of an earlier question being reviewed, null = current */
 
 function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
 function exHTML(s){return esc(s).replace(/\*([^*]+)\*/g,"<b>$1</b>");}
 function save(){if(!S||!L)return;MEM[L]=S;try{localStorage.setItem(KEY(L),JSON.stringify(S));}catch(e){}}
-function valid(s,l){return !!(s&&s.cfg&&Array.isArray(s.qs)&&s.qs.length&&Array.isArray(s.ans)&&typeof s.i==="number"&&s.qs.every(q=>BY[q.id]&&BY[q.id].ls===l&&Array.isArray(q.opts)&&q.opts.length===4&&q.opts.every(o=>BY[o])));}
+function valid(s,l){
+  if(!(s&&s.cfg&&LES[l]&&Array.isArray(s.qs)&&s.qs.length&&Array.isArray(s.ans)&&typeof s.i==="number"))return false;
+  return isDrill(l)?s.qs.every(q=>DR[q.id]):s.qs.every(q=>BY[q.id]&&BY[q.id].ls===l&&Array.isArray(q.opts)&&q.opts.length===4&&q.opts.every(o=>BY[o]));
+}
 function readKey(k){try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}}
 function loadState(l){
   if(MEM[l])return MEM[l];
@@ -476,9 +651,11 @@ function loadState(l){
   if(!s&&l==="1")s=readKey(OLD_KEY);
   if(!valid(s,l))return null;
   s.cfg={...DEF(l),...s.cfg,lesson:l};delete s.cfg.auto;delete s.cfg.mode;
-  /* older saves had Russian prompts: questions not yet answered are rebuilt as Uzbek → Russian */
-  const pool=poolFor(s.cfg);
-  for(let k=s.ans.length;k<s.qs.length;k++)if(s.qs[k].dir!=="uz")s.qs[k]=makeQ(BY[s.qs[k].id],pool);
+  if(!isDrill(l)){
+    /* older saves had Russian prompts: questions not yet answered are rebuilt as Uzbek → Russian */
+    const pool=poolFor(s.cfg);
+    for(let k=s.ans.length;k<s.qs.length;k++)if(s.qs[k].dir!=="uz")s.qs[k]=makeQ(BY[s.qs[k].id],pool);
+  }
   if(s.phase==="fb"&&s.ans.length!==s.i+1)s.phase="q";
   if(s.phase!=="end"&&s.i>=s.qs.length)s.phase="end";
   MEM[l]=s;return s;
@@ -496,43 +673,71 @@ function say(text){
 function sayBtn(t){return TTS?`<button type="button" class="say" data-say="${esc(t)}" aria-label="Тинглаш" title="Тинглаш">${SPK}</button>`:"";}
 function chip(g,v,label){return `<button type="button" class="chip" data-set="${g}" data-val="${v}" aria-pressed="${String(pend[g])===v}">${label}</button>`;}
 
-/* ---- home: lesson picker ---- */
+/* ---- home: section picker ---- */
 function lessonStatus(l){
-  const s=loadState(l.id);
+  const s=loadState(l.id),dr=l.kind==="drill";
   if(!s)return {text:"Ҳали бошланмаган",go:"Бошлаш"};
   const tot=s.qs.length,done=s.ans.length,ok=s.ans.filter(a=>a.ok).length;
   if(s.phase==="end")return {text:`Охирги натижа: ${ok} / ${tot} тўғри (${Math.round(ok*100/tot)}%)`,go:"Натижани кўриш"};
-  if(!done)return {text:`${tot} та саволлик квиз бошланган`,go:"Давом эттириш"};
-  return {text:`${done} / ${tot} та саволга жавоб берилган · ✓ ${ok} · ✗ ${done-ok}`,go:"Давом эттириш"};
+  if(!done)return {text:dr?`${tot} та машқ бошланган`:`${tot} та саволлик квиз бошланган`,go:"Давом эттириш"};
+  return {text:`${done} / ${tot} та ${dr?"машқ бажарилган":"саволга жавоб берилган"} · ✓ ${ok} · ✗ ${done-ok}`,go:"Давом эттириш"};
+}
+function card(l){
+  const st=lessonStatus(l),dr=l.kind==="drill";
+  let sub;
+  if(dr)sub=`${DRILL.length} та машқ, ${Object.keys(DTYPES).length} хил: таржима, хатони тўғрилаш, қўшимча, предлог, олмош ва бошқалар`;
+  else{const n=lessonWords(l.id).length,tk=Object.keys(l.topics);sub=`${n} та ${l.unit}`+(tk.length>1?" · "+tk.map(t=>`${l.topics[t]} ${W.filter(w=>w.tp===t).length}`).join(", "):"");}
+  return `<li><a class="lesson-card" href="#${l.hash}"><div class="pad"><article class="page">${BIND}
+    <div class="head"><div class="num">${l.no}</div><div class="meta"><span class="topic">${dr?"Машқ":"Дарс"}</span><span class="of">${l.pages}</span></div></div>
+    <div class="body"><h3 class="ltitle">${l.title}</h3><div class="lsub">${sub}</div><div class="status">${st.text}</div><span class="go">${st.go} →</span></div>
+  </article></div></a></li>`;
 }
 function renderHome(){
-  topEl.innerHTML=`<div class="kicker">Рус тили · сўз бойлиги</div><h1>Дарслар</h1><p>Керакли дарсни танланг. Ҳар бир дарсдаги натижангиз алоҳида сақланади.</p>`;
-  home.innerHTML=`<ol class="lessons">${LESSONS.map(l=>{
-    const n=lessonWords(l.id).length,st=lessonStatus(l),tk=Object.keys(l.topics);
-    const parts=tk.length>1?" · "+tk.map(t=>`${l.topics[t]} ${W.filter(w=>w.tp===t).length}`).join(", "):"";
-    return `<li><a class="lesson-card" href="#dars-${l.id}"><div class="pad"><article class="page">${BIND}
-      <div class="head"><div class="num">${l.no}</div><div class="meta"><span class="topic">Дарс</span><span class="of">${l.pages}</span></div></div>
-      <div class="body"><h2 class="ltitle">${l.title}</h2><div class="lsub">${n} та ${l.unit}${parts}</div><div class="status">${st.text}</div><span class="go">${st.go} →</span></div>
-    </article></div></a></li>`;}).join("")}</ol>`;
+  topEl.innerHTML=`<div class="kicker">Рус тили</div><h1>Дарслар ва машқлар</h1><p>Керакли бўлимни танланг. Ҳар бир бўлимдаги натижангиз алоҳида сақланади.</p>`;
+  home.innerHTML=`<h2 class="group-title">Сўз бойлиги</h2><ol class="lessons">${LESSONS.filter(l=>l.kind!=="drill").map(card).join("")}</ol>
+    <h2 class="group-title">Машқлар</h2><ol class="lessons">${LESSONS.filter(l=>l.kind==="drill").map(card).join("")}</ol>`;
 }
 
-/* ---- lesson ---- */
+/* ---- inside a section ---- */
 function renderTop(){
-  const l=LES[L],n=lessonWords(L).length;
-  topEl.innerHTML=`<a class="crumb" href="#">← Барча дарслар</a><div class="kicker">${l.no}-дарс</div><h1>${l.title}</h1><p>Дафтардаги ${l.pages}: ${n} та ${l.unit}, урғулари белгиланган.${l.extra||""} Савол ўзбекча, жавоблар русча.</p><p class="kbd">Клавиатурада: 1–4 — жавоб, Enter — кейинги савол, ← — олдинги савол.</p>`;
+  const l=LES[L];
+  if(isDrill(L)){
+    topEl.innerHTML=`<a class="crumb" href="#">← Барча бўлимлар</a><div class="kicker">${l.no}-машқ</div><h1>${l.title}</h1><p>${DRILL.length} та машқ, ${Object.keys(DTYPES).length} хил. Жавобни рус ҳарфларида ёзасиз, ҳар бир жавобдан кейин изоҳ чиқади. Падежлар жадвали саҳифа пастида.</p><p class="kbd">Клавиатурада: Enter — текшириш, кейин яна Enter — кейинги машқ.</p>`;
+    return;
+  }
+  const n=lessonWords(L).length;
+  topEl.innerHTML=`<a class="crumb" href="#">← Барча бўлимлар</a><div class="kicker">${l.no}-дарс</div><h1>${l.title}</h1><p>Дафтардаги ${l.pages}: ${n} та ${l.unit}, урғулари белгиланган.${l.extra||""} Савол ўзбекча, жавоблар русча.</p><p class="kbd">Клавиатурада: 1–4 — жавоб, Enter — кейинги савол, ← — олдинги савол.</p>`;
 }
 function renderSettings(){
+  const c=S.cfg;
+  if(isDrill(L)){
+    const n=t=>DRILL.filter(d=>t==="all"||d.t===t).length;
+    setbody.innerHTML=`<div class="group"><span class="lbl" id="l-type">Машқ тури</span><div class="chips" role="group" aria-labelledby="l-type">${chip("type","all","Аралаш · "+n("all"))}${Object.keys(DTYPES).map(t=>chip("type",t,DTYPES[t].name+" · "+n(t))).join("")}</div></div>
+     <div class="group"><span class="lbl" id="l-count">Машқлар сони</span><div class="chips" role="group" aria-labelledby="l-count">${chip("count","10","10 та")}${chip("count","20","20 та")}${chip("count","all","Ҳаммаси")}</div></div>
+     <div><button type="button" class="btn" data-act="start">Янги машқни бошлаш</button></div>`;
+    const label=S.retry?"Хатолар":(c.type==="all"?"Аралаш":DTYPES[c.type].name);
+    sum.innerHTML=`<span>Созламалар</span><span class="cur">${label} · ${S.qs.length} та машқ</span>`;
+    return;
+  }
   const l=LES[L],tk=Object.keys(l.topics),n=t=>poolFor({lesson:L,topic:t}).length;
   setbody.innerHTML=
   (tk.length>1?`<div class="group"><span class="lbl" id="l-topic">Мавзу</span><div class="chips" role="group" aria-labelledby="l-topic">${chip("topic","all","Ҳаммаси · "+n("all"))}${tk.map(t=>chip("topic",t,l.topics[t]+" · "+n(t))).join("")}</div></div>`:"")+
   `<div class="group"><span class="lbl" id="l-count">Саволлар сони</span><div class="chips" role="group" aria-labelledby="l-count">${chip("count","20","20 та")}${chip("count","40","40 та")}${chip("count","all","Ҳаммаси")}</div></div>
    <div><button type="button" class="btn" data-act="start">Янги квизни бошлаш</button></div>`;
-  const c=S.cfg,label=S.retry?"Хатолар":(c.topic==="all"?"Ҳаммаси":TOPICS[c.topic]);
+  const label=S.retry?"Хатолар":(c.topic==="all"?"Ҳаммаси":TOPICS[c.topic]);
   sum.innerHTML=`<span>Созламалар</span><span class="cur">${label} · ${S.qs.length} савол</span>`;
 }
 function renderProg(){
   const tot=S.qs.length,done=S.ans.length,ok=S.ans.filter(a=>a.ok).length;
   prog.innerHTML=`<span class="pos">${Math.min((view!==null?view:S.i)+1,tot)} / ${tot}</span><span class="bar"><i style="width:${(done/tot*100).toFixed(1)}%"></i></span><span class="tally"><b class="ok" title="Тўғри">✓ ${ok}</b><b class="no" title="Хато">✗ ${done-ok}</b></span>`;
+}
+function navHTML(idx,review,a,unit){
+  const back=idx>0?`<button type="button" class="btn ghost" data-act="back">← Олдинги</button>`:"";
+  let fwd="";
+  if(review)fwd=`<button type="button" class="btn" data-act="fwd">Кейинги →</button>`;
+  else if(a)fwd=`<button type="button" class="btn next" data-act="next">${S.i===S.qs.length-1?"Натижани кўриш":"Кейинги"} →</button>`;
+  const far=review&&(S.phase==="end"||S.i-idx>1)?`<button type="button" class="linkbtn" data-act="live">${S.phase==="end"?"Натижага қайтиш":`Жорий ${unit}га қайтиш`}</button>`:"";
+  return (back||fwd)?`<div class="nav">${back}<span class="sp"></span>${fwd}</div>${far}`:"";
 }
 function qHTML(idx,review){
   const q=S.qs[idx],w=BY[q.id],ps=q.dir,os=ps==="ru"?"uz":"ru";
@@ -553,40 +758,107 @@ function qHTML(idx,review){
       ${w.note?`<div class="explain"><div class="lbl">Изоҳ</div><p>${esc(w.note)}</p></div>`:""}
     </div>`;
   }
-  const back=idx>0?`<button type="button" class="btn ghost" data-act="back">← Олдинги</button>`:"";
-  let fwd="";
-  if(review)fwd=`<button type="button" class="btn" data-act="fwd">Кейинги →</button>`;
-  else if(a)fwd=`<button type="button" class="btn next" data-act="next">${S.i===S.qs.length-1?"Натижани кўриш":"Кейинги"} →</button>`;
-  const far=review&&(S.phase==="end"||S.i-idx>1)?`<button type="button" class="linkbtn" data-act="live">${S.phase==="end"?"Натижага қайтиш":"Жорий саволга қайтиш"}</button>`:"";
-  const nav=(back||fwd)?`<div class="nav">${back}<span class="sp"></span>${fwd}</div>${far}`:"";
   return `<div class="head"><div class="num">${idx+1}</div><div class="meta"><span class="topic">${review?"Кўриб чиқиш":(S.retry?"Хатолар устида":TOPICS[w.tp])}</span><span class="of">${S.qs.length} та саволдан</span></div></div>
   <div class="body">
     <div class="ask">${ps==="ru"?"Ўзбекча таржимасини топинг":"Русчасини топинг"}</div>
     <div class="prompt"><h2 class="word ${ps}" lang="${ps}">${esc(w[ps])}</h2>${ps==="ru"?sayBtn(w.ru):""}</div>
     ${ps==="uz"&&w.exUz?`<p class="ctx">Гапда: ${esc(w.exUz)}</p>`:""}
-    <ol class="opts">${opts}</ol>${fb}${nav}
+    <ol class="opts">${opts}</ol>${fb}${navHTML(idx,review,a,"савол")}
+  </div>`;
+}
+
+/* ---- exercises (typed answers) ---- */
+function drillPrompt(d){
+  return esc(d.q).replace(/___/g,'<span class="gap" aria-label="бўш жой">?</span>').replace(/\(([^)]+)\)/g,'<span class="bracket">($1)</span>').replace(/\[\[([^\]]+)\]\]/g,'<mark class="hl">$1</mark>');
+}
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1);}
+/* the right sentence with the answer in bold; null for whole-sentence exercises */
+function drillFull(d){
+  const a0=drillAnswers(d)[0],q=esc(d.q);
+  if(d.t==="end")return q.replace("___",`<b>${esc(a0)}</b>`);
+  if(d.t==="pr")return q.replace("___",`<b>${esc(q.startsWith("___")?cap(a0):a0)}</b>`);
+  if(d.t==="br"||d.t==="pn"||d.t==="adj")return q.replace(/\(([^)]+)\)/,`<b>${esc(a0)}</b>`);
+  if(d.t==="id")return q.replace(/\[\[([^\]]+)\]\]/,"<b>$1</b>")+` — ${CASES[d.a]} падеж`;
+  return null;
+}
+/* the accepted sentence closest to what the learner wrote, with the words they got wrong marked */
+function drillMarked(d,input){
+  const u=toks(input);let best=null;
+  for(const a of drillAnswers(d)){const words=a.split(/\s+/),m=lcsMask(u,words.map(norm));if(!best||m.score>best.m.score)best={words,m};}
+  return best.words.map((w,i)=>best.m.hit[i]?esc(w):`<mark>${esc(w)}</mark>`).join(" ");
+}
+function dqHTML(idx,review){
+  const q=S.qs[idx],d=DR[q.id],T=DTYPES[d.t],uz=d.t==="tr";
+  const a=review?S.ans[idx]:(S.phase==="fb"?S.ans[S.ans.length-1]:null);
+  const hints=d.h?`<div class="hints"><span class="lbl">Сўзлар</span><ul>${d.h.split(" · ").map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`:"";
+  let body;
+  if(!a){
+    body=`<form class="answer" data-form="drill" autocomplete="off" novalidate>
+      <label class="lbl" for="ans">Жавобингиз</label>
+      <div class="row"><input id="ans" name="ans" type="text" lang="ru" autocomplete="off" autocorrect="off" autocapitalize="${T.long?"sentences":"none"}" spellcheck="false" enterkeyhint="done" placeholder="${T.long?"Гапни русча ёзинг":"Русча ёзинг"}"><button class="btn" type="submit">Текшириш</button></div>
+      <p class="formmsg" id="formmsg" role="alert"></p>
+      <button type="button" class="linkbtn left" data-act="giveup">Билмайман, жавобни кўрсат</button>
+    </form>`;
+  }else{
+    const full=drillFull(d);
+    const right=full!==null?full:(!a.ok&&a.input?drillMarked(d,a.input):esc(drillAnswers(d)[0]));
+    const sayText=d.t==="id"?d.q.replace(/\[\[|\]\]/g,""):(full!==null?full.replace(/<[^>]+>/g,""):drillAnswers(d)[0]);
+    const v=a.ok?(review?"Бу машқни тўғри бажаргансиз":"Тўғри!"):(!a.input?"Жавоб кўрсатилди":(review?"Бу машқда хато қилгансиз":"Хато"));
+    body=`${a.input?`<div class="given ${a.ok?"ok":"no"}"><span class="lbl">Сизнинг жавобингиз</span><p lang="ru">${esc(a.input)}</p></div>`:""}
+    <div class="fb" role="status">
+      <div class="verdict ${a.ok?"ok":"no"}${review||!a.input?" small":""}">${v}</div>
+      <div class="right"><span class="lbl">Тўғри жавоб${!a.ok&&a.input&&full===null?" (белгиланган сўзларда хато бор)":""}</span><p class="right-ans" lang="ru">${right}${sayBtn(sayText)}</p></div>
+      <div class="explain"><div class="lbl">Изоҳ</div><p>${esc(d.x)}</p></div>
+    </div>`;
+  }
+  return `<div class="head"><div class="num">${idx+1}</div><div class="meta"><span class="topic">${review?"Кўриб чиқиш":(S.retry?"Хатолар устида":T.name)}</span><span class="of">${S.qs.length} та машқдан</span></div></div>
+  <div class="body">
+    <div class="ask">${T.ask}</div>
+    <h2 class="word drill ${uz?"uz":"ru"}" lang="${uz?"uz":"ru"}">${drillPrompt(d)}</h2>
+    ${hints}${body}${navHTML(idx,review,a,"машқ")}
   </div>`;
 }
 function wrongIds(){return [...new Set(S.ans.filter(a=>!a.ok).map(a=>a.id))];}
 function endHTML(){
-  const tot=S.qs.length,ok=S.ans.filter(a=>a.ok).length,pct=Math.round(ok*100/tot),wr=wrongIds();
-  const msg=pct===100?"Ҳаммасига тўғри жавоб бердингиз. Аъло!":pct>=85?"Жуда яхши. Хато қилинган бир нечта сўзни такрорлаб олинг.":pct>=60?"Ёмон эмас. Хато қилинган сўзларни яна бир бор ишлаб чиқинг.":"Сўзларни рўйхатдан яна бир бор кўриб чиқинг ва хатолар устида ишланг.";
-  const rows=wr.map(id=>`<tr><td class="ru" lang="ru">${esc(BY[id].ru)}</td><td>${esc(BY[id].uz)}</td></tr>`).join("");
+  const dr=isDrill(L),tot=S.qs.length,ok=S.ans.filter(a=>a.ok).length,pct=Math.round(ok*100/tot),wr=wrongIds();
+  const msg=pct===100?"Ҳаммасига тўғри жавоб бердингиз. Аъло!"
+    :pct>=85?(dr?"Жуда яхши. Хато қилинган бир нечта машқни қайта ишланг.":"Жуда яхши. Хато қилинган бир нечта сўзни такрорлаб олинг.")
+    :pct>=60?(dr?"Ёмон эмас. Падежлар жадвалини кўриб чиқиб, хатолар устида ишланг.":"Ёмон эмас. Хато қилинган сўзларни яна бир бор ишлаб чиқинг.")
+    :(dr?"Падежлар жадвалини яна бир бор ўқиб чиқинг ва хатолар устида ишланг.":"Сўзларни рўйхатдан яна бир бор кўриб чиқинг ва хатолар устида ишланг.");
+  const rows=dr
+    ?wr.map(id=>{const d=DR[id],full=drillFull(d);return `<tr><td>${esc(d.q.replace(/\[\[|\]\]/g,""))}</td><td class="ru" lang="ru">${full!==null?full:esc(drillAnswers(d)[0])}</td></tr>`;}).join("")
+    :wr.map(id=>`<tr><td class="ru" lang="ru">${esc(BY[id].ru)}</td><td>${esc(BY[id].uz)}</td></tr>`).join("");
+  const th=dr?"<th>Машқ</th><th>Тўғри жавоб</th>":"<th>Сўз</th><th>Таржима</th>";
   return `<div class="head"><div class="num">${ok}</div><div class="meta"><span class="topic">Натижа</span><span class="of">${tot} тадан тўғри · ${pct}%</span></div></div>
   <div class="body">
     <p class="msg">${msg}</p>
-    ${wr.length?`<h3 class="sub">Хато қилинган сўзлар · ${wr.length}</h3><div class="tblwrap"><table class="book"><thead><tr><th>Сўз</th><th>Таржима</th></tr></thead><tbody>${rows}</tbody></table></div>`:""}
-    <div class="actions">${wr.length?`<button type="button" class="btn" data-act="retry">Хатоларни қайта ишлаш (${wr.length})</button>`:""}<button type="button" class="btn${wr.length?" ghost":""}" data-act="again">Янги квиз</button><button type="button" class="btn ghost" data-act="back">← Саволларни кўриш</button><a class="btn ghost" href="#">Барча дарслар</a></div>
+    ${wr.length?`<h3 class="sub">${dr?"Хато қилинган машқлар":"Хато қилинган сўзлар"} · ${wr.length}</h3><div class="tblwrap"><table class="book${dr?" mistakes":""}"><thead><tr>${th}</tr></thead><tbody>${rows}</tbody></table></div>`:""}
+    <div class="actions">${wr.length?`<button type="button" class="btn" data-act="retry">Хатоларни қайта ишлаш (${wr.length})</button>`:""}<button type="button" class="btn${wr.length?" ghost":""}" data-act="again">${dr?"Янги машқ":"Янги квиз"}</button><button type="button" class="btn ghost" data-act="back">← ${dr?"Машқларни":"Саволларни"} кўриш</button><a class="btn ghost" href="#">Барча бўлимлар</a></div>
   </div>`;
 }
 function renderPage(anim){
-  const review=view!==null;
-  const inner=(!review&&S.phase==="end")?endHTML():qHTML(review?view:S.i,review);
+  const review=view!==null,dr=isDrill(L);
+  const inner=(!review&&S.phase==="end")?endHTML():(dr?dqHTML(review?view:S.i,review):qHTML(review?view:S.i,review));
   pad.innerHTML=`<article class="page${review?" review":""}${anim&&!RM.matches?" enter":""}">${BIND}${inner}</article>`;
+  /* on a computer the cursor goes straight into the answer box; on phones we leave the keyboard closed */
+  if(dr&&!review&&S.phase==="q"&&FINE.matches){const inp=$("ans");if(inp)inp.focus({preventScroll:true});}
 }
 function renderAll(anim){renderSettings();renderProg();renderPage(anim);}
+const CHEAT=`<div class="tblwrap"><table class="book cheat"><thead><tr><th>Падеж</th><th>Савол</th><th>Предлог</th><th>Мисол</th></tr></thead><tbody>
+<tr><td>Именительный</td><td lang="ru">кто? что?</td><td>—</td><td class="ru" lang="ru">мама, брат</td></tr>
+<tr><td>Родительный</td><td lang="ru">кого? чего?<br>нет кого?</td><td lang="ru">у, без, для, из, от, с (…дан)</td><td class="ru" lang="ru">мамы, брата</td></tr>
+<tr><td>Дательный</td><td lang="ru">кому? чему?</td><td lang="ru">к, по</td><td class="ru" lang="ru">маме, брату</td></tr>
+<tr><td>Винительный</td><td lang="ru">кого? что?<br>куда?</td><td lang="ru">в, на (қаерга)</td><td class="ru" lang="ru">маму, брата*</td></tr>
+<tr><td>Творительный</td><td lang="ru">кем? чем?</td><td lang="ru">с (… билан), над, под, за</td><td class="ru" lang="ru">мамой, братом</td></tr>
+<tr><td>Предложный</td><td lang="ru">о ком? о чём?<br>где?</td><td lang="ru">о, в, на (қаерда)</td><td class="ru" lang="ru">о маме, о брате</td></tr>
+</tbody></table></div>
+<p class="note">* Жонли эркак сўз винительныйда -а олади (вижу брата), жонсиз эркак сўз ўзгармайди (вижу стол).</p>
+<p class="note">г, к, х, ж, ш, ч, щ дан кейин -ы эмас, -и ёзилади: книги, бабушки.</p>
+<p class="note">Предлогдан кейин он, она, они олдига н- қўшилади: к нему, с ней, у них.</p>`;
 function renderList(){
   const l=LES[L];
+  if(isDrill(L)){$("listtitle").textContent="Падежлар жадвали";$("listcount").textContent="6 та падеж";$("listbody").innerHTML=CHEAT;return;}
+  $("listtitle").textContent="Сўзлар рўйхати";
   const sec=t=>{const ws=W.filter(w=>w.tp===t);return `<h3 class="sub">${l.topics[t]} · ${ws.length}</h3><div class="tblwrap"><table class="book"><thead><tr><th>Сўз</th><th>Таржима</th></tr></thead><tbody>${ws.map(w=>`<tr><td class="ru" lang="ru">${esc(w.ru)}</td><td>${esc(w.uz)}${w.exUz?`<div class="lex" lang="ru">${exHTML(w.ex)}</div><div class="lex-uz">${esc(w.exUz)}</div>`:""}</td></tr>`).join("")}</tbody></table></div>`;};
   $("listbody").innerHTML=Object.keys(l.topics).map(sec).join("")+(l.note?`<p class="note">${l.note}</p>`:"");
   $("listcount").textContent=lessonWords(L).length+" та";
@@ -594,16 +866,32 @@ function renderList(){
 function topIntoView(){const p=pad.querySelector(".page");if(p&&p.getBoundingClientRect().top<0)p.scrollIntoView({block:"start"});}
 function newQuiz(cfg,ids){
   busy=false;view=null;
-  S={cfg:{...cfg,lesson:L},qs:buildQs({...cfg,lesson:L},ids),i:0,ans:[],phase:"q",retry:!!ids};
+  S={cfg:{...cfg,lesson:L},qs:isDrill(L)?buildDrill(cfg,ids):buildQs({...cfg,lesson:L},ids),i:0,ans:[],phase:"q",retry:!!ids};
   pend={...S.cfg};save();renderAll(true);topIntoView();
 }
-function answer(k){
-  if(!S||S.phase!=="q"||busy||view!==null)return;
-  const q=S.qs[S.i],pick=q.opts[k];if(pick===undefined)return;
-  S.ans.push({id:q.id,pick,ok:pick===q.id});S.phase="fb";save();renderProg();renderPage(false);
+function afterAnswer(){
+  save();renderProg();renderPage(false);
   /* no auto-advance: the learner reads the feedback and taps "Кейинги" */
   const n=pad.querySelector(".next");if(n)n.focus({preventScroll:true});
   const nv=pad.querySelector(".nav");if(nv&&nv.getBoundingClientRect().bottom>window.innerHeight)nv.scrollIntoView({block:"nearest",behavior:RM.matches?"auto":"smooth"});
+}
+function answer(k){
+  if(!S||S.phase!=="q"||busy||view!==null||isDrill(L))return;
+  const q=S.qs[S.i],pick=q.opts[k];if(pick===undefined)return;
+  S.ans.push({id:q.id,pick,ok:pick===q.id});S.phase="fb";afterAnswer();
+}
+function submitDrill(value){
+  if(!S||S.phase!=="q"||busy||view!==null||!isDrill(L))return;
+  const d=DR[S.qs[S.i].id],v=(value||"").trim();
+  const warn=t=>{const m=$("formmsg");if(m)m.textContent=t;const i=$("ans");if(i)i.focus();};
+  if(!v)return warn("Аввал жавобни ёзинг.");
+  if(/[a-z]/i.test(v))return warn("Жавобда лотин ҳарфлари бор. Рус ҳарфларида ёзинг.");
+  if(d.t==="id"&&!parseCase(v))return warn("Падеж номини ёзинг: именительный, родительный, дательный, винительный, творительный ёки предложный. Қисқаси ҳам бўлади: И.п., Р.п., Д.п., В.п., Т.п., П.п.");
+  S.ans.push({id:d.id,input:v,ok:checkDrill(d,v)});S.phase="fb";afterAnswer();
+}
+function giveUp(){
+  if(!S||S.phase!=="q"||busy||view!==null||!isDrill(L))return;
+  S.ans.push({id:S.qs[S.i].id,input:"",ok:false});S.phase="fb";afterAnswer();
 }
 function tear(done){
   const p=pad.querySelector(".page");
@@ -631,8 +919,8 @@ function fwd(){
 }
 function live(){view=null;renderProg();renderPage(true);topIntoView();}
 
-/* ---- routing: #dars-1, #dars-2, or the lesson list ---- */
-function lessonFromHash(){const m=/^#dars-(\d+)$/.exec(location.hash||"");return m&&LES[m[1]]?m[1]:null;}
+/* ---- routing: #dars-1, #dars-2, #mashq-1, or the section list ---- */
+function lessonFromHash(){const h=(location.hash||"").replace(/^#/,"");const l=LESSONS.find(x=>x.hash===h);return l?l.id:null;}
 function route(){
   busy=false;view=null;
   L=lessonFromHash();
@@ -656,9 +944,14 @@ document.addEventListener("click",e=>{
   else if(act==="back")back();
   else if(act==="fwd")fwd();
   else if(act==="live")live();
+  else if(act==="giveup")giveUp();
   else if(act==="start"){settings.open=false;newQuiz(pend);}
   else if(act==="retry")newQuiz(S.cfg,wrongIds());
   else if(act==="again")newQuiz(S.cfg);
+});
+document.addEventListener("submit",e=>{
+  const f=e.target.closest&&e.target.closest("form[data-form=drill]");if(!f)return;
+  e.preventDefault();submitDrill(f.querySelector("input").value);
 });
 document.addEventListener("keydown",e=>{
   if(!L||!S||e.metaKey||e.ctrlKey||e.altKey)return;
@@ -672,7 +965,7 @@ document.addEventListener("keydown",e=>{
   }
 });
 function start(data){
-  if(data&&data.L&&valid(data.S,data.L)){MEM[data.L]=data.S;if(!lessonFromHash())location.hash="dars-"+data.L;}
+  if(data&&data.L&&valid(data.S,data.L)){MEM[data.L]=data.S;if(!lessonFromHash())location.hash=LES[data.L].hash;}
   route();
 }
 window.claude?.hot?.snapshot(()=>({L,S}));
