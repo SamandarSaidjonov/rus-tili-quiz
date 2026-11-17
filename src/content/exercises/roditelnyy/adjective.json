@@ -1,0 +1,117 @@
+{
+  "topic": "roditelnyy",
+  "type": "adjective",
+  "title": "Родительный падеж",
+  "items": [
+    {
+      "id": "r-adj-01",
+      "case": "Р",
+      "prompt": "У (новый) директора есть план.",
+      "answers": [
+        "нового"
+      ],
+      "note": "Мужской род, родительный: -ый ўрнига -ого.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-adj-02",
+      "case": "Р",
+      "prompt": "Это документы (новая) сотрудницы.",
+      "answers": [
+        "новой"
+      ],
+      "note": "Женский род, родительный: -ая ўрнига -ой.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-adj-03",
+      "case": "Р",
+      "prompt": "У нас нет (свободный) времени.",
+      "answers": [
+        "свободного"
+      ],
+      "note": "Средний род: -ый ўрнига -ого.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-adj-04",
+      "case": "Р",
+      "prompt": "Это подарок для (старший) брата.",
+      "answers": [
+        "старшего"
+      ],
+      "note": "ш дан кейин -его: старший → старшего.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-adj-05",
+      "case": "Р",
+      "prompt": "У (наши) клиентов много вопросов.",
+      "answers": [
+        "наших"
+      ],
+      "note": "Кўплик родительный: -и ўрнига -их.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-adj-06",
+      "case": "Р",
+      "prompt": "Я пришёл из (большой) магазина.",
+      "answers": [
+        "большого"
+      ],
+      "note": "Мужской род: большой → большого.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-adj-07",
+      "case": "Р",
+      "prompt": "После (трудный) дня я отдыхаю.",
+      "answers": [
+        "трудного"
+      ],
+      "note": "Мужской род: -ый ўрнига -ого.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-adj-08",
+      "case": "Р",
+      "prompt": "У (русский) студентов экзамен.",
+      "answers": [
+        "русских"
+      ],
+      "note": "Кўплик: -ие ўрнига -их.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-adj-09",
+      "case": "Р",
+      "prompt": "Без (хорошая) подготовки трудно.",
+      "answers": [
+        "хорошей"
+      ],
+      "note": "Женский род: -ая ўрнига -ей (ш дан кейин).",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-adj-10",
+      "case": "Р",
+      "prompt": "Это машина (моя) сестры.",
+      "answers": [
+        "моей"
+      ],
+      "note": "Эгалик олмоши женский родда: моя → моей.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

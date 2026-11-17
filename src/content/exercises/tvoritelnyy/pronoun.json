@@ -1,0 +1,117 @@
+{
+  "topic": "tvoritelnyy",
+  "type": "pronoun",
+  "title": "Творительный падеж",
+  "items": [
+    {
+      "id": "t-pn-01",
+      "case": "Т",
+      "prompt": "Я иду с (он).",
+      "answers": [
+        "ним"
+      ],
+      "note": "Предлогдан кейин: с ним.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-pn-02",
+      "case": "Т",
+      "prompt": "Мы говорили с (она).",
+      "answers": [
+        "ней"
+      ],
+      "note": "Предлогдан кейин: с ней.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-pn-03",
+      "case": "Т",
+      "prompt": "Он работает с (они).",
+      "answers": [
+        "ними"
+      ],
+      "note": "Предлогдан кейин: с ними.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-pn-04",
+      "case": "Т",
+      "prompt": "Пойдём со (я).",
+      "answers": [
+        "мной"
+      ],
+      "note": "я → мной. «с» ўрнига «со» ёзилади.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-pn-05",
+      "case": "Т",
+      "prompt": "Я согласен с (ты).",
+      "answers": [
+        "тобой"
+      ],
+      "note": "ты → тобой.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-pn-06",
+      "case": "Т",
+      "prompt": "Директор говорил с (вы)?",
+      "answers": [
+        "вами"
+      ],
+      "note": "вы → вами.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-pn-07",
+      "case": "Т",
+      "prompt": "Он гордится (она).",
+      "answers": [
+        "ей"
+      ],
+      "note": "Предлог йўқ: ей (н- қўшилмайди).",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-pn-08",
+      "case": "Т",
+      "prompt": "Мы довольны (они).",
+      "answers": [
+        "ими"
+      ],
+      "note": "Предлог йўқ: ими.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-pn-09",
+      "case": "Т",
+      "prompt": "С (кто) ты работаешь?",
+      "answers": [
+        "кем"
+      ],
+      "note": "кто → кем.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-pn-10",
+      "case": "Т",
+      "prompt": "С (что) ты пьёшь чай?",
+      "answers": [
+        "чем"
+      ],
+      "note": "что → чем.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

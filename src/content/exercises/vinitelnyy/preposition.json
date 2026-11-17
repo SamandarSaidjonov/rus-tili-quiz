@@ -1,0 +1,117 @@
+{
+  "topic": "vinitelnyy",
+  "type": "preposition",
+  "title": "Винительный падеж",
+  "items": [
+    {
+      "id": "v-pr-01",
+      "case": "В",
+      "prompt": "Я иду ___ банк.",
+      "answers": [
+        "в"
+      ],
+      "note": "Бино ичига — «в»: в банк.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-pr-02",
+      "case": "В",
+      "prompt": "Она идёт ___ работу.",
+      "answers": [
+        "на"
+      ],
+      "note": "Ишга, тадбирга — «на»: на работу.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-pr-03",
+      "case": "В",
+      "prompt": "Спасибо ___ помощь!",
+      "answers": [
+        "за"
+      ],
+      "note": "Миннатдорчилик — «за»: за помощь.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-pr-04",
+      "case": "В",
+      "prompt": "___ час я вернусь.",
+      "answers": [
+        "через"
+      ],
+      "note": "Вақтдан кейин — «через»: через час.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-pr-05",
+      "case": "В",
+      "prompt": "Он рассказал ___ свою работу.",
+      "answers": [
+        "про"
+      ],
+      "note": "Ҳақида — «про»: про работу.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-pr-06",
+      "case": "В",
+      "prompt": "Мы идём ___ концерт.",
+      "answers": [
+        "на"
+      ],
+      "note": "Тадбирга — «на»: на концерт.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-pr-07",
+      "case": "В",
+      "prompt": "Положи документы ___ стол.",
+      "answers": [
+        "на"
+      ],
+      "note": "Устига қўйиш — «на»: на стол.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-pr-08",
+      "case": "В",
+      "prompt": "Кот спрятался ___ стол.",
+      "answers": [
+        "под"
+      ],
+      "note": "Тагига — «под»: под стол.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-pr-09",
+      "case": "В",
+      "prompt": "Я еду ___ Москву.",
+      "answers": [
+        "в"
+      ],
+      "note": "Шаҳарга — «в»: в Москву.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-pr-10",
+      "case": "В",
+      "prompt": "Мы заплатили ___ квартиру.",
+      "answers": [
+        "за"
+      ],
+      "note": "Тўлов — «за»: за квартиру.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

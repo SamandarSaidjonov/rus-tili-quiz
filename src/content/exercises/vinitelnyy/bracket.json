@@ -1,0 +1,117 @@
+{
+  "topic": "vinitelnyy",
+  "type": "bracket",
+  "title": "Винительный падеж",
+  "items": [
+    {
+      "id": "v-br-01",
+      "case": "В",
+      "prompt": "Я читаю (книга).",
+      "answers": [
+        "книгу"
+      ],
+      "note": "Женский род: -а ўрнига -у.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-br-02",
+      "case": "В",
+      "prompt": "Я вижу (брат).",
+      "answers": [
+        "брата"
+      ],
+      "note": "Жонли сўз: родительный шакли.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-br-03",
+      "case": "В",
+      "prompt": "Я иду в (банк).",
+      "answers": [
+        "банк"
+      ],
+      "note": "Жонсиз сўз йўналишда ўзгармайди.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-br-04",
+      "case": "В",
+      "prompt": "Она идёт на (работа).",
+      "answers": [
+        "работу"
+      ],
+      "note": "на + винительный: работу.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-br-05",
+      "case": "В",
+      "prompt": "Мы приглашаем (коллеги).",
+      "answers": [
+        "коллег"
+      ],
+      "note": "Жонли кўплик: родительный шакли.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-br-06",
+      "case": "В",
+      "prompt": "Через (неделя) я вернусь.",
+      "answers": [
+        "неделю"
+      ],
+      "note": "«через» + винительный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-br-07",
+      "case": "В",
+      "prompt": "Он получил (зарплата).",
+      "answers": [
+        "зарплату"
+      ],
+      "note": "«получить что?» — винительный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-br-08",
+      "case": "В",
+      "prompt": "Я знаю (этот человек).",
+      "answers": [
+        "этого человека"
+      ],
+      "note": "Жонли сўз: этого человека.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-br-09",
+      "case": "В",
+      "prompt": "Спасибо за (помощь).",
+      "answers": [
+        "помощь"
+      ],
+      "note": "-ь билан тугаган сўз ўзгармайди.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-br-10",
+      "case": "В",
+      "prompt": "Я изучаю (русский язык).",
+      "answers": [
+        "русский язык"
+      ],
+      "note": "Жонсиз сўз ўзгармайди.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

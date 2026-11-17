@@ -1,0 +1,117 @@
+{
+  "topic": "datelnyy",
+  "type": "bracket",
+  "title": "Дательный падеж",
+  "items": [
+    {
+      "id": "d-br-01",
+      "case": "Д",
+      "prompt": "Я звоню (мама) каждый день.",
+      "answers": [
+        "маме"
+      ],
+      "note": "«звонить кому?» — дательный: мама → маме.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-br-02",
+      "case": "Д",
+      "prompt": "Он идёт к (директор).",
+      "answers": [
+        "директору"
+      ],
+      "note": "«к» + дательный: директор → директору.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-br-03",
+      "case": "Д",
+      "prompt": "Покажите паспорт (сотрудник).",
+      "answers": [
+        "сотруднику"
+      ],
+      "note": "«показать кому?» — дательный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-br-04",
+      "case": "Д",
+      "prompt": "Я помогаю (коллеги).",
+      "answers": [
+        "коллегам"
+      ],
+      "note": "Кўплик дательный: коллеги → коллегам.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-br-05",
+      "case": "Д",
+      "prompt": "(Мой брат) двадцать лет.",
+      "answers": [
+        "моему брату"
+      ],
+      "note": "Ёшда шахс дательный да: моему брату.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-br-06",
+      "case": "Д",
+      "prompt": "Мы идём по (улица).",
+      "answers": [
+        "улице"
+      ],
+      "note": "«по» + дательный: улица → улице.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-br-07",
+      "case": "Д",
+      "prompt": "Врач советует (пациент) отдыхать.",
+      "answers": [
+        "пациенту"
+      ],
+      "note": "«советовать кому?» — дательный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-br-08",
+      "case": "Д",
+      "prompt": "Эта машина принадлежит (сестра).",
+      "answers": [
+        "сестре"
+      ],
+      "note": "«принадлежать кому?» — дательный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-br-09",
+      "case": "Д",
+      "prompt": "Я верю (эти люди).",
+      "answers": [
+        "этим людям"
+      ],
+      "note": "Истисно: люди → людям; эти → этим.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-br-10",
+      "case": "Д",
+      "prompt": "Учитель объясняет тему (дети).",
+      "answers": [
+        "детям"
+      ],
+      "note": "Истисно: дети → детям.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

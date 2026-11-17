@@ -1,0 +1,117 @@
+{
+  "topic": "vinitelnyy",
+  "type": "identify",
+  "title": "Винительный падеж",
+  "items": [
+    {
+      "id": "v-id-01",
+      "case": "В",
+      "prompt": "Я читаю [[книгу]].",
+      "answers": [
+        "винительный"
+      ],
+      "note": "«читать что?» — винительный: -а ўрнига -у.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-id-02",
+      "case": "В",
+      "prompt": "Я иду в [[банк]].",
+      "answers": [
+        "винительный"
+      ],
+      "note": "Йўналиш (куда?) — в + винительный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-id-03",
+      "case": "В",
+      "prompt": "Я работаю в [[банке]].",
+      "answers": [
+        "предложный"
+      ],
+      "note": "Жой (где?) — в + предложный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-id-04",
+      "case": "В",
+      "prompt": "Я вижу [[брата]].",
+      "answers": [
+        "винительный"
+      ],
+      "note": "Жонли сўз: винительный родительный билан бир хил шаклда.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-id-05",
+      "case": "В",
+      "prompt": "У меня нет [[брата]].",
+      "answers": [
+        "родительный"
+      ],
+      "note": "«нет» дан кейин родительный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-id-06",
+      "case": "В",
+      "prompt": "[[Книга]] лежит на столе.",
+      "answers": [
+        "именительный"
+      ],
+      "note": "Эга: именительный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-id-07",
+      "case": "В",
+      "prompt": "Через [[неделю]] я вернусь.",
+      "answers": [
+        "винительный"
+      ],
+      "note": "«через» винительный талаб қилади.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-id-08",
+      "case": "В",
+      "prompt": "Я звоню [[брату]].",
+      "answers": [
+        "дательный"
+      ],
+      "note": "«звонить кому?» — дательный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-id-09",
+      "case": "В",
+      "prompt": "Спасибо за [[помощь]].",
+      "answers": [
+        "винительный"
+      ],
+      "note": "«за» (миннатдорчилик) — винительный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-id-10",
+      "case": "В",
+      "prompt": "Он работает [[врачом]].",
+      "answers": [
+        "творительный"
+      ],
+      "note": "Касб: творительный.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

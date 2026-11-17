@@ -1,0 +1,117 @@
+{
+  "topic": "predlozhnyy",
+  "type": "identify",
+  "title": "Предложный падеж",
+  "items": [
+    {
+      "id": "p-id-01",
+      "case": "П",
+      "prompt": "Я работаю в [[банке]].",
+      "answers": [
+        "предложный"
+      ],
+      "note": "Қаерда? — в + предложный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-id-02",
+      "case": "П",
+      "prompt": "Я иду в [[банк]].",
+      "answers": [
+        "винительный"
+      ],
+      "note": "Қаёққа? — в + винительный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-id-03",
+      "case": "П",
+      "prompt": "Мы говорим о [[работе]].",
+      "answers": [
+        "предложный"
+      ],
+      "note": "«о» предлоги предложный талаб қилади.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-id-04",
+      "case": "П",
+      "prompt": "[[Документы]] лежат на столе.",
+      "answers": [
+        "именительный"
+      ],
+      "note": "Эга: именительный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-id-05",
+      "case": "П",
+      "prompt": "Документы лежат на [[столе]].",
+      "answers": [
+        "предложный"
+      ],
+      "note": "Қаерда? — на + предложный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-id-06",
+      "case": "П",
+      "prompt": "У меня нет [[документов]].",
+      "answers": [
+        "родительный"
+      ],
+      "note": "«нет» дан кейин родительный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-id-07",
+      "case": "П",
+      "prompt": "Я думаю о [[тебе]].",
+      "answers": [
+        "предложный"
+      ],
+      "note": "«о» предлоги предложный талаб қилади.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-id-08",
+      "case": "П",
+      "prompt": "Я пишу [[ручкой]].",
+      "answers": [
+        "творительный"
+      ],
+      "note": "Нима билан? — творительный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-id-09",
+      "case": "П",
+      "prompt": "Он учится в [[университете]].",
+      "answers": [
+        "предложный"
+      ],
+      "note": "Қаерда? — в + предложный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-id-10",
+      "case": "П",
+      "prompt": "Я помогаю [[коллеге]].",
+      "answers": [
+        "дательный"
+      ],
+      "note": "«помогать кому?» — дательный.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

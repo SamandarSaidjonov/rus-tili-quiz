@@ -1,0 +1,117 @@
+{
+  "topic": "tvoritelnyy",
+  "type": "adjective",
+  "title": "Творительный падеж",
+  "items": [
+    {
+      "id": "t-adj-01",
+      "case": "Т",
+      "prompt": "Я познакомился с (новый) директором.",
+      "answers": [
+        "новым"
+      ],
+      "note": "Мужской род: -ый ўрнига -ым.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-adj-02",
+      "case": "Т",
+      "prompt": "Он говорил с (новая) сотрудницей.",
+      "answers": [
+        "новой"
+      ],
+      "note": "Женский род: -ая ўрнига -ой.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-adj-03",
+      "case": "Т",
+      "prompt": "Я горжусь (старший) братом.",
+      "answers": [
+        "старшим"
+      ],
+      "note": "ш дан кейин -им: старшим.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-adj-04",
+      "case": "Т",
+      "prompt": "Мы работаем с (наши) клиентами.",
+      "answers": [
+        "нашими"
+      ],
+      "note": "Кўплик: -и ўрнига -ими.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-adj-05",
+      "case": "Т",
+      "prompt": "Он владеет (русский) языком.",
+      "answers": [
+        "русским"
+      ],
+      "note": "к дан кейин -им: русским.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-adj-06",
+      "case": "Т",
+      "prompt": "Она стала (хороший) специалистом.",
+      "answers": [
+        "хорошим"
+      ],
+      "note": "ш дан кейин -им: хорошим.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-adj-07",
+      "case": "Т",
+      "prompt": "Я пишу (синяя) ручкой.",
+      "answers": [
+        "синей"
+      ],
+      "note": "Женский род юмшоқ: -яя ўрнига -ей.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-adj-08",
+      "case": "Т",
+      "prompt": "Он занимается (интересный) проектом.",
+      "answers": [
+        "интересным"
+      ],
+      "note": "Мужской род: -ым.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-adj-09",
+      "case": "Т",
+      "prompt": "Мы довольны (новые) результатами.",
+      "answers": [
+        "новыми"
+      ],
+      "note": "Кўплик: -ые ўрнига -ыми.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-adj-10",
+      "case": "Т",
+      "prompt": "Она руководит (большой) отделом.",
+      "answers": [
+        "большим"
+      ],
+      "note": "Мужской род: большой → большим.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

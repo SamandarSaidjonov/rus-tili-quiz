@@ -1,0 +1,117 @@
+{
+  "topic": "roditelnyy",
+  "type": "bracket",
+  "title": "Родительный падеж",
+  "items": [
+    {
+      "id": "r-br-01",
+      "case": "Р",
+      "prompt": "У меня нет (деньги).",
+      "answers": [
+        "денег"
+      ],
+      "note": "«деньги» фақат кўпликда: нет денег.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-br-02",
+      "case": "Р",
+      "prompt": "Это документы (директор).",
+      "answers": [
+        "директора"
+      ],
+      "note": "Эгалик: директор → директора.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-br-03",
+      "case": "Р",
+      "prompt": "Я пришёл из (университет).",
+      "answers": [
+        "университета"
+      ],
+      "note": "«из» + родительный: университет → университета.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-br-04",
+      "case": "Р",
+      "prompt": "В комнате пять (окно).",
+      "answers": [
+        "окон"
+      ],
+      "note": "5 дан бошлаб кўплик родительный: окно → окон.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-br-05",
+      "case": "Р",
+      "prompt": "Чай без (сахар), пожалуйста.",
+      "answers": [
+        "сахара"
+      ],
+      "note": "«без» + родительный: сахар → сахара.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-br-06",
+      "case": "Р",
+      "prompt": "Мы работаем до (пятница).",
+      "answers": [
+        "пятницы"
+      ],
+      "note": "«до» + родительный: пятница → пятницы.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-br-07",
+      "case": "Р",
+      "prompt": "У нас много (клиент).",
+      "answers": [
+        "клиентов"
+      ],
+      "note": "«много» + кўплик родительный: клиенты → клиентов.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-br-08",
+      "case": "Р",
+      "prompt": "Это подарок для (жена).",
+      "answers": [
+        "жены"
+      ],
+      "note": "«для» + родительный: жена → жены.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-br-09",
+      "case": "Р",
+      "prompt": "Около (дом) есть магазин.",
+      "answers": [
+        "дома"
+      ],
+      "note": "«около» + родительный: дом → дома.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-br-10",
+      "case": "Р",
+      "prompt": "Я жду (врач).",
+      "answers": [
+        "врача"
+      ],
+      "note": "«ждать» + родительный: врач → врача.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

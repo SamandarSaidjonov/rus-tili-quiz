@@ -1,0 +1,117 @@
+{
+  "topic": "vinitelnyy",
+  "type": "adjective",
+  "title": "Винительный падеж",
+  "items": [
+    {
+      "id": "v-adj-01",
+      "case": "В",
+      "prompt": "Я читаю (новая) книгу.",
+      "answers": [
+        "новую"
+      ],
+      "note": "Женский род винительный: -ая ўрнига -ую.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-adj-02",
+      "case": "В",
+      "prompt": "Я вижу (новый) директора.",
+      "answers": [
+        "нового"
+      ],
+      "note": "Жонли мужской род: -ый ўрнига -ого.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-adj-03",
+      "case": "В",
+      "prompt": "Я купил (новый) телефон.",
+      "answers": [
+        "новый"
+      ],
+      "note": "Жонсиз мужской род ўзгармайди.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-adj-04",
+      "case": "В",
+      "prompt": "Мы смотрим (интересный) фильм.",
+      "answers": [
+        "интересный"
+      ],
+      "note": "Жонсиз сўз: шакл ўзгармайди.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-adj-05",
+      "case": "В",
+      "prompt": "Я изучаю (русский) язык.",
+      "answers": [
+        "русский"
+      ],
+      "note": "Жонсиз мужской род: ўзгармайди.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-adj-06",
+      "case": "В",
+      "prompt": "Она надела (синий) платье.",
+      "answers": [
+        "синее"
+      ],
+      "note": "Средний род ўзгармайди: синее платье.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-adj-07",
+      "case": "В",
+      "prompt": "Мы приглашаем (новые) сотрудников.",
+      "answers": [
+        "новых"
+      ],
+      "note": "Жонли кўплик: -ые ўрнига -ых.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-adj-08",
+      "case": "В",
+      "prompt": "Я получил (хорошая) оценку.",
+      "answers": [
+        "хорошую"
+      ],
+      "note": "Женский род: -ая ўрнига -ую.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-adj-09",
+      "case": "В",
+      "prompt": "Он написал (длинное) письмо.",
+      "answers": [
+        "длинное"
+      ],
+      "note": "Средний род: ўзгармайди.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-adj-10",
+      "case": "В",
+      "prompt": "Я знаю (этот) человека.",
+      "answers": [
+        "этого"
+      ],
+      "note": "Жонли сўз билан: этот → этого.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

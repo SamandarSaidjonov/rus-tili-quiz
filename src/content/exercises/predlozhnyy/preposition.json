@@ -1,0 +1,117 @@
+{
+  "topic": "predlozhnyy",
+  "type": "preposition",
+  "title": "Предложный падеж",
+  "items": [
+    {
+      "id": "p-pr-01",
+      "case": "П",
+      "prompt": "Я работаю ___ банке.",
+      "answers": [
+        "в"
+      ],
+      "note": "Бино ичида — «в»: в банке.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-pr-02",
+      "case": "П",
+      "prompt": "Она сейчас ___ работе.",
+      "answers": [
+        "на"
+      ],
+      "note": "«работа» сўзи билан «на» ишлатилади.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-pr-03",
+      "case": "П",
+      "prompt": "Мы говорим ___ новом проекте.",
+      "answers": [
+        "о"
+      ],
+      "note": "Мавзу — «о»: о проекте.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-pr-04",
+      "case": "П",
+      "prompt": "Расскажи ___ офисе.",
+      "answers": [
+        "об"
+      ],
+      "note": "Унли билан бошланган сўздан олдин «об».",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-pr-05",
+      "case": "П",
+      "prompt": "Он думает ___ мне каждый день.",
+      "answers": [
+        "обо"
+      ],
+      "note": "«мне» дан олдин «обо».",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-pr-06",
+      "case": "П",
+      "prompt": "Книга лежит ___ столе.",
+      "answers": [
+        "на"
+      ],
+      "note": "Устида — «на»: на столе.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-pr-07",
+      "case": "П",
+      "prompt": "Я еду ___ автобусе.",
+      "answers": [
+        "на"
+      ],
+      "note": "Транспорт — «на»: на автобусе.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-pr-08",
+      "case": "П",
+      "prompt": "Магазин находится ___ вокзале.",
+      "answers": [
+        "на"
+      ],
+      "note": "«вокзал» сўзи билан «на».",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-pr-09",
+      "case": "П",
+      "prompt": "Встреча будет ___ следующей неделе.",
+      "answers": [
+        "на"
+      ],
+      "note": "«неделя» сўзи билан «на».",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-pr-10",
+      "case": "П",
+      "prompt": "Документы ___ папке.",
+      "answers": [
+        "в"
+      ],
+      "note": "Ичида — «в»: в папке.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

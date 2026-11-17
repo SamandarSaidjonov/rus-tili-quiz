@@ -1,0 +1,117 @@
+{
+  "topic": "datelnyy",
+  "type": "ending",
+  "title": "Дательный падеж",
+  "items": [
+    {
+      "id": "d-end-01",
+      "case": "Д",
+      "prompt": "Я звоню брат___.",
+      "answers": [
+        "у"
+      ],
+      "note": "Мужской род: ундошга -у қўшилади — брат → брату.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-end-02",
+      "case": "Д",
+      "prompt": "Я помогаю мам___.",
+      "answers": [
+        "е"
+      ],
+      "note": "Женский род: -а ўрнига -е — мама → маме.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-end-03",
+      "case": "Д",
+      "prompt": "Он идёт к директор___.",
+      "answers": [
+        "у"
+      ],
+      "note": "«к» + дательный: директор → директору.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-end-04",
+      "case": "Д",
+      "prompt": "Мы идём по улиц___.",
+      "answers": [
+        "е"
+      ],
+      "note": "«по» + дательный: улица → улице.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-end-05",
+      "case": "Д",
+      "prompt": "Покажите документы сотрудник___.",
+      "answers": [
+        "у"
+      ],
+      "note": "Мужской род: сотрудник → сотруднику.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-end-06",
+      "case": "Д",
+      "prompt": "Я верю сестр___.",
+      "answers": [
+        "е"
+      ],
+      "note": "Женский род: сестра → сестре.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-end-07",
+      "case": "Д",
+      "prompt": "Учитель объясняет тему студент___.",
+      "answers": [
+        "ам"
+      ],
+      "note": "Кўплик дательный: студенты → студентам.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-end-08",
+      "case": "Д",
+      "prompt": "Он учится русск___ языку.",
+      "answers": [
+        "ому"
+      ],
+      "note": "Сифат дательныйда: русский → русскому.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-end-09",
+      "case": "Д",
+      "prompt": "Я звоню подруг___.",
+      "answers": [
+        "е"
+      ],
+      "note": "Женский род: -а ўрнига -е — подруга → подруге.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-end-10",
+      "case": "Д",
+      "prompt": "Шум мешает дет___.",
+      "answers": [
+        "ям"
+      ],
+      "note": "Истисно: дети → детям.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

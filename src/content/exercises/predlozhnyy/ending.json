@@ -1,0 +1,117 @@
+{
+  "topic": "predlozhnyy",
+  "type": "ending",
+  "title": "Предложный падеж",
+  "items": [
+    {
+      "id": "p-end-01",
+      "case": "П",
+      "prompt": "Я работаю в банк___.",
+      "answers": [
+        "е"
+      ],
+      "note": "Ундошга -е қўшилади: в банке.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-end-02",
+      "case": "П",
+      "prompt": "Мы говорим о работ___.",
+      "answers": [
+        "е"
+      ],
+      "note": "Женский род: -а ўрнига -е — о работе.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-end-03",
+      "case": "П",
+      "prompt": "Я живу в Ташкент___.",
+      "answers": [
+        "е"
+      ],
+      "note": "Жой: в Ташкенте.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-end-04",
+      "case": "П",
+      "prompt": "Книга лежит на стол___.",
+      "answers": [
+        "е"
+      ],
+      "note": "Мужской род: на столе.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-end-05",
+      "case": "П",
+      "prompt": "Он учится в университет___.",
+      "answers": [
+        "е"
+      ],
+      "note": "Мужской род: в университете.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-end-06",
+      "case": "П",
+      "prompt": "Я живу в Росси___.",
+      "answers": [
+        "и"
+      ],
+      "note": "-ия ўрнига -ии: в России.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-end-07",
+      "case": "П",
+      "prompt": "Документы в тетрад___.",
+      "answers": [
+        "и"
+      ],
+      "note": "-ь ўрнига -и: в тетради.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-end-08",
+      "case": "П",
+      "prompt": "Он работает в двух банк___.",
+      "answers": [
+        "ах"
+      ],
+      "note": "Кўплик предложный: -ах.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-end-09",
+      "case": "П",
+      "prompt": "Мы говорим о нов___ проекте.",
+      "answers": [
+        "ом"
+      ],
+      "note": "Сифат мужской родда: новом.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-end-10",
+      "case": "П",
+      "prompt": "Офис находится в этом здани___.",
+      "answers": [
+        "и"
+      ],
+      "note": "-ие ўрнига -ии: в здании.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

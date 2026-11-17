@@ -1,0 +1,117 @@
+{
+  "topic": "tvoritelnyy",
+  "type": "identify",
+  "title": "Творительный падеж",
+  "items": [
+    {
+      "id": "t-id-01",
+      "case": "Т",
+      "prompt": "Я пишу [[ручкой]].",
+      "answers": [
+        "творительный"
+      ],
+      "note": "Нима билан? — творительный, -ой қўшимчаси.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-id-02",
+      "case": "Т",
+      "prompt": "Он работает [[врачом]].",
+      "answers": [
+        "творительный"
+      ],
+      "note": "Касб творительный да: -ом.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-id-03",
+      "case": "Т",
+      "prompt": "Я иду с [[братом]].",
+      "answers": [
+        "творительный"
+      ],
+      "note": "«с» предлоги творительный талаб қилади.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-id-04",
+      "case": "Т",
+      "prompt": "[[Брат]] работает в банке.",
+      "answers": [
+        "именительный"
+      ],
+      "note": "Эга: именительный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-id-05",
+      "case": "Т",
+      "prompt": "Я читаю [[книгу]].",
+      "answers": [
+        "винительный"
+      ],
+      "note": "«читать что?» — винительный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-id-06",
+      "case": "Т",
+      "prompt": "Я занимаюсь [[спортом]].",
+      "answers": [
+        "творительный"
+      ],
+      "note": "«заниматься» творительный талаб қилади.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-id-07",
+      "case": "Т",
+      "prompt": "У меня нет [[времени]].",
+      "answers": [
+        "родительный"
+      ],
+      "note": "«нет» дан кейин родительный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-id-08",
+      "case": "Т",
+      "prompt": "Машина стоит перед [[банком]].",
+      "answers": [
+        "творительный"
+      ],
+      "note": "«перед» творительный талаб қилади.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-id-09",
+      "case": "Т",
+      "prompt": "Я звоню [[маме]].",
+      "answers": [
+        "дательный"
+      ],
+      "note": "«звонить кому?» — дательный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-id-10",
+      "case": "Т",
+      "prompt": "Мы говорим о [[работе]].",
+      "answers": [
+        "предложный"
+      ],
+      "note": "«о» предлоги предложный билан келади.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

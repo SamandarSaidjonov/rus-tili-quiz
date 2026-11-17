@@ -1,0 +1,117 @@
+{
+  "topic": "vinitelnyy",
+  "type": "ending",
+  "title": "Винительный падеж",
+  "items": [
+    {
+      "id": "v-end-01",
+      "case": "В",
+      "prompt": "Я читаю книг___.",
+      "answers": [
+        "у"
+      ],
+      "note": "Женский род: -а ўрнига -у — книгу.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-end-02",
+      "case": "В",
+      "prompt": "Я вижу брат___.",
+      "answers": [
+        "а"
+      ],
+      "note": "Жонли сўз: брат → брата.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-end-03",
+      "case": "В",
+      "prompt": "Она идёт на работ___.",
+      "answers": [
+        "у"
+      ],
+      "note": "Йўналиш: работа → работу.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-end-04",
+      "case": "В",
+      "prompt": "Я купил нов___ машину.",
+      "answers": [
+        "ую"
+      ],
+      "note": "Сифат женский родда винительный: новую.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-end-05",
+      "case": "В",
+      "prompt": "Через недел___ я вернусь.",
+      "answers": [
+        "ю"
+      ],
+      "note": "-я ўрнига -ю: неделя → неделю.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-end-06",
+      "case": "В",
+      "prompt": "Я жду сестр___ возле банка.",
+      "answers": [
+        "у"
+      ],
+      "note": "Женский род: -а ўрнига -у — сестру.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-end-07",
+      "case": "В",
+      "prompt": "Я слушаю музык___.",
+      "answers": [
+        "у"
+      ],
+      "note": "Женский род: музыка → музыку.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-end-08",
+      "case": "В",
+      "prompt": "Я спросил директор___.",
+      "answers": [
+        "а"
+      ],
+      "note": "Жонли сўз: директор → директора.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-end-09",
+      "case": "В",
+      "prompt": "Он пишет письм___.",
+      "answers": [
+        "о"
+      ],
+      "note": "Средний род ўзгармайди: письмо.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-end-10",
+      "case": "В",
+      "prompt": "Я знаю эт___ человека.",
+      "answers": [
+        "ого"
+      ],
+      "note": "Жонли сўз билан: этот → этого.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

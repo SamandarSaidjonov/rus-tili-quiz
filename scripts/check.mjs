@@ -9,6 +9,7 @@ import { dirname, join, relative, basename } from 'node:path';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const FINAL = process.argv.includes('--final');
+const ALL = process.argv.includes('--all');
 const CONTENT = join(ROOT, 'src/content');
 
 const errors = [];
@@ -72,7 +73,8 @@ const splitWords = (text) =>
     .split(/[\s,.;:!?()«»"'\-–—/]+/)
     .filter((w) => /[а-яёА-ЯЁ]/.test(w));
 
-const needsAccent = (word) => (word.match(VOWELS) ?? []).length >= 2 && !word.includes(ACCENT);
+const needsAccent = (word) =>
+  (word.match(VOWELS) ?? []).length >= 2 && !word.includes(ACCENT) && !/[ёЁ]/.test(word);
 
 /**
  * Луғат сарлавҳа сўзида ҳар бир кўп бўғинли сўзда урғу бўлиши керак.
@@ -361,7 +363,7 @@ function checkTopics() {
 
     const headings = [...body.matchAll(/^#{2,3}\s+(.+)$/gm)].map((m) => m[1]);
     for (const section of TOPIC_SECTIONS) {
-      if (!headings.some((h) => h.includes(section))) {
+      if (!headings.some((h) => h.toLowerCase().includes(section.toLowerCase()))) {
         todo(f, `«${section}» қисми йўқ`);
       }
     }
@@ -401,13 +403,13 @@ console.log('─'.repeat(50));
 
 if (errors.length) {
   console.log(`\nХАТО (${errors.length}):`);
-  for (const e of errors.slice(0, 60)) console.log(`  ✗ ${e}`);
-  if (errors.length > 60) console.log(`  … яна ${errors.length - 60} та`);
+  for (const e of (ALL ? errors : errors.slice(0, 60))) console.log(`  ✗ ${e}`);
+  if (!ALL && errors.length > 60) console.log(`  … яна ${errors.length - 60} та`);
 }
 
 if (todos.length) {
   console.log(`\nТЎЛДИРИЛМАГАН (${todos.length}):`);
-  const shown = todos.slice(0, 25);
+  const shown = ALL ? todos : todos.slice(0, 25);
   for (const t of shown) console.log(`  · ${t}`);
   if (todos.length > shown.length) console.log(`  … яна ${todos.length - shown.length} та`);
 }

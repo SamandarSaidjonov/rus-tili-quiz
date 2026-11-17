@@ -1,0 +1,117 @@
+{
+  "topic": "datelnyy",
+  "type": "identify",
+  "title": "Дательный падеж",
+  "items": [
+    {
+      "id": "d-id-01",
+      "case": "Д",
+      "prompt": "Я звоню [[брату]].",
+      "answers": [
+        "дательный"
+      ],
+      "note": "«звонить кому?» — дательный: -у қўшимчаси.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-id-02",
+      "case": "Д",
+      "prompt": "Я иду к [[врачу]].",
+      "answers": [
+        "дательный"
+      ],
+      "note": "«к» предлоги дательный талаб қилади.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-id-03",
+      "case": "Д",
+      "prompt": "[[Брат]] работает в банке.",
+      "answers": [
+        "именительный"
+      ],
+      "note": "Эга: именительный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-id-04",
+      "case": "Д",
+      "prompt": "У меня нет [[времени]].",
+      "answers": [
+        "родительный"
+      ],
+      "note": "«нет» дан кейин родительный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-id-05",
+      "case": "Д",
+      "prompt": "Мне нравится [[эта книга]].",
+      "answers": [
+        "именительный"
+      ],
+      "note": "Ёқаётган нарса эга — именительный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-id-06",
+      "case": "Д",
+      "prompt": "[[Мне]] нравится эта книга.",
+      "answers": [
+        "дательный"
+      ],
+      "note": "Ёқаётган шахс дательный да: мне.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-id-07",
+      "case": "Д",
+      "prompt": "Мы идём по [[улице]].",
+      "answers": [
+        "дательный"
+      ],
+      "note": "«по» предлоги дательный талаб қилади.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-id-08",
+      "case": "Д",
+      "prompt": "Я читаю [[книгу]].",
+      "answers": [
+        "винительный"
+      ],
+      "note": "«читать что?» — винительный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-id-09",
+      "case": "Д",
+      "prompt": "Покажите документы [[сотруднику]].",
+      "answers": [
+        "дательный"
+      ],
+      "note": "«показать кому?» — дательный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-id-10",
+      "case": "Д",
+      "prompt": "Он работает [[врачом]].",
+      "answers": [
+        "творительный"
+      ],
+      "note": "Касб билдирганда творительный.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

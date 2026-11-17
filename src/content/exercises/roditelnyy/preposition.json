@@ -1,0 +1,118 @@
+{
+  "topic": "roditelnyy",
+  "type": "preposition",
+  "title": "Родительный падеж",
+  "items": [
+    {
+      "id": "r-pr-01",
+      "case": "Р",
+      "prompt": "Я иду ___ банка.",
+      "answers": [
+        "из"
+      ],
+      "note": "Бинонинг ичидан чиқиш — «из»: из банка.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-pr-02",
+      "case": "Р",
+      "prompt": "Письмо ___ друга.",
+      "answers": [
+        "от"
+      ],
+      "note": "Кимдандир келган нарса — «от»: от друга.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-pr-03",
+      "case": "Р",
+      "prompt": "Магазин работает ___ девяти.",
+      "answers": [
+        "до"
+      ],
+      "note": "«-гача» маъноси — «до»: до девяти.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-pr-04",
+      "case": "Р",
+      "prompt": "Кофе ___ сахара.",
+      "answers": [
+        "без"
+      ],
+      "note": "«-сиз» маъноси — «без»: без сахара.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-pr-05",
+      "case": "Р",
+      "prompt": "Это подарок ___ тебя.",
+      "answers": [
+        "для"
+      ],
+      "note": "«учун» маъноси — «для»: для тебя.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-pr-06",
+      "case": "Р",
+      "prompt": "___ брата есть машина.",
+      "answers": [
+        "у"
+      ],
+      "note": "Кимдадир борлиги — «у»: у брата есть.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-pr-07",
+      "case": "Р",
+      "prompt": "___ работы я иду домой.",
+      "answers": [
+        "после"
+      ],
+      "note": "«-дан кейин» маъноси — «после».",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-pr-08",
+      "case": "Р",
+      "prompt": "___ дома есть парк.",
+      "answers": [
+        "около",
+        "возле"
+      ],
+      "note": "«ёнида» маъноси — «около» ёки «возле».",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-pr-09",
+      "case": "Р",
+      "prompt": "Пришли все, ___ брата.",
+      "answers": [
+        "кроме"
+      ],
+      "note": "«-дан ташқари» маъноси — «кроме».",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-pr-10",
+      "case": "Р",
+      "prompt": "Я иду ___ врача.",
+      "answers": [
+        "от"
+      ],
+      "note": "«от врача» — шифокордан (чиқиб келяпман).",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}
