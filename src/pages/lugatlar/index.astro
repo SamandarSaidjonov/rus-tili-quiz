@@ -1,0 +1,50 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { url } from '../../lib/url.ts';
+
+const sets = (await getCollection('vocab')).sort((a, b) => b.data.order - a.data.order);
+const total = sets.reduce((n, s) => n + s.data.words.length, 0);
+---
+
+<Base title="Луғатлар" section="lugatlar">
+  <h1>Луғатлар</h1>
+  <p class="muted">
+    {sets.length} тўплам · {total} сўз. Савол ўзбекча берилади, 4 та жавоб варианти русча.
+    Янги тўпламлар тепада туради.
+  </p>
+
+  <div class="btnrow" style="margin:.9rem 0 1.2rem">
+    <a class="btn btn--primary" href={url('lugatlar/quiz')}>Ҳаммасини сўраш</a>
+    <a class="btn" href={`${url('lugatlar/quiz')}?mode=mistakes`}>Хато қилганларим</a>
+  </div>
+
+  <div class="cards">
+    {
+      sets.map((s) => (
+        <div class="card">
+          <div class="card__top">
+            <span class="card__title">{s.data.title}</span>
+            <span class="badge">{s.data.words.length} сўз</span>
+          </div>
+          {s.data.pages && <p class="card__meta" style="margin:.2rem 0 0">{s.data.pages}</p>}
+          <p class="card__meta" data-prog={`vocab:${s.id}:${s.data.words.length}`} style="margin:.35rem 0 0">
+            …
+          </p>
+          <div class="bar" data-prog-bar={`vocab:${s.id}:${s.data.words.length}`}>
+            <div class="bar__fill" style="width:0%"></div>
+          </div>
+          <div class="btnrow" style="margin-top:.75rem">
+            <a class="btn btn--sm btn--primary" href={`${url('lugatlar/quiz')}?set=${s.id}`}>Сўраш</a>
+            <a class="btn btn--sm" href={url(`lugatlar/${s.id}`)}>Сўзларни кўриш</a>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  <script>
+    import { hydrateProgress } from '../../lib/progress-ui.ts';
+    hydrateProgress();
+  </script>
+</Base>

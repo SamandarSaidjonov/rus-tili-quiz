@@ -1,0 +1,106 @@
+{
+  "topic": "mixed",
+  "type": "pronoun",
+  "title": "Аралаш",
+  "items": [
+    {
+      "id": "d55",
+      "case": "В",
+      "prompt": "Я вижу (он) каждый день.",
+      "answers": [
+        "его"
+      ],
+      "note": "видеть кого? — винительный: он → его.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d56",
+      "case": "Д",
+      "prompt": "Позвони (я) вечером.",
+      "answers": [
+        "мне"
+      ],
+      "note": "звонить кому? — дательный: я → мне.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d57",
+      "case": "П",
+      "prompt": "Мы говорили о (ты).",
+      "answers": [
+        "тебе"
+      ],
+      "note": "о + предложный: ты → тебе.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d58",
+      "case": "Т",
+      "prompt": "Я пойду в кино с (она).",
+      "answers": [
+        "ней"
+      ],
+      "note": "с + творительный: она → ей. Предлогдан кейин олдига н- қўшилади: с ней.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d59",
+      "case": "Р",
+      "prompt": "У (мы) нет времени.",
+      "answers": [
+        "нас"
+      ],
+      "note": "у + родительный: мы → нас.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d60",
+      "case": "Д",
+      "prompt": "Этот дом принадлежит (они).",
+      "answers": [
+        "им"
+      ],
+      "note": "принадлежать кому? — дательный: они → им.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d61",
+      "case": "П",
+      "prompt": "Я думаю о (вы).",
+      "answers": [
+        "вас"
+      ],
+      "note": "о + предложный: вы → вас.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d62",
+      "case": "Д",
+      "prompt": "Расскажи (она) о поездке.",
+      "answers": [
+        "ей"
+      ],
+      "note": "рассказать кому? — дательный: она → ей. Предлог йўқ, шунинг учун н- қўшилмайди.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d63",
+      "case": "Д",
+      "prompt": "Я пойду к (он).",
+      "answers": [
+        "нему"
+      ],
+      "note": "к + дательный: он → ему. Предлогдан кейин н- қўшилади: к нему.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

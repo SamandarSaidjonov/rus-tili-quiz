@@ -1,0 +1,83 @@
+---
+import { getCollection } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import RuText from '../../components/RuText.astro';
+import { url } from '../../lib/url.ts';
+
+export const getStaticPaths = (async () => {
+  const sets = await getCollection('vocab');
+  return sets.map((s) => ({ params: { set: s.id }, props: { set: s } }));
+}) satisfies GetStaticPaths;
+
+const { set } = Astro.props;
+const { title, pages, note, words } = set.data;
+---
+
+<Base title={title} section="lugatlar">
+  <p class="crumb"><a href={url('lugatlar')}>← Луғатлар</a></p>
+  <h1>{title}</h1>
+  <p class="muted">{words.length} сўз{pages ? ` · ${pages}` : ''}</p>
+  {note && <p class="note">{note}</p>}
+
+  <div class="btnrow" style="margin:.9rem 0 1.1rem">
+    <a class="btn btn--primary" href={`${url('lugatlar/quiz')}?set=${set.id}`}>Сўрашни бошлаш</a>
+    <button class="btn" type="button" id="view-btn" aria-pressed="false">Жадвал кўриниши</button>
+  </div>
+
+  <div id="cards" class="cards">
+    {
+      words.map((w) => (
+        <div class="card wordcard">
+          <div class="wordcard__top">
+            <RuText text={w.ru} class="wordcard__ru" />
+            {w.pos && <span class="badge">{w.pos}</span>}
+          </div>
+          <p class="wordcard__uz">{w.uz}</p>
+          {w.example?.ru && (
+            <div class="note stack" style="margin-top:.5rem">
+              <p style="margin:0"><RuText text={w.example.ru} /></p>
+              {w.example.uz && <p class="muted" style="margin:0">{w.example.uz}</p>}
+            </div>
+          )}
+          {w.note && <p class="muted" style="margin:.5rem 0 0">{w.note}</p>}
+          {!w.reviewed && <p class="card__meta" style="margin:.4rem 0 0">Ўқитувчи текширмаган</p>}
+        </div>
+      ))
+    }
+  </div>
+
+  <div id="table" class="tblwrap" hidden>
+    <table>
+      <thead>
+        <tr>
+          <th>Русча</th>
+          <th>Ўзбекча</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          words.map((w) => (
+            <tr>
+              <td><RuText text={w.ru} /></td>
+              <td>{w.uz}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    const btn = document.getElementById('view-btn');
+    const cards = document.getElementById('cards');
+    const table = document.getElementById('table');
+    btn?.addEventListener('click', () => {
+      const showTable = table?.hidden ?? false;
+      if (cards) cards.hidden = showTable;
+      if (table) table.hidden = !showTable;
+      btn.textContent = showTable ? 'Карточка кўриниши' : 'Жадвал кўриниши';
+      btn.setAttribute('aria-pressed', String(showTable));
+    });
+  </script>
+</Base>

@@ -1,0 +1,15 @@
+---
+import { splitStars } from '../lib/text.ts';
+
+interface Props {
+  text: string;
+  class?: string;
+}
+
+const { text, class: cls = '' } = Astro.props;
+const parts = splitStars(text ?? '');
+---
+
+<span class:list={['ru', cls]} lang="ru"
+  >{parts.map((p) => (p.bold ? <b>{p.text}</b> : <Fragment>{p.text}</Fragment>))}</span
+>

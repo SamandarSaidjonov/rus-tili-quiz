@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { url } from '../../lib/url.ts';
+
+const topics = (await getCollection('topics')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base title="Мавзулар" section="mavzular">
+  <h1>Мавзулар</h1>
+  <p class="muted">
+    Фақат тушунтириш ва жадваллар. Машқлар алоҳида бўлимда.
+  </p>
+
+  {
+    topics.length === 0 && (
+      <div class="card">
+        <p style="margin:0">Мавзулар ҳозир тайёрланмоқда.</p>
+      </div>
+    )
+  }
+
+  <div class="cards" style="margin-top:1rem">
+    {
+      topics.map((t, i) => (
+        <a class="card card-link" href={url(`mavzular/${t.id}`)}>
+          <div class="card__top">
+            <span class="card__title">
+              <span class="muted">{i + 1}.</span> {t.data.title}
+            </span>
+            <span class="badge" data-prog-seen={t.id}>…</span>
+          </div>
+          <p class="card__meta" style="margin:.25rem 0 0">{t.data.short}</p>
+        </a>
+      ))
+    }
+  </div>
+
+  <script>
+    import { hydrateProgress } from '../../lib/progress-ui.ts';
+    hydrateProgress();
+  </script>
+</Base>

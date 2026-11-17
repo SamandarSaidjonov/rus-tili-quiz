@@ -1,0 +1,520 @@
+{
+  "title": "Об-ҳаво",
+  "pages": "1-дарс · 23–30-бетлар",
+  "order": 2,
+  "source": "daftar",
+  "note": "Дафтардаги об-ҳаво сўзлари.",
+  "words": [
+    {
+      "id": "w01",
+      "ru": "Кака́я сего́дня пого́да?",
+      "uz": "Бугун об-ҳаво қандай?",
+      "pos": "",
+      "cluster": "ask",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w05",
+      "ru": "Бу́дет",
+      "uz": "Бўлади",
+      "pos": "",
+      "cluster": "ask",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w06",
+      "ru": "Бы́ло",
+      "uz": "Эди / бўлди",
+      "pos": "",
+      "cluster": "ask",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w07",
+      "ru": "Хо́лодно",
+      "uz": "Совуқ",
+      "pos": "",
+      "cluster": "temp",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w08",
+      "ru": "Жа́рко",
+      "uz": "Иссиқ",
+      "pos": "",
+      "cluster": "temp",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w09",
+      "ru": "Тепло́",
+      "uz": "Илиқ",
+      "pos": "",
+      "cluster": "temp",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w10",
+      "ru": "Дождли́во",
+      "uz": "Ёмғирли",
+      "pos": "",
+      "cluster": "sky",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w11",
+      "ru": "Со́лнечно",
+      "uz": "Қуёшли",
+      "pos": "",
+      "cluster": "sky",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w12",
+      "ru": "Сне́жно",
+      "uz": "Қорли",
+      "pos": "",
+      "cluster": "sky",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w13",
+      "ru": "Па́смурно",
+      "uz": "Булутли",
+      "pos": "",
+      "cluster": "sky",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w14",
+      "ru": "Сего́дня бу́дет дождь",
+      "uz": "Бугун ёмғир бўлади",
+      "pos": "",
+      "cluster": "precip",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w15",
+      "ru": "Сего́дня идёт дождь / снег",
+      "uz": "Бугун ёмғир / қор ёғяпти",
+      "pos": "",
+      "cluster": "precip",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w16",
+      "ru": "Суро́вая зима́",
+      "uz": "Қаҳратон қиш",
+      "pos": "",
+      "cluster": "season",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w17",
+      "ru": "Сейча́с весна́ / о́сень / зима́ / ле́то",
+      "uz": "Ҳозир баҳор / куз / қиш / ёз",
+      "pos": "",
+      "cluster": "season",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w18",
+      "ru": "Вчера́ был си́льный ве́тер",
+      "uz": "Кеча кучли шамол бўлди",
+      "pos": "",
+      "cluster": "wind",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w19",
+      "ru": "Вчера́ бы́ло хо́лодно / жа́рко",
+      "uz": "Кеча совуқ / иссиқ эди",
+      "pos": "",
+      "cluster": "temp",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w20",
+      "ru": "На сего́дня обеща́ли снег",
+      "uz": "Бугунга қор айтишган (ваъда қилишган)",
+      "pos": "",
+      "cluster": "precip",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w21",
+      "ru": "Кака́я пого́да за́втра бу́дет?",
+      "uz": "Эртага об-ҳаво қандай бўлади?",
+      "pos": "",
+      "cluster": "ask",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w22",
+      "ru": "Сего́дня па́смурная пого́да",
+      "uz": "Бугун булутли об-ҳаво",
+      "pos": "",
+      "cluster": "sky",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w23",
+      "ru": "Начался́ дождь / снег",
+      "uz": "Ёмғир / қор бошланди",
+      "pos": "",
+      "cluster": "precip",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w24",
+      "ru": "Све́тит со́лнце",
+      "uz": "Қуёш чарақлаяпти",
+      "pos": "",
+      "cluster": "sky",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w25",
+      "ru": "На у́лице моро́з",
+      "uz": "Кўчада қаттиқ совуқ",
+      "pos": "",
+      "cluster": "temp",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w26",
+      "ru": "Си́льный ве́тер",
+      "uz": "Кучли шамол",
+      "pos": "",
+      "cluster": "wind",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w27",
+      "ru": "Так хо́лодно",
+      "uz": "Шундай совуқ",
+      "pos": "",
+      "cluster": "temp",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w28",
+      "ru": "Внеза́пно пошёл дождь",
+      "uz": "Тўсатдан ёмғир ёғди",
+      "pos": "",
+      "cluster": "precip",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w29",
+      "ru": "Ле́то / ле́том",
+      "uz": "Ёз / ёзда",
+      "pos": "",
+      "cluster": "season",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Летом мы на каникулах.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "w30",
+      "ru": "Весна́ / весно́й",
+      "uz": "Баҳор / баҳорда",
+      "pos": "",
+      "cluster": "season",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Весной у меня начинается аллергия.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "w31",
+      "ru": "О́сень / о́сенью",
+      "uz": "Куз / кузда",
+      "pos": "",
+      "cluster": "season",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Осенью каждый день дожди.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "w32",
+      "ru": "Зима́ / зимо́й",
+      "uz": "Қиш / қишда",
+      "pos": "",
+      "cluster": "season",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Зимой на улице очень холодно.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "w33",
+      "ru": "Зимо́й о́чень хо́лодно",
+      "uz": "Қишда жуда совуқ бўлади",
+      "pos": "",
+      "cluster": "season",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w34",
+      "ru": "Сообщи́ли, что бу́дет дождь / снег",
+      "uz": "Ёмғир / қор бўлишини хабар қилишди",
+      "pos": "",
+      "cluster": "precip",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w35",
+      "ru": "Наступи́ла зима́ / весна́",
+      "uz": "Қиш / баҳор келди",
+      "pos": "",
+      "cluster": "season",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w36",
+      "ru": "Гололёд",
+      "uz": "Сирпанчиқ муз",
+      "pos": "",
+      "cluster": "nature",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w37",
+      "ru": "Снег",
+      "uz": "Қор",
+      "pos": "",
+      "cluster": "nature",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w38",
+      "ru": "Тума́н",
+      "uz": "Туман",
+      "pos": "",
+      "cluster": "nature",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w39",
+      "ru": "Роса́",
+      "uz": "Шудринг",
+      "pos": "",
+      "cluster": "nature",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w40",
+      "ru": "Ду́ет лёгкий ветеро́к",
+      "uz": "Енгил шамол эсмоқда",
+      "pos": "",
+      "cluster": "wind",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w41",
+      "ru": "Лист",
+      "uz": "Барг",
+      "pos": "",
+      "cluster": "nature",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w42",
+      "ru": "Па́дают ли́стья",
+      "uz": "Барглар тушяпти",
+      "pos": "",
+      "cluster": "nature",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w44",
+      "ru": "Со́лнце печёт",
+      "uz": "Қуёш куйдиряпти",
+      "pos": "",
+      "cluster": "sky",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w45",
+      "ru": "Прохла́дный ве́тер",
+      "uz": "Салқин шамол",
+      "pos": "",
+      "cluster": "wind",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w46",
+      "ru": "Ту́чи на не́бе",
+      "uz": "Осмонда булутлар бор",
+      "pos": "",
+      "cluster": "sky",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w47",
+      "ru": "Шуми́т ве́тер",
+      "uz": "Шамол эсмоқда (кучли)",
+      "pos": "",
+      "cluster": "wind",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w49",
+      "ru": "Како́й прогно́з пого́ды?",
+      "uz": "Об-ҳаво башорати қандай?",
+      "pos": "",
+      "cluster": "ask",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w50",
+      "ru": "Сего́дня хоро́шая пого́да",
+      "uz": "Бугун об-ҳаво яхши",
+      "pos": "",
+      "cluster": "ask",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w51",
+      "ru": "За́втра бу́дет …",
+      "uz": "Эртага … бўлади",
+      "pos": "",
+      "cluster": "ask",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w52",
+      "ru": "В пя́тницу бу́дет …",
+      "uz": "Жума куни … бўлади",
+      "pos": "",
+      "cluster": "ask",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w53",
+      "ru": "Что за жара́!",
+      "uz": "Бунча иссиқ!",
+      "pos": "",
+      "cluster": "temp",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w54",
+      "ru": "Что за хо́лод!",
+      "uz": "Бунча совуқ!",
+      "pos": "",
+      "cluster": "temp",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w55",
+      "ru": "Мне хо́лодно",
+      "uz": "Мен совуқ қотяпман",
+      "pos": "",
+      "cluster": "temp",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w56",
+      "ru": "Одева́йтесь потепле́е",
+      "uz": "Иссиқроқ кийининг",
+      "pos": "",
+      "cluster": "temp",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w57",
+      "ru": "На у́лице темно́",
+      "uz": "Кўчада қоронғи",
+      "pos": "",
+      "cluster": "sky",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w58",
+      "ru": "Анома́льный хо́лод",
+      "uz": "Аномал совуқ",
+      "pos": "",
+      "cluster": "temp",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w59",
+      "ru": "Сего́дня прохла́днее",
+      "uz": "Бугун салқинроқ",
+      "pos": "",
+      "cluster": "temp",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "w60",
+      "ru": "Сего́дня потепле́е",
+      "uz": "Бугун иссиқроқ",
+      "pos": "",
+      "cluster": "temp",
+      "source": "daftar",
+      "reviewed": false
+    }
+  ]
+}

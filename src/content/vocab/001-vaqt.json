@@ -1,0 +1,676 @@
+{
+  "title": "Вақт",
+  "pages": "1-дарс · 23–30-бетлар",
+  "order": 1,
+  "source": "daftar",
+  "note": "Дафтардаги вақт сўзлари. Такрорланганлари бир мартадан олинган.",
+  "words": [
+    {
+      "id": "t01",
+      "ru": "Неда́вно",
+      "uz": "Яқинда (ўтган замон)",
+      "pos": "",
+      "cluster": "moment",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Недавно я начал(а) учить русский язык.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t02",
+      "ru": "Всегда́",
+      "uz": "Ҳамиша",
+      "pos": "",
+      "cluster": "freq",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Я всегда читаю русские книги.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t03",
+      "ru": "Ча́сто",
+      "uz": "Тез-тез",
+      "pos": "",
+      "cluster": "freq",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Я часто хожу в кинотеатр.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t04",
+      "ru": "Всю жизнь",
+      "uz": "Бир умр",
+      "pos": "",
+      "cluster": "dur",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Он жил с ней всю жизнь.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t05",
+      "ru": "На всю жизнь / навсегда́",
+      "uz": "Бир умрга",
+      "pos": "",
+      "cluster": "dur",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Это мне хватит на всю жизнь.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t06",
+      "ru": "Ка́ждый день / ме́сяц / год",
+      "uz": "Ҳар кун / ой / йил",
+      "pos": "",
+      "cluster": "freq",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Я хожу на работу каждый день, кроме воскресенья.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t07",
+      "ru": "Ка́ждую неде́лю",
+      "uz": "Ҳар ҳафтада",
+      "pos": "",
+      "cluster": "freq",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Каждую неделю в воскресенье я отдыхаю.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t08",
+      "ru": "Всю неде́лю",
+      "uz": "Бутун ҳафта",
+      "pos": "",
+      "cluster": "dur",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Всю неделю будет дождь.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t09",
+      "ru": "Весь год",
+      "uz": "Бутун бир йил",
+      "pos": "",
+      "cluster": "dur",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Весь год он просил у меня деньги.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t10",
+      "ru": "Во́время",
+      "uz": "Ўз вақтида",
+      "pos": "",
+      "cluster": "moment",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Уроки всегда начинаются вовремя.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t11",
+      "ru": "Во вре́мя …",
+      "uz": "…пайтида",
+      "pos": "",
+      "cluster": "moment",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Во время урока студенты говорят по-русски.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t12",
+      "ru": "Обы́чно",
+      "uz": "Одатда",
+      "pos": "",
+      "cluster": "freq",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Обычно я ем только молочные продукты.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t13",
+      "ru": "Ре́дко = иногда́",
+      "uz": "Баъзида, камдан-кам",
+      "pos": "",
+      "cluster": "freq",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Я редко пишу письма.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t14",
+      "ru": "Вре́менно",
+      "uz": "Вақтинча",
+      "pos": "",
+      "cluster": "dur",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Временно отключили свет.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t15",
+      "ru": "У́тром",
+      "uz": "Эрталаб",
+      "pos": "",
+      "cluster": "daypart",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Утром погода прохладная.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t16",
+      "ru": "Ве́чером",
+      "uz": "Кечқурун",
+      "pos": "",
+      "cluster": "daypart",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Давай встретимся вечером.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t17",
+      "ru": "Днём",
+      "uz": "Кундузи",
+      "pos": "",
+      "cluster": "daypart",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Днём я немного отдыхаю.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t18",
+      "ru": "Но́чью",
+      "uz": "Тунда",
+      "pos": "",
+      "cluster": "daypart",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Ночью был дождь.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t19",
+      "ru": "До утра́ / до ве́чера / до но́чи",
+      "uz": "Эрталабгача / кечқурунгача / тунгача",
+      "pos": "",
+      "cluster": "daypart",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Мы пели песни до утра.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t20",
+      "ru": "В по́лночь",
+      "uz": "Ярим тунда",
+      "pos": "",
+      "cluster": "daypart",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "В полночь мне сделали операцию.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t21",
+      "ru": "Че́рез ме́сяц / год",
+      "uz": "1 ойдан / йилдан кейин",
+      "pos": "",
+      "cluster": "period",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "t22",
+      "ru": "Че́рез неде́лю",
+      "uz": "1 ҳафтадан кейин",
+      "pos": "",
+      "cluster": "period",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "t23",
+      "ru": "Ско́ро",
+      "uz": "Тез орада (келаси замон)",
+      "pos": "",
+      "cluster": "moment",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Скоро открытие.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t25",
+      "ru": "Два дня наза́д",
+      "uz": "2 кун олдин",
+      "pos": "",
+      "cluster": "period",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "2 дня назад мы были в городе.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t26",
+      "ru": "Год / ме́сяц наза́д",
+      "uz": "1 йил / ой олдин",
+      "pos": "",
+      "cluster": "period",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Год назад я был студентом.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t27",
+      "ru": "С ма́рта / с понеде́льника",
+      "uz": "Мартдан / душанбадан",
+      "pos": "",
+      "cluster": "period",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Давайте начнём с понедельника.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t28",
+      "ru": "До ма́рта / до понеде́льника",
+      "uz": "Мартгача / душанбагача",
+      "pos": "",
+      "cluster": "period",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Мы будем учиться до марта.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t29",
+      "ru": "Ежедне́вно",
+      "uz": "Ҳар куни",
+      "pos": "",
+      "cluster": "freq",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Мы ежедневно занимаемся русским языком.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t30",
+      "ru": "Че́рез день",
+      "uz": "1 кун ўтиб",
+      "pos": "",
+      "cluster": "relday",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Мы ходим на русский через день.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t35",
+      "ru": "Ве́чно",
+      "uz": "Ҳар доим",
+      "pos": "",
+      "cluster": "freq",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Ты вечно недовольная.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t36",
+      "ru": "Ка́ждый раз",
+      "uz": "Ҳар сафар",
+      "pos": "",
+      "cluster": "freq",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Ты каждый раз так делаешь.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t37",
+      "ru": "До́лго",
+      "uz": "Узоқ пайт",
+      "pos": "",
+      "cluster": "dur",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Он долго не решался.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t38",
+      "ru": "Пора́",
+      "uz": "Вақти бўлди",
+      "pos": "",
+      "cluster": "moment",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Пора начать читать.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t39",
+      "ru": "Тепе́рь",
+      "uz": "Энди",
+      "pos": "",
+      "cluster": "moment",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Он теперь не мой.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t40",
+      "ru": "Сего́дня",
+      "uz": "Бугун",
+      "pos": "",
+      "cluster": "relday",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Сегодня его нет в классе.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t41",
+      "ru": "За́втра",
+      "uz": "Эртага",
+      "pos": "",
+      "cluster": "relday",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Завтра не будет концерта.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t42",
+      "ru": "Послеза́втра",
+      "uz": "Индинга",
+      "pos": "",
+      "cluster": "relday",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Послезавтра я прилечу в Ташкент.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t43",
+      "ru": "Вчера́",
+      "uz": "Кеча",
+      "pos": "",
+      "cluster": "relday",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Вчера был хороший день.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t44",
+      "ru": "Позавчера́",
+      "uz": "Ўтган куни",
+      "pos": "",
+      "cluster": "relday",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Позавчера я смотрела фильм.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t45",
+      "ru": "На день / час / ме́сяц",
+      "uz": "1 кунга / соатга / ойга",
+      "pos": "",
+      "cluster": "period",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Одолжи мне книгу на день.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t46",
+      "ru": "Одна́жды",
+      "uz": "Бир куни",
+      "pos": "",
+      "cluster": "moment",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Однажды я обязательно приеду.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t47",
+      "ru": "Накану́не",
+      "uz": "Бир кун олдин",
+      "pos": "",
+      "cluster": "relday",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Сообщи мне накануне.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t48",
+      "ru": "Ра́но",
+      "uz": "Эрта",
+      "pos": "",
+      "cluster": "daypart",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Он пришёл рано.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t49",
+      "ru": "По́здно",
+      "uz": "Кеч",
+      "pos": "",
+      "cluster": "daypart",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Он пришёл поздно.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t50",
+      "ru": "Сейча́с",
+      "uz": "Ҳозир",
+      "pos": "",
+      "cluster": "moment",
+      "source": "daftar",
+      "reviewed": false,
+      "example": {
+        "ru": "Сейчас мы на уроке.",
+        "uz": ""
+      }
+    },
+    {
+      "id": "t51",
+      "ru": "Понеде́льник / в понеде́льник",
+      "uz": "Душанба / душанбада",
+      "pos": "",
+      "cluster": "week",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "t52",
+      "ru": "Вто́рник / во вто́рник",
+      "uz": "Сешанба / сешанбада",
+      "pos": "",
+      "cluster": "week",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "t53",
+      "ru": "Среда́ / в сре́ду",
+      "uz": "Чоршанба / чоршанбада",
+      "pos": "",
+      "cluster": "week",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "t54",
+      "ru": "Четве́рг / в четве́рг",
+      "uz": "Пайшанба / пайшанбада",
+      "pos": "",
+      "cluster": "week",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "t55",
+      "ru": "Пя́тница / в пя́тницу",
+      "uz": "Жума / жумада",
+      "pos": "",
+      "cluster": "week",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "t56",
+      "ru": "Суббо́та / в суббо́ту",
+      "uz": "Шанба / шанбада",
+      "pos": "",
+      "cluster": "week",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "t57",
+      "ru": "Воскресе́нье / в воскресе́нье",
+      "uz": "Якшанба / якшанбада",
+      "pos": "",
+      "cluster": "week",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "t58",
+      "ru": "Пото́м",
+      "uz": "Кейин",
+      "pos": "",
+      "cluster": "moment",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "t59",
+      "ru": "Сро́чно",
+      "uz": "Тез, шошилинч",
+      "pos": "",
+      "cluster": "moment",
+      "source": "daftar",
+      "reviewed": false
+    },
+    {
+      "id": "t60",
+      "ru": "То́лько что",
+      "uz": "Ҳозиргина",
+      "pos": "",
+      "cluster": "moment",
+      "source": "daftar",
+      "reviewed": false
+    }
+  ]
+}
