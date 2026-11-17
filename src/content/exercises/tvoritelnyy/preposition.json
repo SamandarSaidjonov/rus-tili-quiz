@@ -1,0 +1,117 @@
+{
+  "topic": "tvoritelnyy",
+  "type": "preposition",
+  "title": "Творительный падеж",
+  "items": [
+    {
+      "id": "t-pr-01",
+      "case": "Т",
+      "prompt": "Я иду ___ братом.",
+      "answers": [
+        "с"
+      ],
+      "note": "Ҳамроҳ — «с»: с братом.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-pr-02",
+      "case": "Т",
+      "prompt": "Лампа висит ___ столом.",
+      "answers": [
+        "над"
+      ],
+      "note": "Устида (тегмасдан) — «над».",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-pr-03",
+      "case": "Т",
+      "prompt": "Сумка стоит ___ столом.",
+      "answers": [
+        "под"
+      ],
+      "note": "Тагида — «под».",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-pr-04",
+      "case": "Т",
+      "prompt": "Машина стоит ___ банком.",
+      "answers": [
+        "перед"
+      ],
+      "note": "Олдида — «перед».",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-pr-05",
+      "case": "Т",
+      "prompt": "___ домом и банком есть парк.",
+      "answers": [
+        "между"
+      ],
+      "note": "Орасида — «между».",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-pr-06",
+      "case": "Т",
+      "prompt": "Чай ___ лимоном, пожалуйста.",
+      "answers": [
+        "с"
+      ],
+      "note": "Қўшимча нарса — «с».",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-pr-07",
+      "case": "Т",
+      "prompt": "Мы сидим ___ столом и работаем.",
+      "answers": [
+        "за"
+      ],
+      "note": "Стол ёнида ўтириш — «за столом».",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-pr-08",
+      "case": "Т",
+      "prompt": "Он живёт ___ нами на этаж выше.",
+      "answers": [
+        "над"
+      ],
+      "note": "Тепа қаватда — «над нами».",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-pr-09",
+      "case": "Т",
+      "prompt": "Приходи ___ мной завтра.",
+      "answers": [
+        "со"
+      ],
+      "note": "«с» дан кейин «мной» — «со мной».",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-pr-10",
+      "case": "Т",
+      "prompt": "Документы лежат ___ папкой.",
+      "answers": [
+        "под"
+      ],
+      "note": "Тагида — «под папкой».",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

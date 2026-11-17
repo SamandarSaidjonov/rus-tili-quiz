@@ -1,0 +1,110 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { url, SECTIONS } from '../lib/url.ts';
+
+const topics = await getCollection('topics');
+const vocab = await getCollection('vocab');
+const exercises = await getCollection('exercises');
+const tests = await getCollection('tests');
+
+// Машқлар мавзу (папка) бўйича бирлаштирилади: mixed/translate → mixed
+const exByTopic = new Map<string, number>();
+for (const e of exercises) {
+  exByTopic.set(e.data.topic, (exByTopic.get(e.data.topic) ?? 0) + e.data.items.length);
+}
+
+const catalog = {
+  topics: topics.map((t) => t.id),
+  vocab: vocab.map((v) => ({ id: v.id, n: v.data.words.length })),
+  ex: [...exByTopic.entries()].map(([id, n]) => ({ id, n })),
+  tests: tests.map((t) => t.id),
+};
+
+const counts: Record<string, string> = {
+  mavzular: `${topics.length} мавзу`,
+  mashqlar: `${[...exByTopic.values()].reduce((a, b) => a + b, 0)} машқ`,
+  lugatlar: `${vocab.reduce((a, v) => a + v.data.words.length, 0)} сўз`,
+  testlar: `${tests.length} тест`,
+};
+---
+
+<Base title="Рус тили">
+  <h1>Рус тили</h1>
+  <p class="muted">
+    Мавзулар бўйича тушунтириш, падежлар машқлари, луғат ва тестлар. Ҳаммаси телефонда ишлайди,
+    прогресс шу браузерда сақланади.
+  </p>
+
+  <div class="cards" style="margin-top:1.2rem">
+    {
+      SECTIONS.map((s) => (
+        <a class="card card-link" href={url(s.key)}>
+          <div class="card__top">
+            <span class="card__title">{s.title}</span>
+            <span class="badge">{counts[s.key]}</span>
+          </div>
+          <p class="card__meta" style="margin:.2rem 0 0">{s.hint}</p>
+          <p class="card__meta" data-sum={s.key} style="margin:.35rem 0 0">…</p>
+          <div class="bar" data-sum-bar={s.key}><div class="bar__fill" style="width:0%"></div></div>
+        </a>
+      ))
+    }
+  </div>
+
+  <details class="card" style="margin-top:1.2rem">
+    <summary>Прогресс ва эски версия</summary>
+    <div class="stack" style="margin-top:.7rem">
+      <p class="muted" style="margin:0">
+        Прогресс фақат шу телефон ва браузерда сақланади. Эски версиядаги натижалар автоматик
+        кўчирилди.
+      </p>
+      <div class="btnrow">
+        <button class="btn" type="button" id="clear-btn">Барча прогрессни тозалаш</button>
+        <a class="btn btn--ghost" href={url('legacy/index.html')}>Эски версия</a>
+      </div>
+      <p id="clear-msg" class="muted" role="status" style="margin:0"></p>
+    </div>
+  </details>
+
+  <script type="application/json" id="catalog" set:html={JSON.stringify(catalog)} is:inline />
+
+  <script>
+    import { hydrateHome, type Catalog } from '../lib/progress-ui.ts';
+    import { clearAllProgress, storageAvailable } from '../lib/progress.ts';
+
+    const raw = document.getElementById('catalog')?.textContent ?? '{}';
+    try {
+      hydrateHome(JSON.parse(raw) as Catalog);
+    } catch {
+      /* прогресс кўрсатилмаса ҳам саҳифа ишлайди */
+    }
+
+    const msg = document.getElementById('clear-msg');
+    if (!storageAvailable() && msg) {
+      msg.textContent = 'Диққат: бу браузерда прогресс сақланмайди (шахсий режим бўлиши мумкин).';
+    }
+
+    document.getElementById('clear-btn')?.addEventListener('click', () => {
+      if (!confirm('Барча прогресс ўчирилади. Давом этамизми?')) return;
+      clearAllProgress();
+      if (msg) msg.textContent = 'Прогресс тозаланди.';
+      location.reload();
+    });
+
+    // Эски ҳаволалар: #dars-1, #dars-2, #mashq-1
+    const LEGACY: Record<string, string> = {
+      'dars-1': 'lugatlar',
+      'dars-2': 'lugatlar/003-feellar',
+      'mashq-1': 'mashqlar/mixed',
+    };
+    const hash = location.hash.replace(/^#/, '');
+    const target = LEGACY[hash];
+    if (target) {
+      const base = import.meta.env.BASE_URL.endsWith('/')
+        ? import.meta.env.BASE_URL
+        : `${import.meta.env.BASE_URL}/`;
+      location.replace(`${base}${target}/`);
+    }
+  </script>
+</Base>

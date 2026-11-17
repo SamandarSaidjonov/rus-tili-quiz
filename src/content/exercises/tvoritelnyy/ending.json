@@ -1,0 +1,117 @@
+{
+  "topic": "tvoritelnyy",
+  "type": "ending",
+  "title": "Творительный падеж",
+  "items": [
+    {
+      "id": "t-end-01",
+      "case": "Т",
+      "prompt": "Я пишу ручк___.",
+      "answers": [
+        "ой"
+      ],
+      "note": "Женский род: -а ўрнига -ой — ручкой.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-end-02",
+      "case": "Т",
+      "prompt": "Я иду с брат___.",
+      "answers": [
+        "ом"
+      ],
+      "note": "Мужской род: ундошга -ом — братом.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-end-03",
+      "case": "Т",
+      "prompt": "Он работает врач___.",
+      "answers": [
+        "ом"
+      ],
+      "note": "Урғу қўшимчада: врачом.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-end-04",
+      "case": "Т",
+      "prompt": "Чай с сахар___.",
+      "answers": [
+        "ом"
+      ],
+      "note": "Мужской род: сахаром.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-end-05",
+      "case": "Т",
+      "prompt": "Она руководит отдел___.",
+      "answers": [
+        "ом"
+      ],
+      "note": "Мужской род: отделом.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-end-06",
+      "case": "Т",
+      "prompt": "Я горжусь сестр___.",
+      "answers": [
+        "ой"
+      ],
+      "note": "Женский род: сестра → сестрой.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-end-07",
+      "case": "Т",
+      "prompt": "Мы говорили с коллег___ вчера.",
+      "answers": [
+        "ой"
+      ],
+      "note": "Женский род: коллега → коллегой.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-end-08",
+      "case": "Т",
+      "prompt": "Лампа висит над стол___.",
+      "answers": [
+        "ом"
+      ],
+      "note": "«над» + творительный: столом.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-end-09",
+      "case": "Т",
+      "prompt": "Я пользуюсь компьютер___.",
+      "answers": [
+        "ом"
+      ],
+      "note": "«пользоваться» + творительный: компьютером.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-end-10",
+      "case": "Т",
+      "prompt": "Он занимается нов___ проектом.",
+      "answers": [
+        "ым"
+      ],
+      "note": "Сифат мужской родда: новым.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

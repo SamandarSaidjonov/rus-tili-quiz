@@ -1,0 +1,117 @@
+{
+  "topic": "datelnyy",
+  "type": "pronoun",
+  "title": "Дательный падеж",
+  "items": [
+    {
+      "id": "d-pn-01",
+      "case": "Д",
+      "prompt": "Я звоню (он) каждый день.",
+      "answers": [
+        "ему"
+      ],
+      "note": "Предлог йўқ, шунинг учун н- ҳам йўқ: ему.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-pn-02",
+      "case": "Д",
+      "prompt": "Я иду к (он).",
+      "answers": [
+        "нему"
+      ],
+      "note": "Предлогдан кейин: к нему.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-pn-03",
+      "case": "Д",
+      "prompt": "Покажи (я) документы.",
+      "answers": [
+        "мне"
+      ],
+      "note": "я → мне.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-pn-04",
+      "case": "Д",
+      "prompt": "Я помогаю (она).",
+      "answers": [
+        "ей"
+      ],
+      "note": "Предлогсиз: ей.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-pn-05",
+      "case": "Д",
+      "prompt": "Мы идём к (она).",
+      "answers": [
+        "ней"
+      ],
+      "note": "Предлогдан кейин: к ней.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-pn-06",
+      "case": "Д",
+      "prompt": "Это принадлежит (они).",
+      "answers": [
+        "им"
+      ],
+      "note": "Предлогсиз: им.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-pn-07",
+      "case": "Д",
+      "prompt": "Я пришёл к (они).",
+      "answers": [
+        "ним"
+      ],
+      "note": "Предлогдан кейин: к ним.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-pn-08",
+      "case": "Д",
+      "prompt": "Я верю (ты).",
+      "answers": [
+        "тебе"
+      ],
+      "note": "ты → тебе.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-pn-09",
+      "case": "Д",
+      "prompt": "(Вы) нравится эта работа?",
+      "answers": [
+        "Вам"
+      ],
+      "note": "вы → вам. Гап бошида бош ҳарф билан.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-pn-10",
+      "case": "Д",
+      "prompt": "(Кто) ты звонишь?",
+      "answers": [
+        "Кому"
+      ],
+      "note": "кто → кому.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

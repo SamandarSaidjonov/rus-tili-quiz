@@ -1,0 +1,117 @@
+{
+  "topic": "predlozhnyy",
+  "type": "pronoun",
+  "title": "Предложный падеж",
+  "items": [
+    {
+      "id": "p-pn-01",
+      "case": "П",
+      "prompt": "Мы говорим о (он).",
+      "answers": [
+        "нём"
+      ],
+      "note": "Предлогдан кейин: о нём.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-pn-02",
+      "case": "П",
+      "prompt": "Я думаю о (она).",
+      "answers": [
+        "ней"
+      ],
+      "note": "Предлогдан кейин: о ней.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-pn-03",
+      "case": "П",
+      "prompt": "Директор спросил о (они).",
+      "answers": [
+        "них"
+      ],
+      "note": "Предлогдан кейин: о них.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-pn-04",
+      "case": "П",
+      "prompt": "Он думает обо (я).",
+      "answers": [
+        "мне"
+      ],
+      "note": "я → мне. «обо мне» деб ёзилади.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-pn-05",
+      "case": "П",
+      "prompt": "Я думаю о (ты).",
+      "answers": [
+        "тебе"
+      ],
+      "note": "ты → тебе.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-pn-06",
+      "case": "П",
+      "prompt": "Мы слышали о (вы).",
+      "answers": [
+        "вас"
+      ],
+      "note": "вы → вас.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-pn-07",
+      "case": "П",
+      "prompt": "Он знает о (мы) всё.",
+      "answers": [
+        "нас"
+      ],
+      "note": "мы → нас.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-pn-08",
+      "case": "П",
+      "prompt": "О (кто) вы говорите?",
+      "answers": [
+        "ком"
+      ],
+      "note": "кто → ком: о ком.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-pn-09",
+      "case": "П",
+      "prompt": "О (что) эта книга?",
+      "answers": [
+        "чём"
+      ],
+      "note": "что → чём: о чём.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-pn-10",
+      "case": "П",
+      "prompt": "Я забыл о (оно).",
+      "answers": [
+        "нём"
+      ],
+      "note": "оно → нём (предлогдан кейин).",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

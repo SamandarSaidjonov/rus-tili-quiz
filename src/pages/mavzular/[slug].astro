@@ -1,0 +1,77 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import { url } from '../../lib/url.ts';
+
+export const getStaticPaths = (async () => {
+  const topics = (await getCollection('topics')).sort((a, b) => a.data.order - b.data.order);
+  return topics.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: {
+      entry,
+      prev: i > 0 ? topics[i - 1] : null,
+      next: i + 1 < topics.length ? topics[i + 1] : null,
+    },
+  }));
+}) satisfies GetStaticPaths;
+
+const { entry, prev, next } = Astro.props;
+const { Content } = await render(entry);
+const exercisesTopic = entry.data.exercises ?? entry.id;
+const hasExercises = (await getCollection('exercises')).some((e) => e.data.topic === exercisesTopic);
+---
+
+<Base title={entry.data.title} section="mavzular" description={entry.data.short}>
+  <p class="crumb"><a href={url('mavzular')}>← Мавзулар</a></p>
+  <h1>{entry.data.title}</h1>
+  <p class="muted">{entry.data.short}</p>
+  {
+    !entry.data.reviewed && (
+      <p class="card__meta">Бу мавзуни ўқитувчи ҳали текширмаган.</p>
+    )
+  }
+
+  <article class="prose">
+    <Content />
+  </article>
+
+  {
+    hasExercises && (
+      <div class="card" style="margin-top:1.4rem">
+        <div class="card__top">
+          <span class="card__title">Шу мавзу бўйича машқлар</span>
+        </div>
+        <p class="card__meta" style="margin:.25rem 0 .7rem">
+          Жавобни рус ҳарфларида ўзингиз ёзасиз.
+        </p>
+        <a class="btn btn--primary btn--sm" href={url(`mashqlar/${exercisesTopic}`)}>Машқларни бошлаш</a>
+      </div>
+    )
+  }
+
+  <nav class="navrow" style="margin-top:1.4rem" aria-label="Мавзулар орасида юриш">
+    {
+      prev ? (
+        <a class="btn" href={url(`mavzular/${prev.id}`)}>← {prev.data.title}</a>
+      ) : (
+        <span></span>
+      )
+    }
+    {
+      next ? (
+        <a class="btn" href={url(`mavzular/${next.id}`)}>{next.data.title} →</a>
+      ) : (
+        <span></span>
+      )
+    }
+  </nav>
+
+  <div id="topic-meta" data-topic={entry.id} hidden></div>
+  <script>
+    // Мавзу очилганда «ўқилди» деб белгиланади.
+    import { recordAnswer } from '../../lib/progress.ts';
+    const id = document.getElementById('topic-meta')?.dataset.topic;
+    if (id) recordAnswer('topic', 'read', id, true);
+  </script>
+</Base>

@@ -1,0 +1,117 @@
+{
+  "topic": "roditelnyy",
+  "type": "ending",
+  "title": "Родительный падеж",
+  "items": [
+    {
+      "id": "r-end-01",
+      "case": "Р",
+      "prompt": "У меня нет брат___.",
+      "answers": [
+        "а"
+      ],
+      "note": "Мужской род, ундошга -а қўшилади: брат → брата.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-end-02",
+      "case": "Р",
+      "prompt": "Это машина сестр___.",
+      "answers": [
+        "ы"
+      ],
+      "note": "Женский род: -а ўрнига -ы — сестра → сестры.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-end-03",
+      "case": "Р",
+      "prompt": "Я иду из офис___.",
+      "answers": [
+        "а"
+      ],
+      "note": "«из» + родительный: офис → офиса.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-end-04",
+      "case": "Р",
+      "prompt": "Кофе без молок___.",
+      "answers": [
+        "а"
+      ],
+      "note": "Средний род: -о ўрнига -а — молоко → молока.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-end-05",
+      "case": "Р",
+      "prompt": "После урок___ мы пойдём домой.",
+      "answers": [
+        "а"
+      ],
+      "note": "«после» + родительный: урок → урока.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-end-06",
+      "case": "Р",
+      "prompt": "У нас нет тетрад___.",
+      "answers": [
+        "и"
+      ],
+      "note": "Женский род -ь билан тугайди: тетрадь → тетради.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-end-07",
+      "case": "Р",
+      "prompt": "Это подарок для мам___.",
+      "answers": [
+        "ы"
+      ],
+      "note": "Женский род: мама → мамы.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-end-08",
+      "case": "Р",
+      "prompt": "Я боюсь собак___.",
+      "answers": [
+        "и"
+      ],
+      "note": "к дан кейин -ы эмас, -и: собака → собаки.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-end-09",
+      "case": "Р",
+      "prompt": "Магазин работает до вечер___.",
+      "answers": [
+        "а"
+      ],
+      "note": "«до» + родительный: вечер → вечера.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-end-10",
+      "case": "Р",
+      "prompt": "У неё нет словар___.",
+      "answers": [
+        "я"
+      ],
+      "note": "-ь ўрнига -я: словарь → словаря.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import ExerciseRunner from '../../components/ExerciseRunner.tsx';
+import { url } from '../../lib/url.ts';
+import { topicMeta } from '../../lib/topics.ts';
+import type { ExerciseSet } from '../../lib/types.ts';
+
+export const getStaticPaths = (async () => {
+  const entries = await getCollection('exercises');
+  const topics = [...new Set(entries.map((e) => e.data.topic))];
+  return topics.map((topic) => ({
+    params: { topic },
+    props: {
+      topic,
+      groups: entries
+        .filter((e) => e.data.topic === topic)
+        .map((e) => ({ topic: e.data.topic, type: e.data.type, title: e.data.title, items: e.data.items })),
+    },
+  }));
+}) satisfies GetStaticPaths;
+
+const { topic, groups } = Astro.props as { topic: string; groups: ExerciseSet[] };
+const meta = topicMeta(topic);
+const hasTopicPage = (await getCollection('topics')).some((t) => t.id === topic);
+---
+
+<Base title={`${meta.title} · машқлар`} section="mashqlar">
+  <p class="crumb"><a href={url('mashqlar')}>← Машқлар</a></p>
+  <h1>{meta.title}</h1>
+  {
+    hasTopicPage && (
+      <p class="muted">
+        Тушунтириш ва жадваллар: <a href={url(`mavzular/${topic}`)}>{meta.title} мавзуси</a>
+      </p>
+    )
+  }
+  <ExerciseRunner
+    topic={topic}
+    title={meta.title}
+    groups={groups}
+    homeHref={url()}
+    listHref={url('mashqlar')}
+    client:only="preact"
+  />
+</Base>

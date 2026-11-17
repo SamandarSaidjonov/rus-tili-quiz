@@ -1,0 +1,117 @@
+{
+  "topic": "datelnyy",
+  "type": "adjective",
+  "title": "Дательный падеж",
+  "items": [
+    {
+      "id": "d-adj-01",
+      "case": "Д",
+      "prompt": "Я иду к (новый) директору.",
+      "answers": [
+        "новому"
+      ],
+      "note": "Мужской род дательный: -ый ўрнига -ому.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-adj-02",
+      "case": "Д",
+      "prompt": "Он помогает (новая) сотруднице.",
+      "answers": [
+        "новой"
+      ],
+      "note": "Женский род дательный: -ая ўрнига -ой.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-adj-03",
+      "case": "Д",
+      "prompt": "Я звоню (старший) брату.",
+      "answers": [
+        "старшему"
+      ],
+      "note": "ш дан кейин -ему: старший → старшему.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-adj-04",
+      "case": "Д",
+      "prompt": "Объясните это (наши) клиентам.",
+      "answers": [
+        "нашим"
+      ],
+      "note": "Кўплик дательный: -и ўрнига -им.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-adj-05",
+      "case": "Д",
+      "prompt": "Он учится (русский) языку.",
+      "answers": [
+        "русскому"
+      ],
+      "note": "Мужской род: русский → русскому.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-adj-06",
+      "case": "Д",
+      "prompt": "Мы идём по (главная) улице.",
+      "answers": [
+        "главной"
+      ],
+      "note": "Женский род: главная → главной.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-adj-07",
+      "case": "Д",
+      "prompt": "Покажите документы (новый) сотруднику.",
+      "answers": [
+        "новому"
+      ],
+      "note": "Мужской род: новому.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-adj-08",
+      "case": "Д",
+      "prompt": "Экзамен по (трудный) предмету.",
+      "answers": [
+        "трудному"
+      ],
+      "note": "Мужской род: трудный → трудному.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-adj-09",
+      "case": "Д",
+      "prompt": "Я советую (молодые) специалистам учиться.",
+      "answers": [
+        "молодым"
+      ],
+      "note": "Кўплик: -ые ўрнига -ым.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-adj-10",
+      "case": "Д",
+      "prompt": "Благодаря (хороший) учителю я выучил язык.",
+      "answers": [
+        "хорошему"
+      ],
+      "note": "ш дан кейин -ему: хорошему.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "topic": "roditelnyy",
+  "type": "pronoun",
+  "title": "Родительный падеж",
+  "items": [
+    {
+      "id": "r-pn-01",
+      "case": "Р",
+      "prompt": "У (он) нет времени.",
+      "answers": [
+        "него"
+      ],
+      "note": "Предлогдан кейин его → него.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-pn-02",
+      "case": "Р",
+      "prompt": "Это подарок для (она).",
+      "answers": [
+        "неё"
+      ],
+      "note": "Предлогдан кейин её → неё.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-pn-03",
+      "case": "Р",
+      "prompt": "У (они) много работы.",
+      "answers": [
+        "них"
+      ],
+      "note": "Предлогдан кейин их → них.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-pn-04",
+      "case": "Р",
+      "prompt": "У (я) нет паспорта.",
+      "answers": [
+        "меня"
+      ],
+      "note": "я → меня. Бу олмошда н- қўшилмайди.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-pn-05",
+      "case": "Р",
+      "prompt": "У (ты) есть ручка?",
+      "answers": [
+        "тебя"
+      ],
+      "note": "ты → тебя.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-pn-06",
+      "case": "Р",
+      "prompt": "Это книга (мы) группы.",
+      "answers": [
+        "нашей"
+      ],
+      "note": "Бу ерда эгалик олмоши керак: мы → наша → родительный «нашей группы».",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-pn-07",
+      "case": "Р",
+      "prompt": "Я жду (вы) уже час.",
+      "answers": [
+        "вас"
+      ],
+      "note": "вы → вас. Предлог йўқ, шунинг учун н- ҳам йўқ.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-pn-08",
+      "case": "Р",
+      "prompt": "Без (он) мы не начнём.",
+      "answers": [
+        "него"
+      ],
+      "note": "«без» предлогидан кейин: него.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-pn-09",
+      "case": "Р",
+      "prompt": "После (она) выступает директор.",
+      "answers": [
+        "неё"
+      ],
+      "note": "«после» предлогидан кейин: неё.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "r-pn-10",
+      "case": "Р",
+      "prompt": "У (кто) есть вопросы?",
+      "answers": [
+        "кого"
+      ],
+      "note": "кто → кого.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

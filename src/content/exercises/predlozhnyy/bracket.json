@@ -1,0 +1,117 @@
+{
+  "topic": "predlozhnyy",
+  "type": "bracket",
+  "title": "Предложный падеж",
+  "items": [
+    {
+      "id": "p-br-01",
+      "case": "П",
+      "prompt": "Я работаю в (банк).",
+      "answers": [
+        "банке"
+      ],
+      "note": "Жой: в банке.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-br-02",
+      "case": "П",
+      "prompt": "Мы говорим о (работа).",
+      "answers": [
+        "работе"
+      ],
+      "note": "«о» + предложный: о работе.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-br-03",
+      "case": "П",
+      "prompt": "Она сейчас на (работа).",
+      "answers": [
+        "работе"
+      ],
+      "note": "Қаерда? — на работе.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-br-04",
+      "case": "П",
+      "prompt": "Я живу в (Ташкент).",
+      "answers": [
+        "Ташкенте"
+      ],
+      "note": "Жой: в Ташкенте.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-br-05",
+      "case": "П",
+      "prompt": "Документы лежат в (папка).",
+      "answers": [
+        "папке"
+      ],
+      "note": "Жой: в папке.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-br-06",
+      "case": "П",
+      "prompt": "Он учится в (университет).",
+      "answers": [
+        "университете"
+      ],
+      "note": "Жой: в университете.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-br-07",
+      "case": "П",
+      "prompt": "Расскажите об (офис).",
+      "answers": [
+        "офисе"
+      ],
+      "note": "Унлидан олдин «об»: об офисе.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-br-08",
+      "case": "П",
+      "prompt": "Я думаю о (ты).",
+      "answers": [
+        "тебе"
+      ],
+      "note": "Олмош: ты → о тебе.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-br-09",
+      "case": "П",
+      "prompt": "Встреча будет на (следующая неделя).",
+      "answers": [
+        "следующей неделе"
+      ],
+      "note": "Женский род: следующей неделе.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-br-10",
+      "case": "П",
+      "prompt": "Он работает в (два банка).",
+      "answers": [
+        "двух банках"
+      ],
+      "note": "Кўплик предложный: в двух банках.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "topic": "datelnyy",
+  "type": "preposition",
+  "title": "Дательный падеж",
+  "items": [
+    {
+      "id": "d-pr-01",
+      "case": "Д",
+      "prompt": "Я иду ___ врачу.",
+      "answers": [
+        "к"
+      ],
+      "note": "Кимгадир томон — «к»: к врачу.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-pr-02",
+      "case": "Д",
+      "prompt": "Мы идём ___ улице.",
+      "answers": [
+        "по"
+      ],
+      "note": "Бўйлаб — «по»: по улице.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-pr-03",
+      "case": "Д",
+      "prompt": "Я говорю ___ телефону.",
+      "answers": [
+        "по"
+      ],
+      "note": "Воситани билдиради: по телефону.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-pr-04",
+      "case": "Д",
+      "prompt": "Завтра экзамен ___ русскому языку.",
+      "answers": [
+        "по"
+      ],
+      "note": "Бўйича — «по»: по русскому языку.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-pr-05",
+      "case": "Д",
+      "prompt": "Он пришёл ___ нам в гости.",
+      "answers": [
+        "к"
+      ],
+      "note": "Кимникига — «к»: к нам.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-pr-06",
+      "case": "Д",
+      "prompt": "Банк работает ___ субботам.",
+      "answers": [
+        "по"
+      ],
+      "note": "Такрорланадиган кун: по субботам.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-pr-07",
+      "case": "Д",
+      "prompt": "___ мне пришёл друг.",
+      "answers": [
+        "ко"
+      ],
+      "note": "«к» дан кейин «мне» келса — «ко мне».",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-pr-08",
+      "case": "Д",
+      "prompt": "Я отправил письмо ___ почте.",
+      "answers": [
+        "по"
+      ],
+      "note": "Восита: по почте.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-pr-09",
+      "case": "Д",
+      "prompt": "Мы ездим ___ городу на автобусе.",
+      "answers": [
+        "по"
+      ],
+      "note": "Бўйлаб юриш: по городу.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "d-pr-10",
+      "case": "Д",
+      "prompt": "Подойдите ___ окну номер два.",
+      "answers": [
+        "к"
+      ],
+      "note": "Томон ҳаракат: к окну.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

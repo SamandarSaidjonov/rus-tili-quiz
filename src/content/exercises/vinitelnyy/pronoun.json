@@ -1,0 +1,117 @@
+{
+  "topic": "vinitelnyy",
+  "type": "pronoun",
+  "title": "Винительный падеж",
+  "items": [
+    {
+      "id": "v-pn-01",
+      "case": "В",
+      "prompt": "Я вижу (он).",
+      "answers": [
+        "его"
+      ],
+      "note": "Предлогсиз: его.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-pn-02",
+      "case": "В",
+      "prompt": "Я смотрю на (он).",
+      "answers": [
+        "него"
+      ],
+      "note": "Предлогдан кейин н- қўшилади: на него.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-pn-03",
+      "case": "В",
+      "prompt": "Я вижу (она).",
+      "answers": [
+        "её"
+      ],
+      "note": "Предлогсиз: её.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-pn-04",
+      "case": "В",
+      "prompt": "Он спросил про (она).",
+      "answers": [
+        "неё"
+      ],
+      "note": "Предлогдан кейин: про неё.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-pn-05",
+      "case": "В",
+      "prompt": "Мы приглашаем (они).",
+      "answers": [
+        "их"
+      ],
+      "note": "Предлогсиз: их.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-pn-06",
+      "case": "В",
+      "prompt": "Директор ждёт (вы).",
+      "answers": [
+        "вас"
+      ],
+      "note": "вы → вас.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-pn-07",
+      "case": "В",
+      "prompt": "Он пригласил (я) на встречу.",
+      "answers": [
+        "меня"
+      ],
+      "note": "я → меня.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-pn-08",
+      "case": "В",
+      "prompt": "Я давно знаю (ты).",
+      "answers": [
+        "тебя"
+      ],
+      "note": "ты → тебя.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-pn-09",
+      "case": "В",
+      "prompt": "Это касается (мы) всех.",
+      "answers": [
+        "нас"
+      ],
+      "note": "мы → нас.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "v-pn-10",
+      "case": "В",
+      "prompt": "(Кто) ты видишь?",
+      "answers": [
+        "Кого"
+      ],
+      "note": "кто → кого.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "topic": "predlozhnyy",
+  "type": "adjective",
+  "title": "Предложный падеж",
+  "items": [
+    {
+      "id": "p-adj-01",
+      "case": "П",
+      "prompt": "Мы говорим о (новый) проекте.",
+      "answers": [
+        "новом"
+      ],
+      "note": "Мужской род: -ый ўрнига -ом.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-adj-02",
+      "case": "П",
+      "prompt": "Документы в (новая) папке.",
+      "answers": [
+        "новой"
+      ],
+      "note": "Женский род: -ая ўрнига -ой.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-adj-03",
+      "case": "П",
+      "prompt": "Он работает в (большой) банке.",
+      "answers": [
+        "большом"
+      ],
+      "note": "Мужской род: большой → большом.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-adj-04",
+      "case": "П",
+      "prompt": "Встреча на (следующая) неделе.",
+      "answers": [
+        "следующей"
+      ],
+      "note": "Женский род юмшоқ: -ая ўрнига -ей.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-adj-05",
+      "case": "П",
+      "prompt": "Я читал о (русские) писателях.",
+      "answers": [
+        "русских"
+      ],
+      "note": "Кўплик: -ие ўрнига -их.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-adj-06",
+      "case": "П",
+      "prompt": "Офис в (это) здании.",
+      "answers": [
+        "этом"
+      ],
+      "note": "Кўрсатиш олмоши: это → этом.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-adj-07",
+      "case": "П",
+      "prompt": "Он живёт в (старый) доме.",
+      "answers": [
+        "старом"
+      ],
+      "note": "Мужской род: -ый ўрнига -ом.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-adj-08",
+      "case": "П",
+      "prompt": "Мы говорили о (ваши) документах.",
+      "answers": [
+        "ваших"
+      ],
+      "note": "Кўплик: ваши → ваших.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-adj-09",
+      "case": "П",
+      "prompt": "Я работаю в (хороший) коллективе.",
+      "answers": [
+        "хорошем"
+      ],
+      "note": "ш дан кейин -ем: хорошем.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "p-adj-10",
+      "case": "П",
+      "prompt": "Книга о (интересная) работе.",
+      "answers": [
+        "интересной"
+      ],
+      "note": "Женский род: -ая ўрнига -ой.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

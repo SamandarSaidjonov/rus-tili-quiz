@@ -1,0 +1,117 @@
+{
+  "topic": "tvoritelnyy",
+  "type": "bracket",
+  "title": "Творительный падеж",
+  "items": [
+    {
+      "id": "t-br-01",
+      "case": "Т",
+      "prompt": "Я пишу (ручка).",
+      "answers": [
+        "ручкой"
+      ],
+      "note": "Восита: ручка → ручкой.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-br-02",
+      "case": "Т",
+      "prompt": "Он работает (инженер).",
+      "answers": [
+        "инженером"
+      ],
+      "note": "Касб: инженер → инженером.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-br-03",
+      "case": "Т",
+      "prompt": "Я иду с (брат).",
+      "answers": [
+        "братом"
+      ],
+      "note": "«с» + творительный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-br-04",
+      "case": "Т",
+      "prompt": "Она стала (директор).",
+      "answers": [
+        "директором"
+      ],
+      "note": "«стать» + творительный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-br-05",
+      "case": "Т",
+      "prompt": "Я занимаюсь (спорт).",
+      "answers": [
+        "спортом"
+      ],
+      "note": "«заниматься» + творительный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-br-06",
+      "case": "Т",
+      "prompt": "Мы говорили с (коллеги).",
+      "answers": [
+        "коллегами"
+      ],
+      "note": "Кўплик творительный: -ами.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-br-07",
+      "case": "Т",
+      "prompt": "Машина стоит перед (банк).",
+      "answers": [
+        "банком"
+      ],
+      "note": "«перед» + творительный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-br-08",
+      "case": "Т",
+      "prompt": "Я горжусь (своя дочь).",
+      "answers": [
+        "своей дочерью"
+      ],
+      "note": "Истисно: дочь → дочерью; своя → своей.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-br-09",
+      "case": "Т",
+      "prompt": "Он пользуется (компьютер).",
+      "answers": [
+        "компьютером"
+      ],
+      "note": "«пользоваться» + творительный.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "t-br-10",
+      "case": "Т",
+      "prompt": "Я познакомился с (новые сотрудники).",
+      "answers": [
+        "новыми сотрудниками"
+      ],
+      "note": "Кўплик: -ыми ва -ами.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

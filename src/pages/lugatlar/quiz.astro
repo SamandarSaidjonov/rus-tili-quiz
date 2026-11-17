@@ -1,0 +1,21 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import VocabQuiz from '../../components/VocabQuiz.tsx';
+import { url } from '../../lib/url.ts';
+import type { VocabSet } from '../../lib/types.ts';
+
+const entries = (await getCollection('vocab')).sort((a, b) => a.data.order - b.data.order);
+const sets: VocabSet[] = entries.map((e) => ({ id: e.id, ...e.data }));
+---
+
+<Base title="Луғат сўраш" section="lugatlar">
+  <p class="crumb"><a href={url('lugatlar')}>← Луғатлар</a></p>
+  <h1>Луғат сўраш</h1>
+  <VocabQuiz
+    sets={sets}
+    homeHref={url()}
+    listHref={url('lugatlar')}
+    client:only="preact"
+  />
+</Base>

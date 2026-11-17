@@ -1,0 +1,29 @@
+{
+  "name": "rus-tili-quiz",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "node scripts/check.mjs",
+    "check:final": "node scripts/check.mjs --final",
+    "check:astro": "astro check",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "e2e": "playwright test",
+    "legacy:extract": "node scripts/extract-legacy.mjs"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^8.1.6",
+    "@astrojs/preact": "^6.1.6",
+    "astro": "^7.4.12",
+    "preact": "^11.2.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  }
+}

@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { url } from '../../lib/url.ts';
+
+const tests = (await getCollection('tests')).sort((a, b) => b.data.no - a.data.no);
+---
+
+<Base title="Тестлар" section="testlar">
+  <h1>Тестлар</h1>
+  <p class="muted">
+    Ҳар бир тестда 10 та савол: мавзулардан, луғатдан ва машқлардан. Саволлар ҳамма учун бир хил,
+    фақат вариантлар тартиби аралашади. Натижа охирида чиқади.
+  </p>
+
+  {
+    tests.length === 0 && (
+      <div class="card">
+        <p style="margin:0">Тестлар ҳозир тайёрланмоқда.</p>
+      </div>
+    )
+  }
+
+  <div class="cards" style="margin-top:1rem">
+    {
+      tests.map((t) => (
+        <div class="card">
+          <div class="card__top">
+            <span class="card__title">{t.data.title}</span>
+            <span class="badge">{t.data.questions.length} савол</span>
+          </div>
+          <p class="card__meta" data-prog={`test:${t.id}:${t.data.questions.length}`} style="margin:.35rem 0 0">
+            …
+          </p>
+          <div class="btnrow" style="margin-top:.75rem">
+            <a class="btn btn--sm btn--primary" href={url(`testlar/${t.id}`)}>Топшириш</a>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  <script>
+    import { hydrateProgress } from '../../lib/progress-ui.ts';
+    hydrateProgress();
+  </script>
+</Base>
