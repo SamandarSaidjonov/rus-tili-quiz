@@ -61,7 +61,14 @@ export function ProgressRow({
           <span class="mark-bad">✗ {wrong}</span>
         </span>
       </div>
-      <div class="bar" role="progressbar" aria-valuenow={done} aria-valuemin={0} aria-valuemax={total}>
+      <div
+        class="bar"
+        role="progressbar"
+        aria-label="Прогресс"
+        aria-valuenow={done}
+        aria-valuemin={0}
+        aria-valuemax={total}
+      >
         <div class="bar__fill" style={{ width: `${pct}%` }} />
       </div>
     </div>

@@ -193,7 +193,14 @@ export default function TestRunner({ test, homeHref, listHref }: Props): JSX.Ele
           </strong>
           <span class="muted">{answered} та саволга жавоб берилди</span>
         </div>
-        <div class="bar" role="progressbar" aria-valuenow={answered} aria-valuemin={0} aria-valuemax={total}>
+        <div
+          class="bar"
+          role="progressbar"
+          aria-label="Прогресс"
+          aria-valuenow={answered}
+          aria-valuemin={0}
+          aria-valuemax={total}
+        >
           <div class="bar__fill" style={{ width: `${Math.round((answered / total) * 100)}%` }} />
         </div>
       </div>

@@ -29,7 +29,8 @@ interface Answer {
 interface Session {
   v: 1;
   cfg: Cfg;
-  qs: Array<{ id: string; opts: string[] }>;
+  /** `opts` савол биринчи марта кўрсатилганда ҳисобланади (тезлик учун). */
+  qs: Array<{ id: string; opts?: string[] }>;
   i: number;
   ans: Array<Answer | null>;
   finished: boolean;
@@ -89,7 +90,6 @@ export default function VocabQuiz({
     (next: Cfg, onlyIds?: string[]): Session | null => {
       const pool = wordsOf(next.sets.length ? next.sets : sets.map((s) => s.id));
       if (!pool.length) return null;
-      const indexed = indexWords(pool);
 
       let targets = pool;
       if (onlyIds?.length) {
@@ -106,7 +106,7 @@ export default function VocabQuiz({
       return {
         v: 1,
         cfg: next,
-        qs: list.map((w) => ({ id: w.id, opts: pickOptions(w.id, indexed) })),
+        qs: list.map((w) => ({ id: w.id })),
         i: 0,
         ans: list.map(() => null),
         finished: false,
@@ -120,10 +120,19 @@ export default function VocabQuiz({
       Boolean(
         s && s.v === 1 && Array.isArray(s.qs) && s.qs.length && Array.isArray(s.ans) &&
         s.ans.length === s.qs.length && typeof s.i === 'number' &&
-        s.qs.every((q) => byId.has(q.id) && Array.isArray(q.opts) && q.opts.length === 4 &&
-          q.opts.every((o) => byId.has(o))),
+        s.qs.every(
+          (q) =>
+            byId.has(q.id) &&
+            (q.opts == null ||
+              (Array.isArray(q.opts) && q.opts.length === 4 && q.opts.every((o) => byId.has(o))))),
       ),
     [byId],
+  );
+
+  // Вариантларни танлаш учун индекс (бир марта тузилади)
+  const indexedPool = useMemo(
+    () => indexWords(wordsOf(cfg.sets.length ? cfg.sets : sets.map((x) => x.id))),
+    [cfg.sets, sets, wordsOf],
   );
 
   const persist = useCallback((s: Session) => {
@@ -195,6 +204,17 @@ export default function VocabQuiz({
     persist({ ...session, i: session.i + 1 });
   }, [byId, persist, session]);
 
+  // Вариантлар фақат савол кўрсатилганда ҳисобланади — шунда саҳифа тез очилади.
+  useEffect(() => {
+    if (!session || session.finished) return;
+    const idx = view ?? session.i;
+    const q = session.qs[idx];
+    if (!q || q.opts) return;
+    const qs = session.qs.slice();
+    qs[idx] = { ...q, opts: pickOptions(q.id, indexedPool) };
+    persist({ ...session, qs });
+  }, [session, view, indexedPool, persist]);
+
   // Клавиатура: 1–4 вариантни танлайди, Enter — кейингиси, ←/→ — кўриб чиқиш.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -205,7 +225,7 @@ export default function VocabQuiz({
       const answered = Boolean(session.ans[idx]);
       if (/^[1-4]$/.test(e.key) && view === null && !answered) {
         const q = session.qs[session.i];
-        const pick = q?.opts[Number(e.key) - 1];
+        const pick = q?.opts?.[Number(e.key) - 1];
         if (pick) {
           e.preventDefault();
           answer(pick);
@@ -351,7 +371,7 @@ export default function VocabQuiz({
         {word.example?.uz && <p class="quiz__ex muted">Гапда: {word.example.uz}</p>}
 
         <ul class="optlist">
-          {q.opts.map((optId, n) => {
+          {(q.opts ?? []).map((optId, n) => {
             const opt = byId.get(optId)?.word;
             const isRight = optId === q.id;
             const isPick = given?.pick === optId;
@@ -363,7 +383,6 @@ export default function VocabQuiz({
                   class={`opt${state}`}
                   disabled={Boolean(given) || reviewing}
                   onClick={() => answer(optId)}
-                  aria-label={`${n + 1}. ${opt?.ru ?? ''}`}
                 >
                   <span class="opt__no" aria-hidden="true">{n + 1}</span>
                   <Ru text={opt?.ru ?? ''} class="opt__text" />

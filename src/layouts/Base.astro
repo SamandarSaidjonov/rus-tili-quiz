@@ -25,6 +25,9 @@ const fullTitle = title === 'Рус тили' ? title : `${title} · Рус ти
     <meta name="description" content={description} />
     <meta name="color-scheme" content="light dark" />
     <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={url('icon-192.png')} />
+    <link rel="manifest" href={url('manifest.webmanifest')} />
+    <meta name="theme-color" content="#2f5bd4" />
     <Font cssVariable="--font-uz" preload />
     <Font cssVariable="--font-ru" />
     <script is:inline>
@@ -76,6 +79,18 @@ const fullTitle = title === 'Рус тили' ? title : `${title} · Рус ти
         runMigration();
       } catch {
         /* прогресс кўчмаса ҳам сайт ишлайди */
+      }
+
+      // Офлайн ишлаши ва бош экранга қўшиш учун
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          const base = import.meta.env.BASE_URL.endsWith('/')
+            ? import.meta.env.BASE_URL
+            : `${import.meta.env.BASE_URL}/`;
+          navigator.serviceWorker.register(`${base}sw.js`, { scope: base }).catch(() => {
+            /* service worker ишламаса ҳам сайт ишлайди */
+          });
+        });
       }
 
       document.getElementById('theme-btn')?.addEventListener('click', () => {
