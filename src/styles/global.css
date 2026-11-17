@@ -456,6 +456,19 @@ mark {
 .opt--bad .opt__text { text-decoration: line-through; }
 .opt--dim { opacity: .55; }
 
+.opt--picked {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  font-weight: 600;
+}
+
+/* Тест натижаси: ҳар бир савол бўйича кўриб чиқиш */
+.review { border-inline-start: 4px solid var(--line); }
+.review--good { border-inline-start-color: var(--good); }
+.review--bad { border-inline-start-color: var(--bad); }
+.review__prompt { margin: 0; font-weight: 600; }
+.quiz__prompt--test { font-size: 1.25rem; }
+
 .feedback { margin-top: 1rem; }
 .feedback__pair {
   display: flex;

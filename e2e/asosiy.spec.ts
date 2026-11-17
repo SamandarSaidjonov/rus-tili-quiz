@@ -70,3 +70,25 @@ test('қоронғи тема танлови сақланади', async ({ page 
     .poll(async () => page.evaluate(() => document.documentElement.dataset.theme))
     .toBe(theme);
 });
+
+test('тест: натижа охирида чиқади ва изоҳлар кўринади', async ({ page }) => {
+  await page.goto('./testlar/test-001/');
+  await expect(page.getByRole('heading', { level: 1, name: 'Тест 1' })).toBeVisible();
+
+  for (let i = 0; i < 10; i++) {
+    await page.locator('.opt').first().click();
+    // Тест давомида тўғри ёки хато кўрсатилмайди
+    await expect(page.locator('.verdict')).toHaveCount(0);
+    const next = page.getByRole('button', { name: /Кейинги/ });
+    if (await next.isVisible()) await next.click();
+  }
+
+  await page.getByRole('button', { name: 'Якунлаш' }).click();
+  await expect(page.getByRole('heading', { name: 'Натижа' })).toBeVisible();
+  await expect(page.locator('.review')).toHaveCount(10);
+  await expect(page.locator('.result__score')).toContainText('/ 10');
+
+  // Рўйхатда натижа кўринади
+  await page.goto('./testlar/');
+  await expect(page.locator('[data-prog="test:test-001:10"]')).toContainText('Охирги натижа');
+});

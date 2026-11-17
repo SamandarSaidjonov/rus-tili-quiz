@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import TestRunner from '../../components/TestRunner.tsx';
+import { url } from '../../lib/url.ts';
+import type { TestFile } from '../../lib/types.ts';
+
+export const getStaticPaths = (async () => {
+  const tests = await getCollection('tests');
+  return tests.map((t) => ({
+    params: { test: t.id },
+    props: { test: { id: t.id, ...t.data } as TestFile },
+  }));
+}) satisfies GetStaticPaths;
+
+const { test } = Astro.props as { test: TestFile };
+---
+
+<Base title={test.title} section="testlar">
+  <p class="crumb"><a href={url('testlar')}>← Тестлар</a></p>
+  <h1>{test.title}</h1>
+  <p class="muted">
+    {test.questions.length} та савол · ҳар бирида 4 та вариант. Натижа охирида чиқади.
+  </p>
+  <TestRunner test={test} homeHref={url()} listHref={url('testlar')} client:only="preact" />
+</Base>
