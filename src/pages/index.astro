@@ -41,12 +41,35 @@ const counts: Record<string, string> = {
 <Base title="Рус тили" wide>
   <div class="rt-pagehead">
     <h1>Рус тили</h1>
+    <div class="rt-pagehead__end">
+      <button
+        class="rt-iconbtn"
+        id="theme-btn"
+        type="button"
+        aria-label="Темани алмаштириш"
+        title="Темани алмаштириш"
+      >
+        <Icon name="sun" class="rt-theme__sun" />
+        <Icon name="moon" class="rt-theme__moon" />
+      </button>
+      <button
+        class="rt-iconbtn rt-iconbtn--danger"
+        id="clear-btn"
+        type="button"
+        aria-label="Барча прогрессни тозалаш"
+        title="Барча прогрессни тозалаш"
+      >
+        <Icon name="trash" />
+      </button>
+    </div>
   </div>
 
   <p class="rt-muted">
     Мавзулар бўйича тушунтириш, падежлар машқлари, луғат ва тестлар. Ҳаммаси телефонда ишлайди,
     прогресс шу браузерда сақланади.
   </p>
+
+  <p id="clear-msg" class="rt-notice" role="status"></p>
 
   <div class="rt-stack--tight rt-grid rt-grid--2">
     {
@@ -74,24 +97,6 @@ const counts: Record<string, string> = {
     }
   </div>
 
-  <section class="rt-card">
-    <h2 class="rt-item__title">Созламалар</h2>
-    <p class="rt-item__meta">
-      Прогресс фақат шу телефон ва браузерда сақланади. Эски версиядаги натижалар автоматик
-      кўчирилди.
-    </p>
-    <div class="rt-row">
-      <button class="rt-btn rt-btn--secondary" id="theme-btn" type="button">
-        Қоронғи темага ўтиш
-      </button>
-      <a class="rt-btn rt-btn--secondary" href={url('legacy/index.html')}>Эски версияни очиш</a>
-    </div>
-    <div>
-      <button class="rt-link" id="clear-btn" type="button">Барча прогрессни тозалаш</button>
-    </div>
-    <p id="clear-msg" class="rt-item__meta" role="status"></p>
-  </section>
-
   <script type="application/json" id="catalog" set:html={JSON.stringify(catalog)} is:inline />
 
   <script>
@@ -106,22 +111,17 @@ const counts: Record<string, string> = {
     }
 
     // Тема: тизим созламасини кузатамиз, танлов `localStorage` да сақланади.
-    const themeBtn = document.getElementById('theme-btn');
+    // Тугмадаги қуёш/ой иконкасини CSS ўзи алмаштиради (`.rt-theme__sun`, `.rt-theme__moon`).
     const isDark = (): boolean => {
       const root = document.documentElement;
       return root.dataset.theme
         ? root.dataset.theme === 'dark'
         : window.matchMedia('(prefers-color-scheme: dark)').matches;
     };
-    const labelTheme = (): void => {
-      if (themeBtn) themeBtn.textContent = isDark() ? 'Ёруғ темага ўтиш' : 'Қоронғи темага ўтиш';
-    };
-    labelTheme();
-    themeBtn?.addEventListener('click', () => {
+    document.getElementById('theme-btn')?.addEventListener('click', () => {
       const next = isDark() ? 'light' : 'dark';
       document.documentElement.dataset.theme = next;
       writeRaw('rt2:theme', next);
-      labelTheme();
     });
 
     const msg = document.getElementById('clear-msg');

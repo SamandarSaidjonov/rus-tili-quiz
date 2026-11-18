@@ -22,6 +22,20 @@ body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f
 .rt-link { appearance: none; background: none; border: 0; padding: var(--space-1) 0; font: 400 15px/22px var(--font-uz); color: var(--muted); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 .rt-link:hover { color: var(--ink); }
 
+/* ---------- IconButton ---------- */
+.rt-iconbtn { box-sizing: border-box; appearance: none; flex: none; display: inline-grid; place-items: center; width: var(--tap-min); height: var(--tap-min); padding: 0; border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--muted); cursor: pointer; }
+.rt-iconbtn svg { width: 22px; height: 22px; }
+.rt-iconbtn:hover { background: var(--surface-sunk); color: var(--ink); }
+.rt-iconbtn--danger:hover { color: var(--bad); }
+.rt-theme__sun { display: none; }
+.rt-theme__moon { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .rt-theme__sun { display: block; }
+  :root:not([data-theme="light"]) .rt-theme__moon { display: none; }
+}
+[data-theme="dark"] .rt-theme__sun { display: block; }
+[data-theme="dark"] .rt-theme__moon { display: none; }
+
 /* ---------- SpeakButton ---------- */
 .rt-say { box-sizing: border-box; appearance: none; flex: none; display: inline-grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 2px solid var(--line); border-radius: var(--radius-pill); background: var(--surface); color: var(--accent); cursor: pointer; vertical-align: middle; }
 .rt-say svg { width: 22px; height: 22px; }

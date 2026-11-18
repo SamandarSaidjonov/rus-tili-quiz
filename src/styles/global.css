@@ -1275,8 +1275,72 @@ textarea.rt-input {
   min-width: 0;
   font: 700 34px/38px var(--font-display);
 }
+/* Сарлавҳанинг ўнг четидаги иконка тугмалар (тема, прогрессни тозалаш). */
 .rt-pagehead__end {
   margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* Ҳолат ёзуви (масалан, прогресс сақланмаслиги ҳақида): бўш бўлса жой эгалламайди. */
+.rt-notice {
+  color: var(--muted);
+}
+.rt-notice:empty {
+  display: none;
+}
+
+/* Ёзувсиз иконка тугма: маъноси `aria-label` да айтилади. */
+.rt-iconbtn {
+  appearance: none;
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: var(--tap-min);
+  height: var(--tap-min);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+.rt-iconbtn svg {
+  width: 22px;
+  height: 22px;
+}
+.rt-iconbtn:hover {
+  background: var(--surface-sunk);
+  color: var(--ink);
+}
+/* Прогрессни ўчириш — қайтмас амал, шунинг учун устига борганда қизаради. */
+.rt-iconbtn--danger:hover {
+  color: var(--bad);
+}
+
+/* Тема тугмасида битта иконка кўринади: ҳозир қоронғи бўлса — қуёш (ёруғга ўтиш),
+   ёруғ бўлса — ой (қоронғига ўтиш). Тартиб юқоридаги ранг токенлариникидек:
+   аввал ёруғ, кейин тизим созламаси, охирида фойдаланувчи танлови. */
+.rt-theme__sun {
+  display: none;
+}
+.rt-theme__moon {
+  display: block;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .rt-theme__sun {
+    display: block;
+  }
+  :root:not([data-theme='light']) .rt-theme__moon {
+    display: none;
+  }
+}
+[data-theme='dark'] .rt-theme__sun {
+  display: block;
+}
+[data-theme='dark'] .rt-theme__moon {
+  display: none;
 }
 
 /* Бўлим рўйхатидаги карточка: ном, белги, прогресс ва тугмалар. */

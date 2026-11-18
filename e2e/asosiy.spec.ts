@@ -62,7 +62,7 @@ test('машқда «Билмайман» хато деб ҳисобланади
 
 test('қоронғи тема танлови сақланади', async ({ page }) => {
   await page.goto('./');
-  await page.getByRole('button', { name: /тема/ }).click();
+  await page.getByRole('button', { name: /тема/i }).click();
   const theme = await page.evaluate(() => document.documentElement.dataset.theme);
   expect(['dark', 'light']).toContain(theme);
   await page.reload();
