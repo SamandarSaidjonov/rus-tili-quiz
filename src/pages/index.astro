@@ -38,7 +38,7 @@ const counts: Record<string, string> = {
 };
 ---
 
-<Base title="Рус тили">
+<Base title="Рус тили" wide>
   <div class="rt-pagehead">
     <h1>Рус тили</h1>
   </div>
@@ -48,7 +48,7 @@ const counts: Record<string, string> = {
     прогресс шу браузерда сақланади.
   </p>
 
-  <div class="rt-stack--tight">
+  <div class="rt-stack--tight rt-grid rt-grid--2">
     {
       SECTIONS.map((s) => (
         <a class="rt-section" href={url(s.key)}>

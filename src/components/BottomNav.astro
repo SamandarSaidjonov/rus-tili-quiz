@@ -19,6 +19,8 @@ const icons: Record<SectionKey, IconName> = {
 ---
 
 <nav class="rt-nav" aria-label="Бўлимлар">
+  {/* Компьютерда навигация чап устунда туради: тепасида сайт номи бўлади. */}
+  <a class="rt-nav__home" href={url()}>Рус тили</a>
   {
     SECTIONS.map((s) => (
       <a

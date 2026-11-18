@@ -8,7 +8,7 @@ const sets = (await getCollection('vocab')).sort((a, b) => b.data.order - a.data
 const total = sets.reduce((n, s) => n + s.data.words.length, 0);
 ---
 
-<Base title="Луғатлар" section="lugatlar">
+<Base title="Луғатлар" section="lugatlar" wide>
   <div class="rt-pagehead">
     <a class="rt-back" href={url()} aria-label="Бош саҳифага қайтиш">
       <Icon name="arrow-left" />
@@ -28,7 +28,7 @@ const total = sets.reduce((n, s) => n + s.data.words.length, 0);
     </a>
   </div>
 
-  <div class="rt-stack--tight">
+  <div class="rt-stack--tight rt-grid">
     {
       sets.map((s) => (
         <div class="rt-item">

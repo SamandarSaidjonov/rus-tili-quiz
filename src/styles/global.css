@@ -100,6 +100,10 @@
   --icon-size: 24px;
   --page-max: 640px;
   --read-max: 68ch;
+  /* Саҳифа чети ва пастки навигация эгаллаган жой: кенг экранда ўзгаради. */
+  --page-pad: var(--space-4);
+  --nav-bottom: var(--nav-height);
+  --rail-width: 240px;
   --focus-width: 3px;
 }
 
@@ -199,8 +203,8 @@ a {
   width: 100%;
   max-width: var(--page-max);
   margin: 0 auto;
-  padding: var(--space-4) var(--space-4)
-    calc(var(--nav-height) + var(--space-12) + env(safe-area-inset-bottom));
+  padding: var(--page-pad) var(--page-pad)
+    calc(var(--nav-bottom) + var(--space-12) + env(safe-area-inset-bottom));
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
@@ -412,7 +416,7 @@ a {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  padding: var(--space-2) var(--space-4) var(--space-3);
+  padding: var(--space-2) var(--page-pad) var(--space-3);
   background: var(--bg);
 }
 .rt-topbar__row {
@@ -471,6 +475,10 @@ a {
   padding-bottom: env(safe-area-inset-bottom);
   background: var(--surface);
   border-top: 1px solid var(--line);
+}
+/* Сайт номи фақат компьютердаги чап устунда кўринади. */
+.rt-nav__home {
+  display: none;
 }
 .rt-nav__item {
   position: relative;
@@ -905,10 +913,10 @@ textarea.rt-input {
 }
 .rt-actionbar {
   position: sticky;
-  bottom: calc(var(--nav-height) + env(safe-area-inset-bottom));
+  bottom: calc(var(--nav-bottom) + env(safe-area-inset-bottom));
   z-index: 10;
-  margin-inline: calc(var(--space-4) * -1);
-  padding: var(--space-3) var(--space-4);
+  margin-inline: calc(var(--page-pad) * -1);
+  padding: var(--space-3) var(--page-pad);
   background: var(--surface);
   border-top: 1px solid var(--line);
 }
@@ -1442,5 +1450,143 @@ a.rt-item:hover {
   *::after {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
+  }
+}
+
+/* ============================================================
+   Экранга мослашиш: телефон → планшет → компьютер.
+   Юқоридаги ҳамма қоида телефон учун (асосий ҳолат). Қуйидагилар
+   фақат кенг экранда ишлайди, телефон кўринишига тегмайди.
+     ≥ 700px  — планшет: саҳифа кенгаяди, рўйхатлар икки устунда.
+     ≥ 1024px — компьютер: пастки навигация чап устунга айланади.
+   ============================================================ */
+
+@media (min-width: 700px) {
+  :root {
+    --page-max: 720px;
+    --page-pad: var(--space-6);
+  }
+
+  /* Рўйхатли саҳифалар (бош саҳифа, бўлимлар, луғат тўплами) кенгроқ. */
+  .rt-page--wide {
+    max-width: 920px;
+  }
+
+  .rt-page > h1,
+  .rt-pagehead h1,
+  .rt-topic h1 {
+    font: 700 38px/42px var(--font-display);
+  }
+
+  /* Рўйхат устунларга бўлинади. Телефонда бу синф ҳеч нарса қилмайди. */
+  .rt-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: var(--space-3);
+  }
+  /* Бош саҳифадаги тўртта бўлим: доим иккита устун (3+1 бўлиб қолмасин). */
+  .rt-grid--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .rt-grid > li {
+    display: flex;
+  }
+  .rt-grid > li > * {
+    flex: 1;
+  }
+  /* Ёнма-ён турган карточкаларда тугмалар бир сатрда турсин. */
+  .rt-grid > .rt-item > .rt-item__actions {
+    margin-top: auto;
+  }
+
+  /* Кенг экранда жадвал матнича кенгликда туради: чегараси ичида бўш жой қолмайди.
+     Жадвал устундан кенг бўлса, аввалгидек ён томонга сурилади. */
+  .rt-prose table {
+    width: fit-content;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    /* Навигация пастда эмас — саҳифа остида жой қолдирилмайди. */
+    --nav-bottom: 0px;
+  }
+
+  body {
+    padding-inline-start: var(--rail-width);
+  }
+
+  /* Пастки навигация чап устунга айланади (HTML ўзгармайди). */
+  .rt-nav {
+    top: 0;
+    inset-inline: 0 auto;
+    width: var(--rail-width);
+    grid-template-columns: 1fr;
+    align-content: start;
+    gap: var(--space-1);
+    padding: var(--space-6) var(--space-3);
+    padding-bottom: var(--space-6);
+    border-top: 0;
+    border-inline-end: 1px solid var(--line);
+  }
+  .rt-nav__home {
+    display: flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    margin-bottom: var(--space-3);
+    padding-inline: var(--space-3);
+    font: 700 26px/30px var(--font-display);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .rt-nav__item {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: var(--space-3);
+    min-height: var(--tap-min);
+    padding-inline: var(--space-3);
+    border-radius: var(--radius-md);
+    font: 400 17px/24px var(--font-uz);
+  }
+  .rt-nav__item:hover {
+    background: var(--surface-sunk);
+  }
+  .rt-nav__item[aria-current='page'] {
+    background: var(--accent-soft);
+    font-weight: 700;
+  }
+  /* Жорий бўлим белгиси тепада эмас, чап четда туради. */
+  .rt-nav__item[aria-current='page']::before {
+    top: 50%;
+    left: 0;
+    right: auto;
+    width: 3px;
+    height: 26px;
+    margin-top: -13px;
+    border-radius: 0 3px 3px 0;
+  }
+
+  .rt-page {
+    padding-top: var(--space-6);
+  }
+  .rt-page--wide {
+    max-width: 1040px;
+  }
+  .rt-topbar {
+    padding-top: var(--space-6);
+  }
+
+  /* «Асосий қисмга ўтиш» ҳаволаси чап устун устига тушиб қолмасин. */
+  .rt-skip:focus {
+    left: calc(var(--rail-width) + var(--space-2));
+  }
+
+  /* Компьютерда тугмалар панели ёпишиб турмайди: экран баланд, жой етарли. */
+  .rt-actionbar {
+    position: static;
+    margin-inline: 0;
+    padding: 0;
+    background: none;
+    border-top: 0;
   }
 }

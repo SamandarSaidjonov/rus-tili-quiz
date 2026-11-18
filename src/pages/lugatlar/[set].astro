@@ -16,7 +16,7 @@ const { set } = Astro.props;
 const { title, pages, note, words } = set.data;
 ---
 
-<Base title={title} section="lugatlar">
+<Base title={title} section="lugatlar" wide>
   <div class="rt-pagehead">
     <a class="rt-back" href={url('lugatlar')} aria-label="Луғатлар рўйхатига қайтиш">
       <Icon name="arrow-left" />
@@ -36,7 +36,7 @@ const { title, pages, note, words } = set.data;
     </button>
   </div>
 
-  <div id="cards" class="rt-stack--tight">
+  <div id="cards" class="rt-stack--tight rt-grid">
     {
       words.map((w) => (
         <article class="rt-card">

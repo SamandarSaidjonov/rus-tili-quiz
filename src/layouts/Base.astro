@@ -8,10 +8,16 @@ interface Props {
   title: string;
   description?: string;
   section?: SectionKey;
+  /** Рўйхатли саҳифа: кенг экранда карточкалар бир неча устунга бўлинади. */
+  wide?: boolean;
 }
 
-const { title, description = 'Рус тилини ўрганиш: мавзулар, машқлар, луғат ва тестлар.', section } =
-  Astro.props;
+const {
+  title,
+  description = 'Рус тилини ўрганиш: мавзулар, машқлар, луғат ва тестлар.',
+  section,
+  wide = false,
+} = Astro.props;
 
 const fullTitle = title === 'Рус тили' ? title : `${title} · Рус тили`;
 ---
@@ -47,7 +53,7 @@ const fullTitle = title === 'Рус тили' ? title : `${title} · Рус ти
 
     <slot name="topbar" />
 
-    <main id="main" class="rt-page">
+    <main id="main" class:list={['rt-page', wide && 'rt-page--wide']}>
       <slot />
     </main>
 

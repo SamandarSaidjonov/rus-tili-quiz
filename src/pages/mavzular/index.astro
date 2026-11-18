@@ -7,7 +7,7 @@ import { url } from '../../lib/url.ts';
 const topics = (await getCollection('topics')).sort((a, b) => a.data.order - b.data.order);
 ---
 
-<Base title="Мавзулар" section="mavzular">
+<Base title="Мавзулар" section="mavzular" wide>
   <div class="rt-pagehead">
     <a class="rt-back" href={url()} aria-label="Бош саҳифага қайтиш">
       <Icon name="arrow-left" />
@@ -27,7 +27,7 @@ const topics = (await getCollection('topics')).sort((a, b) => a.data.order - b.d
     )
   }
 
-  <div class="rt-stack--tight">
+  <div class="rt-stack--tight rt-grid">
     {
       topics.map((t) => (
         <a class="rt-item" href={url(`mavzular/${t.id}`)}>

@@ -92,3 +92,39 @@ test('тест: натижа охирида чиқади ва изоҳлар к�
   await page.goto('./testlar/');
   await expect(page.locator('[data-prog-badge="test:test-001:10"]')).toContainText('/10');
 });
+
+test('телефонда навигация пастда туради', async ({ page }) => {
+  await page.goto('./');
+  const nav = page.locator('.rt-nav');
+  const box = await nav.boundingBox();
+  const size = page.viewportSize();
+  expect(box && size && box.y + box.height).toBeGreaterThanOrEqual(size!.height - 1);
+  // Сайт номи чап устунга тегишли — телефонда кўринмайди.
+  await expect(page.locator('.rt-nav__home')).toBeHidden();
+});
+
+test.describe('компьютер экрани', () => {
+  test.use({ viewport: { width: 1280, height: 800 }, isMobile: false, hasTouch: false });
+
+  test('навигация чап устунга ўтади, контент марказда қолади', async ({ page }) => {
+    await page.goto('./');
+
+    const nav = page.locator('.rt-nav');
+    const navBox = await nav.boundingBox();
+    expect(navBox?.x).toBe(0);
+    // Устун бўйи бўйича чўзилади, пастки панел эмас.
+    expect(navBox?.height).toBeGreaterThan(400);
+
+    // Устун тепасида сайт номи бор ва у бош саҳифага олиб боради.
+    await expect(page.getByRole('navigation').getByRole('link', { name: 'Рус тили' })).toBeVisible();
+
+    // Бўлимлар рўйхати бир нечта устунда кўринади.
+    const cards = page.locator('.rt-section');
+    const first = await cards.nth(0).boundingBox();
+    const second = await cards.nth(1).boundingBox();
+    expect(second?.y).toBe(first?.y);
+    // Контент чап устун билан қопланмайди.
+    const main = await page.locator('#main').boundingBox();
+    expect(main?.x).toBeGreaterThanOrEqual(navBox!.width);
+  });
+});

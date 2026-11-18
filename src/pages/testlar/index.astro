@@ -7,7 +7,7 @@ import { url } from '../../lib/url.ts';
 const tests = (await getCollection('tests')).sort((a, b) => b.data.no - a.data.no);
 ---
 
-<Base title="Тестлар" section="testlar">
+<Base title="Тестлар" section="testlar" wide>
   <div class="rt-pagehead">
     <a class="rt-back" href={url()} aria-label="Бош саҳифага қайтиш">
       <Icon name="arrow-left" />
@@ -28,7 +28,7 @@ const tests = (await getCollection('tests')).sort((a, b) => b.data.no - a.data.n
     )
   }
 
-  <ul class="rt-tests">
+  <ul class="rt-tests rt-grid">
     {
       tests.map((t) => (
         <li>
