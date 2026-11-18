@@ -5,7 +5,6 @@ import Icon from '../../components/Icon.astro';
 import { url } from '../../lib/url.ts';
 
 const sets = (await getCollection('vocab')).sort((a, b) => b.data.order - a.data.order);
-const total = sets.reduce((n, s) => n + s.data.words.length, 0);
 ---
 
 <Base title="Луғатлар" section="lugatlar" wide>
@@ -16,15 +15,12 @@ const total = sets.reduce((n, s) => n + s.data.words.length, 0);
     <h1>Луғатлар</h1>
   </div>
 
-  <p class="rt-muted">
-    {sets.length} та тўплам · {total} та сўз. Савол ўзбекча берилади, 4 та жавоб варианти русча.
-    Янги тўпламлар тепада туради.
-  </p>
+  <p class="rt-muted">Савол ўзбекча берилади, 4 та жавоб варианти русча</p>
 
   <div class="rt-row">
-    <a class="rt-btn rt-btn--primary" href={url('lugatlar/quiz')}>Ҳаммасини сўраш</a>
+    <a class="rt-btn rt-btn--primary" href={url('lugatlar/quiz')}>Ҳаммасини топшириш</a>
     <a class="rt-btn rt-btn--secondary" href={`${url('lugatlar/quiz')}?mode=mistakes`}>
-      Хато қилганларимни сўраш
+      Хато қилганларимни топшириш
     </a>
   </div>
 
@@ -45,7 +41,7 @@ const total = sets.reduce((n, s) => n + s.data.words.length, 0);
           </span>
           <div class="rt-item__actions">
             <a class="rt-btn rt-btn--primary" href={`${url('lugatlar/quiz')}?set=${s.id}`}>
-              Сўрашни бошлаш
+              Мавзу бўйича топшириш
             </a>
             <a class="rt-btn rt-btn--secondary" href={url(`lugatlar/${s.id}`)}>
               Сўзларни кўриш

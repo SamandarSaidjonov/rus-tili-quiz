@@ -12,8 +12,7 @@
     "check:astro": "astro check",
     "test": "vitest run",
     "test:watch": "vitest",
-    "e2e": "playwright test",
-    "legacy:extract": "node scripts/extract-legacy.mjs"
+    "e2e": "playwright test"
   },
   "dependencies": {
     "@astrojs/mdx": "^8.1.6",

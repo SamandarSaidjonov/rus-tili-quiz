@@ -345,7 +345,7 @@ export default function ExerciseRunner({
                 {warning && <Warn text={warning} id="rt-answer-warn" />}
                 <div>
                   <button class="rt-link" type="button" onClick={giveUp}>
-                    Билмайман, жавобни кўрсат
+                    Билмайман. Жавобни кўриш
                   </button>
                 </div>
               </>

@@ -31,12 +31,6 @@ const hasExercises = (await getCollection('exercises')).some((e) => e.data.topic
 
     <p class="rt-lead">{entry.data.short}</p>
 
-    {
-      !entry.data.reviewed && (
-        <p class="rt-item__meta">Бу мавзуни ўқитувчи ҳали текширмаган.</p>
-      )
-    }
-
     <div class="rt-prose">
       <Content />
     </div>

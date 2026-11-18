@@ -4,7 +4,6 @@ import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import { url } from '../../lib/url.ts';
 import { topicMeta } from '../../lib/topics.ts';
-import { TYPE_INFO } from '../../lib/exercise.ts';
 
 const entries = await getCollection('exercises');
 
@@ -13,7 +12,6 @@ interface Group {
   title: string;
   order: number;
   items: number;
-  types: string[];
 }
 
 const groups = new Map<string, Group>();
@@ -24,15 +22,12 @@ for (const e of entries) {
     title: meta.title,
     order: meta.order,
     items: 0,
-    types: [],
   };
   g.items += e.data.items.length;
-  g.types.push(TYPE_INFO[e.data.type].name);
   groups.set(e.data.topic, g);
 }
 
 const list = [...groups.values()].sort((a, b) => a.order - b.order);
-const total = list.reduce((n, g) => n + g.items, 0);
 ---
 
 <Base title="Машқлар" section="mashqlar" wide>
@@ -44,8 +39,8 @@ const total = list.reduce((n, g) => n + g.items, 0);
   </div>
 
   <p class="rt-muted">
-    {total} та машқ. Жавобни рус ҳарфларида ўзингиз ёзасиз. Катта-кичик ҳарф, тиниш белгилари,
-    ё/е фарқи ва урғу белгиси хато ҳисобланмайди.
+    Жавобни рус ҳарфларида ўзингиз ёзасиз. Катта-кичик ҳарф, тиниш белгилари, ё/е фарқи ва
+    урғу белгиси хато ҳисобланмайди
   </p>
 
   {
@@ -64,9 +59,6 @@ const total = list.reduce((n, g) => n + g.items, 0);
             <h2 class="rt-item__title">{g.title}</h2>
             <span class="rt-badge rt-badge--score">{g.items} та машқ</span>
           </div>
-          <p class="rt-item__meta">
-            {g.types.length} тур: {g.types.join(' · ')}
-          </p>
           <p class="rt-item__meta" data-prog={`ex:${g.slug}:${g.items}`}>Ҳали бошланмаган</p>
           <span class="rt-bar" data-prog-bar={`ex:${g.slug}:${g.items}`}>
             <i style="width:0%" />
