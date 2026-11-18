@@ -2,7 +2,9 @@
 import { getCollection } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
 import RuText from '../../components/RuText.astro';
+import SpeakButton from '../../components/SpeakButton.astro';
 import { url } from '../../lib/url.ts';
 
 export const getStaticPaths = (async () => {
@@ -15,52 +17,82 @@ const { title, pages, note, words } = set.data;
 ---
 
 <Base title={title} section="lugatlar">
-  <p class="crumb"><a href={url('lugatlar')}>← Луғатлар</a></p>
-  <h1>{title}</h1>
-  <p class="muted">{words.length} сўз{pages ? ` · ${pages}` : ''}</p>
-  {note && <p class="note">{note}</p>}
-
-  <div class="btnrow" style="margin:.9rem 0 1.1rem">
-    <a class="btn btn--primary" href={`${url('lugatlar/quiz')}?set=${set.id}`}>Сўрашни бошлаш</a>
-    <button class="btn" type="button" id="view-btn" aria-pressed="false">Жадвал кўриниши</button>
+  <div class="rt-pagehead">
+    <a class="rt-back" href={url('lugatlar')} aria-label="Луғатлар рўйхатига қайтиш">
+      <Icon name="arrow-left" />
+    </a>
+    <h1>{title}</h1>
   </div>
 
-  <div id="cards" class="cards">
+  <p class="rt-muted">{words.length} та сўз{pages ? ` · ${pages}` : ''}</p>
+  {note && <p class="rt-note">{note}</p>}
+
+  <div class="rt-row">
+    <a class="rt-btn rt-btn--primary" href={`${url('lugatlar/quiz')}?set=${set.id}`}>
+      Сўрашни бошлаш
+    </a>
+    <button class="rt-btn rt-btn--secondary" type="button" id="view-btn" aria-pressed="false">
+      Жадвалда кўриш
+    </button>
+  </div>
+
+  <div id="cards" class="rt-stack--tight">
     {
       words.map((w) => (
-        <div class="card wordcard">
-          <div class="wordcard__top">
-            <RuText text={w.ru} class="wordcard__ru" />
-            {w.pos && <span class="badge">{w.pos}</span>}
+        <article class="rt-card">
+          <div class="rt-vocab__head">
+            <div class="rt-vocab__words">
+              {w.pos && <p class="rt-vocab__pos">{w.pos}</p>}
+              <h2 class="rt-vocab__ru" lang="ru">
+                <RuText text={w.ru} />
+              </h2>
+              <p class="rt-vocab__uz">{w.uz}</p>
+            </div>
+            <SpeakButton text={w.ru} />
           </div>
-          <p class="wordcard__uz">{w.uz}</p>
+
           {w.example?.ru && (
-            <div class="note stack" style="margin-top:.5rem">
-              <p style="margin:0"><RuText text={w.example.ru} /></p>
-              {w.example.uz && <p class="muted" style="margin:0">{w.example.uz}</p>}
+            <div class="rt-example">
+              <p class="rt-label">Мисол</p>
+              <p class="rt-example__ru" lang="ru">
+                <RuText text={w.example.ru} />
+                <SpeakButton text={w.example.ru} small label="Гапни тинглаш" />
+              </p>
+              {w.example.uz && <p class="rt-example__uz">{w.example.uz}</p>}
             </div>
           )}
-          {w.note && <p class="muted" style="margin:.5rem 0 0">{w.note}</p>}
-          {!w.reviewed && <p class="card__meta" style="margin:.4rem 0 0">Ўқитувчи текширмаган</p>}
-        </div>
+
+          {w.note && (
+            <div class="rt-note">
+              <p class="rt-label">Изоҳ</p>
+              {w.note}
+            </div>
+          )}
+
+          {!w.reviewed && <p class="rt-item__meta">Ўқитувчи текширмаган</p>}
+        </article>
       ))
     }
   </div>
 
-  <div id="table" class="tblwrap" hidden>
-    <table>
+  <div id="table" class="rt-table-wrap" role="region" aria-label={`${title}: сўзлар жадвали`} tabindex="0" hidden>
+    <table class="rt-table">
       <thead>
         <tr>
-          <th>Русча</th>
-          <th>Ўзбекча</th>
+          <th scope="col">Русча</th>
+          <th scope="col">Ўзбекча</th>
+          <th scope="col">Сўз туркуми</th>
         </tr>
       </thead>
       <tbody>
         {
           words.map((w) => (
             <tr>
-              <td><RuText text={w.ru} /></td>
+              <td lang="ru">
+                <RuText text={w.ru} />
+              </td>
               <td>{w.uz}</td>
+              <td>{w.pos}</td>
             </tr>
           ))
         }
@@ -69,6 +101,9 @@ const { title, pages, note, words } = set.data;
   </div>
 
   <script>
+    import { wireSpeak } from '../../lib/speak-ui.ts';
+    wireSpeak();
+
     const btn = document.getElementById('view-btn');
     const cards = document.getElementById('cards');
     const table = document.getElementById('table');
@@ -76,7 +111,7 @@ const { title, pages, note, words } = set.data;
       const showTable = table?.hidden ?? false;
       if (cards) cards.hidden = showTable;
       if (table) table.hidden = !showTable;
-      btn.textContent = showTable ? 'Карточка кўриниши' : 'Жадвал кўриниши';
+      btn.textContent = showTable ? 'Карточкада кўриш' : 'Жадвалда кўриш';
       btn.setAttribute('aria-pressed', String(showTable));
     });
   </script>

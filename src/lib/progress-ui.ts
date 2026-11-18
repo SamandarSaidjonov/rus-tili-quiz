@@ -1,7 +1,12 @@
 /**
  * Статик саҳифалардаги прогресс ёзувларини `localStorage` дан тўлдиради.
- * HTML'да: `<span data-prog="vocab:001-vaqt:55"></span>`, `<div data-prog-bar="vocab:001-vaqt:55">`.
+ * HTML'да бошланғич матн (масалан «55 та сўз») ёзилган бўлади; прогресс бўлса,
+ * шу матн алмаштирилади, бўлмаса ўз жойида қолади.
+ *
+ * `<p data-prog="vocab:001-vaqt:55">`, `<span data-prog-bar="vocab:001-vaqt:55"><i></i></span>`,
+ * `<span data-prog-badge="test:test-001:10">`, `<span data-prog-seen="predlozhnyy">`.
  */
+import { ICONS } from './icons.ts';
 import { answeredCount, readStats, type Kind } from './progress.ts';
 
 function parse(spec: string): { kind: Kind; id: string; total: number } | null {
@@ -11,30 +16,30 @@ function parse(spec: string): { kind: Kind; id: string; total: number } | null {
   return { kind, id, total: Number(total) || 0 };
 }
 
-function statusText(kind: Kind, id: string, total: number): string {
+const icon = (name: 'check' | 'cross'): string =>
+  `<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false">${ICONS[name]}</svg>`;
+
+/** Прогресс бўлмаса `null` қайтади — HTML'даги бошланғич матн қолади. */
+function statusText(kind: Kind, id: string, total: number): string | null {
   const stats = readStats(kind, id);
-  const { answered, correct } = answeredCount(stats);
 
   if (kind === 'test') {
-    if (stats.last) {
-      const best = stats.best ? ` · энг яхши: ${stats.best.correct}/${stats.best.total}` : '';
-      return `Охирги натижа: ${stats.last.correct}/${stats.last.total}${best}`;
-    }
-    return 'Топширилмаган';
+    return stats.best ? `Энг яхши натижа: ${stats.best.correct}/${stats.best.total}` : null;
   }
 
-  if (!answered) return 'Ҳали бошланмаган';
+  const { answered, correct } = answeredCount(stats);
+  if (!answered) return null;
   const wrong = answered - correct;
   const unit = kind === 'vocab' ? 'сўз' : 'машқ';
-  const best = stats.best ? ` · энг яхши: ${stats.best.correct}/${stats.best.total}` : '';
-  return `${answered} / ${total} ${unit} · ✓ ${correct} · ✗ ${wrong}${best}`;
+  return `${answered} / ${total} та ${unit} · ${correct} тўғри · ${wrong} хато`;
 }
 
 export function hydrateProgress(root: ParentNode = document): void {
   root.querySelectorAll<HTMLElement>('[data-prog]').forEach((el) => {
     const spec = parse(el.dataset.prog ?? '');
     if (!spec) return;
-    el.textContent = statusText(spec.kind, spec.id, spec.total);
+    const text = statusText(spec.kind, spec.id, spec.total);
+    if (text) el.textContent = text;
   });
 
   root.querySelectorAll<HTMLElement>('[data-prog-bar]').forEach((el) => {
@@ -42,20 +47,29 @@ export function hydrateProgress(root: ParentNode = document): void {
     if (!spec || !spec.total) return;
     const { answered } = answeredCount(readStats(spec.kind, spec.id));
     const pct = Math.min(100, Math.round((answered / spec.total) * 100));
-    const fill = el.querySelector<HTMLElement>('.bar__fill');
+    const fill = el.querySelector<HTMLElement>('i');
     if (fill) fill.style.width = `${pct}%`;
     el.setAttribute('aria-valuenow', String(answered));
   });
 
+  // Тестлар рўйхатидаги белги: охирги натижа ёки «Топширилмаган».
+  root.querySelectorAll<HTMLElement>('[data-prog-badge]').forEach((el) => {
+    const spec = parse(el.dataset.progBadge ?? '');
+    if (!spec) return;
+    const stats = readStats(spec.kind, spec.id);
+    if (!stats.last) return;
+    el.classList.remove('rt-badge--todo');
+    el.classList.add('rt-badge--score');
+    el.textContent = `${stats.last.correct}/${stats.last.total}`;
+  });
+
+  // Мавзу ўқилганми.
   root.querySelectorAll<HTMLElement>('[data-prog-seen]').forEach((el) => {
     const id = el.dataset.progSeen ?? '';
-    const seen = readStats('topic', 'read').items[id];
-    if (seen) {
-      el.textContent = 'Ўқилди';
-      el.classList.add('badge--good');
-    } else {
-      el.textContent = 'Ўқилмаган';
-    }
+    if (!readStats('topic', 'read').items[id]) return;
+    el.classList.remove('rt-badge--todo');
+    el.classList.add('rt-badge--ok');
+    el.innerHTML = `${icon('check')}Ўқилди`;
   });
 }
 
@@ -71,7 +85,10 @@ interface Summary {
   pct: number;
 }
 
-function sumOf(kind: Kind, sets: Array<{ id: string; n: number }>): { answered: number; total: number } {
+function sumOf(
+  kind: Kind,
+  sets: Array<{ id: string; n: number }>,
+): { answered: number; total: number } {
   let answered = 0;
   let total = 0;
   for (const s of sets) {
@@ -81,7 +98,7 @@ function sumOf(kind: Kind, sets: Array<{ id: string; n: number }>): { answered: 
   return { answered, total };
 }
 
-/** Бош саҳифадаги тўртта бўлим учун қисқа ҳолат. */
+/** Бош саҳифадаги тўртта бўлим карточкаси учун қисқа ҳолат. */
 export function homeSummaries(catalog: Catalog): Record<string, Summary> {
   const read = readStats('topic', 'read');
   const seen = catalog.topics.filter((id) => read.items[id]).length;
@@ -90,25 +107,24 @@ export function homeSummaries(catalog: Catalog): Record<string, Summary> {
   const ex = sumOf('ex', catalog.ex);
   const taken = catalog.tests.filter((id) => readStats('test', id).last).length;
 
+  const line = (done: number, all: number, unit: string, verb: string): string =>
+    !all ? 'Ҳозир тайёрланмоқда' : !done ? 'Ҳали бошланмаган' : `${all} та ${unit}дан ${done} таси ${verb}`;
+
   return {
     mavzular: {
-      text: catalog.topics.length
-        ? `${catalog.topics.length} мавзу · ${seen} таси ўқилди`
-        : 'Мавзулар ҳозир тайёрланмоқда',
+      text: line(seen, catalog.topics.length, 'мавзу', 'ўқилган'),
       pct: catalog.topics.length ? (seen / catalog.topics.length) * 100 : 0,
     },
     mashqlar: {
-      text: ex.total ? `${ex.answered} / ${ex.total} машқ ишланди` : 'Машқлар ҳозир тайёрланмоқда',
+      text: line(ex.answered, ex.total, 'машқ', 'бажарилган'),
       pct: ex.total ? (ex.answered / ex.total) * 100 : 0,
     },
     lugatlar: {
-      text: vocab.total ? `${vocab.answered} / ${vocab.total} сўз жавоб берилган` : 'Луғат бўш',
+      text: line(vocab.answered, vocab.total, 'сўз', 'сўралган'),
       pct: vocab.total ? (vocab.answered / vocab.total) * 100 : 0,
     },
     testlar: {
-      text: catalog.tests.length
-        ? `${taken} / ${catalog.tests.length} тест топширилган`
-        : 'Тестлар ҳозир тайёрланмоқда',
+      text: line(taken, catalog.tests.length, 'тест', 'топширилган'),
       pct: catalog.tests.length ? (taken / catalog.tests.length) * 100 : 0,
     },
   };
@@ -119,7 +135,7 @@ export function hydrateHome(catalog: Catalog, root: ParentNode = document): void
   for (const [key, s] of Object.entries(sums)) {
     const el = root.querySelector<HTMLElement>(`[data-sum="${key}"]`);
     if (el) el.textContent = s.text;
-    const fill = root.querySelector<HTMLElement>(`[data-sum-bar="${key}"] .bar__fill`);
+    const fill = root.querySelector<HTMLElement>(`[data-sum-bar="${key}"] i`);
     if (fill) fill.style.width = `${Math.round(s.pct)}%`;
   }
 }

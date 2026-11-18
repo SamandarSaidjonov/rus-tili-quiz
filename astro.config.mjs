@@ -8,15 +8,17 @@ export default defineConfig({
   base: '/rus-tili-quiz',
   trailingSlash: 'always',
   integrations: [mdx(), preact({ compat: false })],
+  // Дизайн тизимидаги учта оила: ўзбекча матн PT Sans, русча матн PT Serif,
+  // сарлавҳа ва рақамлар PT Sans Narrow. Учаласи ҳам ў, қ, ғ, ҳ ва урғу белгисини кўрсатади.
   fonts: [
     {
       provider: fontProviders.google(),
-      name: 'Noto Sans',
+      name: 'PT Sans',
       cssVariable: '--font-uz',
-      weights: [400, 500, 700],
+      weights: [400, 700],
       styles: ['normal'],
       subsets: ['cyrillic', 'cyrillic-ext', 'latin'],
-      fallbacks: ['Segoe UI', 'system-ui', 'sans-serif'],
+      fallbacks: ['Segoe UI', 'Roboto', 'Arial', 'sans-serif'],
     },
     {
       provider: fontProviders.google(),
@@ -25,7 +27,16 @@ export default defineConfig({
       weights: [400, 700],
       styles: ['normal', 'italic'],
       subsets: ['cyrillic', 'cyrillic-ext', 'latin'],
-      fallbacks: ['Georgia', 'serif'],
+      fallbacks: ['Georgia', 'Times New Roman', 'serif'],
+    },
+    {
+      provider: fontProviders.google(),
+      name: 'PT Sans Narrow',
+      cssVariable: '--font-display',
+      weights: [700],
+      styles: ['normal'],
+      subsets: ['cyrillic', 'cyrillic-ext', 'latin'],
+      fallbacks: ['Arial Narrow', 'Roboto Condensed', 'sans-serif'],
     },
   ],
 });

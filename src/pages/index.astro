@@ -1,7 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
 import { url, SECTIONS } from '../lib/url.ts';
+import type { IconName } from '../lib/icons.ts';
 
 const topics = await getCollection('topics');
 const vocab = await getCollection('vocab');
@@ -21,57 +23,80 @@ const catalog = {
   tests: tests.map((t) => t.id),
 };
 
+const icons: Record<string, IconName> = {
+  mavzular: 'book',
+  mashqlar: 'pencil',
+  lugatlar: 'cards',
+  testlar: 'test',
+};
+
 const counts: Record<string, string> = {
-  mavzular: `${topics.length} мавзу`,
-  mashqlar: `${[...exByTopic.values()].reduce((a, b) => a + b, 0)} машқ`,
-  lugatlar: `${vocab.reduce((a, v) => a + v.data.words.length, 0)} сўз`,
-  testlar: `${tests.length} тест`,
+  mavzular: `${topics.length} та мавзу`,
+  mashqlar: `${[...exByTopic.values()].reduce((a, b) => a + b, 0)} та машқ`,
+  lugatlar: `${vocab.reduce((a, v) => a + v.data.words.length, 0)} та сўз`,
+  testlar: `${tests.length} та тест`,
 };
 ---
 
 <Base title="Рус тили">
-  <h1>Рус тили</h1>
-  <p class="muted">
+  <div class="rt-pagehead">
+    <h1>Рус тили</h1>
+  </div>
+
+  <p class="rt-muted">
     Мавзулар бўйича тушунтириш, падежлар машқлари, луғат ва тестлар. Ҳаммаси телефонда ишлайди,
     прогресс шу браузерда сақланади.
   </p>
 
-  <div class="cards" style="margin-top:1.2rem">
+  <div class="rt-stack--tight">
     {
       SECTIONS.map((s) => (
-        <a class="card card-link" href={url(s.key)}>
-          <div class="card__top">
-            <span class="card__title">{s.title}</span>
-            <span class="badge">{counts[s.key]}</span>
-          </div>
-          <p class="card__meta" style="margin:.2rem 0 0">{s.hint}</p>
-          <p class="card__meta" data-sum={s.key} style="margin:.35rem 0 0">…</p>
-          <div class="bar" data-sum-bar={s.key}><div class="bar__fill" style="width:0%"></div></div>
+        <a class="rt-section" href={url(s.key)}>
+          <span class="rt-section__icon">
+            <Icon name={icons[s.key]} />
+          </span>
+          <span>
+            <span class="rt-section__title" role="heading" aria-level="2">
+              {s.title}
+            </span>
+            <span class="rt-section__meta" data-sum={s.key}>
+              {counts[s.key]}
+            </span>
+            <span class="rt-bar" data-sum-bar={s.key}>
+              <i style="width:0%" />
+            </span>
+          </span>
+          <span class="rt-section__go">
+            <Icon name="chevron-right" />
+          </span>
         </a>
       ))
     }
   </div>
 
-  <details class="card" style="margin-top:1.2rem">
-    <summary>Прогресс ва эски версия</summary>
-    <div class="stack" style="margin-top:.7rem">
-      <p class="muted" style="margin:0">
-        Прогресс фақат шу телефон ва браузерда сақланади. Эски версиядаги натижалар автоматик
-        кўчирилди.
-      </p>
-      <div class="btnrow">
-        <button class="btn" type="button" id="clear-btn">Барча прогрессни тозалаш</button>
-        <a class="btn btn--ghost" href={url('legacy/index.html')}>Эски версия</a>
-      </div>
-      <p id="clear-msg" class="muted" role="status" style="margin:0"></p>
+  <section class="rt-card">
+    <h2 class="rt-item__title">Созламалар</h2>
+    <p class="rt-item__meta">
+      Прогресс фақат шу телефон ва браузерда сақланади. Эски версиядаги натижалар автоматик
+      кўчирилди.
+    </p>
+    <div class="rt-row">
+      <button class="rt-btn rt-btn--secondary" id="theme-btn" type="button">
+        Қоронғи темага ўтиш
+      </button>
+      <a class="rt-btn rt-btn--secondary" href={url('legacy/index.html')}>Эски версияни очиш</a>
     </div>
-  </details>
+    <div>
+      <button class="rt-link" id="clear-btn" type="button">Барча прогрессни тозалаш</button>
+    </div>
+    <p id="clear-msg" class="rt-item__meta" role="status"></p>
+  </section>
 
   <script type="application/json" id="catalog" set:html={JSON.stringify(catalog)} is:inline />
 
   <script>
     import { hydrateHome, type Catalog } from '../lib/progress-ui.ts';
-    import { clearAllProgress, storageAvailable } from '../lib/progress.ts';
+    import { clearAllProgress, storageAvailable, writeRaw } from '../lib/progress.ts';
 
     const raw = document.getElementById('catalog')?.textContent ?? '{}';
     try {
@@ -79,6 +104,25 @@ const counts: Record<string, string> = {
     } catch {
       /* прогресс кўрсатилмаса ҳам саҳифа ишлайди */
     }
+
+    // Тема: тизим созламасини кузатамиз, танлов `localStorage` да сақланади.
+    const themeBtn = document.getElementById('theme-btn');
+    const isDark = (): boolean => {
+      const root = document.documentElement;
+      return root.dataset.theme
+        ? root.dataset.theme === 'dark'
+        : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    };
+    const labelTheme = (): void => {
+      if (themeBtn) themeBtn.textContent = isDark() ? 'Ёруғ темага ўтиш' : 'Қоронғи темага ўтиш';
+    };
+    labelTheme();
+    themeBtn?.addEventListener('click', () => {
+      const next = isDark() ? 'light' : 'dark';
+      document.documentElement.dataset.theme = next;
+      writeRaw('rt2:theme', next);
+      labelTheme();
+    });
 
     const msg = document.getElementById('clear-msg');
     if (!storageAvailable() && msg) {

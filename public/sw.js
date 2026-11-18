@@ -3,7 +3,7 @@
  * HTML — аввал тармоқдан (янги контент учун), бўлмаса кэшдан.
  * Қолган файллар (JS, CSS, шрифт, расм) — аввал кэшдан, кейин тармоқдан.
  */
-const VERSION = 'rt2-v1';
+const VERSION = 'rt2-v2';
 const CACHE = `${VERSION}-assets`;
 const OFFLINE_URL = '/rus-tili-quiz/';
 

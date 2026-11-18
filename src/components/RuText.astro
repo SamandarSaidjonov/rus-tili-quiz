@@ -6,10 +6,10 @@ interface Props {
   class?: string;
 }
 
-const { text, class: cls = '' } = Astro.props;
+const { text, class: cls } = Astro.props;
 const parts = splitStars(text ?? '');
 ---
 
-<span class:list={['ru', cls]} lang="ru"
+<span class={cls} lang="ru"
   >{parts.map((p) => (p.bold ? <b>{p.text}</b> : <Fragment>{p.text}</Fragment>))}</span
 >

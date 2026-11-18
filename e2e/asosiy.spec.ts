@@ -17,14 +17,14 @@ test('эски ҳавола #dars-2 луғат тўпламига олиб бо�
 test('луғат квизи: жавобдан кейин ўзи ўтиб кетмайди', async ({ page }) => {
   await page.goto('./lugatlar/quiz/?set=003-feellar');
 
-  const prompt = page.locator('.quiz__prompt');
+  const prompt = page.locator('.rt-prompt-uz');
   await expect(prompt).toBeVisible();
   const first = await prompt.textContent();
 
-  await page.locator('.opt').first().click();
+  await page.locator('.rt-option').first().click();
 
   // Изоҳ чиқади, савол эса ўзгармайди
-  await expect(page.locator('.verdict')).toBeVisible();
+  await expect(page.locator('.rt-verdict')).toBeVisible();
   await expect(prompt).toHaveText(first ?? '');
 
   // Кейингисига фақат тугма босилганда ўтилади
@@ -33,31 +33,31 @@ test('луғат квизи: жавобдан кейин ўзи ўтиб кет�
 
   // «Олдинги» фақат кўриш учун: вариантлар босилмайди
   await page.getByRole('button', { name: /Олдинги/ }).click();
-  await expect(page.locator('.review-note')).toBeVisible();
-  await expect(page.locator('.opt').first()).toBeDisabled();
+  await expect(page.locator('.rt-reviewing')).toBeVisible();
+  await expect(page.locator('.rt-option').first()).toBeDisabled();
 });
 
 test('машқ: бўш жавобда огоҳлантиради, хато жавобда тўғрисини кўрсатади', async ({ page }) => {
   await page.goto('./mashqlar/mixed/');
-  await expect(page.locator('.quiz__task')).toBeVisible();
+  await expect(page.locator('.rt-exercise')).toBeVisible();
 
   await page.getByRole('button', { name: 'Текшириш' }).click();
   await expect(page.getByRole('alert')).toBeVisible();
 
-  const field = page.locator('input[type="text"], textarea').first();
+  const field = page.locator('.rt-input').first();
   await field.fill('ҳали билмайман');
   await page.getByRole('button', { name: 'Текшириш' }).click();
 
-  await expect(page.locator('.verdict--bad')).toBeVisible();
-  await expect(page.locator('.feedback__answer')).toBeVisible();
-  await expect(page.locator('.note').last()).toBeVisible();
+  await expect(page.locator('.rt-feedback.is-wrong')).toBeVisible();
+  await expect(page.locator('.rt-answer')).toBeVisible();
+  await expect(page.locator('.rt-explain').last()).toBeVisible();
 });
 
 test('машқда «Билмайман» хато деб ҳисобланади', async ({ page }) => {
   await page.goto('./mashqlar/mixed/');
   await page.getByRole('button', { name: /Билмайман/ }).click();
-  await expect(page.locator('.verdict--bad')).toBeVisible();
-  await expect(page.locator('.progressrow__counts')).toContainText('✗ 1');
+  await expect(page.locator('.rt-feedback.is-wrong')).toBeVisible();
+  await expect(page.locator('.rt-tally__no')).toContainText('1');
 });
 
 test('қоронғи тема танлови сақланади', async ({ page }) => {
@@ -76,19 +76,19 @@ test('тест: натижа охирида чиқади ва изоҳлар к�
   await expect(page.getByRole('heading', { level: 1, name: 'Тест 1' })).toBeVisible();
 
   for (let i = 0; i < 10; i++) {
-    await page.locator('.opt').first().click();
+    await page.locator('.rt-option').first().click();
     // Тест давомида тўғри ёки хато кўрсатилмайди
-    await expect(page.locator('.verdict')).toHaveCount(0);
+    await expect(page.locator('.rt-feedback')).toHaveCount(0);
     const next = page.getByRole('button', { name: /Кейинги/ });
     if (await next.isVisible()) await next.click();
   }
 
   await page.getByRole('button', { name: 'Якунлаш' }).click();
   await expect(page.getByRole('heading', { name: 'Натижа' })).toBeVisible();
-  await expect(page.locator('.review')).toHaveCount(10);
-  await expect(page.locator('.result__score')).toContainText('/ 10');
+  await expect(page.locator('.rt-review > li')).toHaveCount(10);
+  await expect(page.locator('.rt-score__num')).toContainText('/10');
 
   // Рўйхатда натижа кўринади
   await page.goto('./testlar/');
-  await expect(page.locator('[data-prog="test:test-001:10"]')).toContainText('Охирги натижа');
+  await expect(page.locator('[data-prog-badge="test:test-001:10"]')).toContainText('/10');
 });

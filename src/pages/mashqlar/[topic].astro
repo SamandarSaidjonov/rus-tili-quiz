@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 import Base from '../../layouts/Base.astro';
+import TopBar from '../../components/TopBar.astro';
 import ExerciseRunner from '../../components/ExerciseRunner.tsx';
 import { url } from '../../lib/url.ts';
 import { topicMeta } from '../../lib/topics.ts';
@@ -23,25 +24,26 @@ export const getStaticPaths = (async () => {
 
 const { topic, groups } = Astro.props as { topic: string; groups: ExerciseSet[] };
 const meta = topicMeta(topic);
+const count = groups.reduce((n, g) => n + g.items.length, 0);
 const hasTopicPage = (await getCollection('topics')).some((t) => t.id === topic);
 ---
 
 <Base title={`${meta.title} · машқлар`} section="mashqlar">
-  <p class="crumb"><a href={url('mashqlar')}>← Машқлар</a></p>
-  <h1>{meta.title}</h1>
-  {
-    hasTopicPage && (
-      <p class="muted">
-        Тушунтириш ва жадваллар: <a href={url(`mavzular/${topic}`)}>{meta.title} мавзуси</a>
-      </p>
-    )
-  }
+  <TopBar
+    slot="topbar"
+    title={meta.title}
+    sub={`${groups.length} тур · ${count} та машқ`}
+    backHref={url('mashqlar')}
+    backLabel="Машқлар рўйхатига қайтиш"
+  />
+
   <ExerciseRunner
     topic={topic}
     title={meta.title}
     groups={groups}
     homeHref={url()}
     listHref={url('mashqlar')}
+    topicHref={hasTopicPage ? url(`mavzular/${topic}`) : undefined}
     client:only="preact"
   />
 </Base>

@@ -7,6 +7,10 @@
 - Сайт: https://samandarsaidjonov.github.io/rus-tili-quiz/
 - Эски (1-версия) сайт архивда: `public/legacy/index.html` → `/rus-tili-quiz/legacy/index.html`
 - Лойиҳа ҳужжатлари: `docs/rus-tili-quiz-loyiha.md` (1-версия тавсифи), `docs/claude-code-prompt-v2.md` (2-версия талаблари)
+- **Дизайн тизими: `design/`** — қоидалар `design/README.md` да, токенлар `design/tokens.css`
+  ва `design/tokens.json` да, ҳар бир компонентнинг намунаси `design/components/<ном>/preview.html`
+  да. Саҳифа ёки компонент ўзгартиришдан олдин шуни очиб кўринг; сайт услублари
+  (`src/styles/global.css`) шу файллардан кўчирилган.
 
 ## 1. Ўзгармайдиган қоидалар
 
@@ -77,9 +81,15 @@ src/
     progress.ts     localStorage (хотирага тушадиган заҳира билан)
     migrate.ts      эски версиянинг прогрессини кўчириш
     topics.ts       мавзу ва машқ тўпламларининг номлари
-  components/       Preact оролчалари (VocabQuiz, ExerciseRunner) ва кичик компонентлар
+    icons.ts        24×24 инлайн SVG иконкалар (design/assets/Icons дан)
+    speak-ui.ts     статик саҳифалардаги `data-say` тугмалари
+    progress-ui.ts  статик саҳифалардаги прогресс ёзувлари ва чизиқлари
+  components/       Preact оролчалари (VocabQuiz, ExerciseRunner, TestRunner), `bits.tsx`
+                    (Icon, Ru, Speak, Progress, Verdict, Warn, Option, Chip) ва Astro
+                    компонентлари (Icon, TopBar, BottomNav, RuText, SpeakButton)
   pages/            Astro саҳифалари: /, /mavzular, /mashqlar, /lugatlar, /testlar
-  styles/global.css дизайн токенлари ва ҳамма услублар
+  styles/global.css дизайн токенлари ва ҳамма услублар (design/ дан кўчирилган)
+design/             дизайн тизими: README, токенлар, компонент превьюлари, иконкалар
 scripts/check.mjs   контент текшируви
 tests/              Vitest
 e2e/                Playwright
@@ -131,16 +141,30 @@ e2e/                Playwright
 - GitHub Pages манбаи — **GitHub Actions** (`.github/workflows/deploy.yml`).
 - `main` га push қилинганда: `npm run check` → `npm test` → `npm run build` → Pages.
 - `astro.config.mjs` да `site` ва `base` тўғри бўлиши керак (`base: '/rus-tili-quiz'`).
-- Шрифтлар (Noto Sans, PT Serif) йиғиш пайтида юклаб олинади ва сайт ичида жойлашади —
+- Шрифтлар (PT Sans, PT Serif, PT Sans Narrow) йиғиш пайтида юклаб олинади ва сайт ичида жойлашади —
   интернет секин бўлса ҳам тез очилади.
 
 ## 7. Дизайн, тезлик ва PWA
 
-- **Шрифт қоидаси:** квиз, луғат ва машқлардаги русча матн serif (PT Serif), интерфейс ва
-  мавзу матни sans (Noto Sans). Мавзу жадвалларида русча ва ўзбекча сўзлар бир қаторда келгани
-  учун улар ҳам sans. Шрифтлар йиғиш пайтида юклаб олиниб, сайт ичида жойлашади.
-- **Ранглар:** `src/styles/global.css` даги токенлар. Тўғри (яшил) ва хато (қизил) ранги
-  асосий рангдан (кўк) алоҳида. Ҳолат доим белги билан ҳам кўрсатилади: ✓ / ✗.
+Тўлиқ қоидалар — `design/README.md`. Қисқача:
+
+- **Учта шрифт оиласи** (`astro.config.mjs` да, йиғиш пайтида юклаб олиниб сайт ичида жойлашади):
+  ўзбекча матн `--font-uz` (PT Sans), русча матн `--font-ru` (PT Serif), сарлавҳа ва рақамлар
+  `--font-display` (PT Sans Narrow 700). **Русча матнни доим `lang="ru"` билан ўранг** —
+  `global.css` даги `[lang="ru"]` қоидаси шрифтни ўзи алмаштиради ва `speechSynthesis` ҳам
+  тилни тўғри танийди. Мавзу жадвалларида русча ва ўзбекча сўзлар бир қаторда келгани учун
+  улар sans бўлиб қолади.
+- **Ранглар:** `src/styles/global.css` даги токенлар (`design/tokens.css` дан). `accent` —
+  ягона асосий ранг; `good` / `bad` фақат тўғри ва хато учун, `warn` эса текширишдан олдинги
+  огоҳлантириш учун. Ҳолат ҳеч қачон фақат ранг билан кўрсатилмайди: ёнида иконка (`check`,
+  `cross`, `alert`) ва сўз бўлади.
+- **Класслар `rt-` билан бошланади** ва дизайн тизимидаги компонент номига мос келади:
+  `rt-card`, `rt-section`, `rt-option`, `rt-feedback`, `rt-actionbar`, `rt-nav`, `rt-topbar`…
+  Янги класс ўйлаб топишдан олдин `design/components/` да тайёри борми, шуни қаранг.
+- **Иконкалар** `src/lib/icons.ts` да инлайн SVG бўлиб туради (манба — `design/assets/Icons`).
+  Astro'да `<Icon name="book" />`, Preact'да `bits.tsx` даги `<Icon />`.
+- **Экран тартиби:** TopBar (ортга, ном) → прогресс → карточка → Feedback → QuizNav → BottomNav.
+  Намунаси: `design/components/ExerciseScreen/preview.html`.
 - **Lighthouse (мобил):** бош саҳифа 99 / 100, луғат квизи 97 / 100, машқлар 97 / 100,
   тест 99 / 100 (Performance / Accessibility). Янги оролча қўшганда шуни текшириб туринг.
 - **Тезлик қоидаси:** оролчага катта маълумот берилса, оғир ҳисоб-китобни кераклигича қилинг.

@@ -2,18 +2,16 @@
  * Машқлар: жавоб клавиатурадан ёзилади (`choose` туридан ташқари).
  * Текшириш юмшоқ: катта-кичик ҳарф, тиниш белгилари, ё/е ва урғу белгиси хато ҳисобланмайди.
  * Автоматик ўтиш йўқ; «← Олдинги» ўтган машқни фақат кўриш учун очади.
+ * Кўриниши: design/components/ExerciseScreen.
  */
 import { useCallback, useEffect, useMemo, useState } from 'preact/hooks';
 import type { JSX } from 'preact';
 import type { ExerciseItem, ExerciseSet, ExerciseType } from '../lib/types.ts';
-import { CASES } from '../lib/text.ts';
-import {
-  TYPE_INFO, checkExercise, dealByType, fullAnswer, maskWords,
-} from '../lib/exercise.ts';
+import { TYPE_INFO, checkExercise, dealByType, fullAnswer, maskWords } from '../lib/exercise.ts';
 import {
   readJson, recordAnswer, recordScore, removeRaw, sessionKey, writeJson,
 } from '../lib/progress.ts';
-import { ProgressRow, Ru, Speak, Verdict, Warning } from './bits.tsx';
+import { Chip, Icon, Option, Progress, Ru, Speak, Verdict, Warn } from './bits.tsx';
 
 type Count = 10 | 20 | 'all';
 
@@ -43,9 +41,13 @@ interface Props {
   groups: ExerciseSet[];
   homeHref: string;
   listHref: string;
+  /** Шу мавзунинг тушунтириш саҳифаси (бўлса). */
+  topicHref?: string;
 }
 
-export default function ExerciseRunner({ topic, title, groups, homeHref, listHref }: Props): JSX.Element {
+export default function ExerciseRunner({
+  topic, title, groups, homeHref, listHref, topicHref,
+}: Props): JSX.Element {
   const SESSION = sessionKey('ex', topic);
 
   const byId = useMemo(() => {
@@ -167,6 +169,7 @@ export default function ExerciseRunner({ topic, title, groups, homeHref, listHre
       const correct = session.ans.filter((a) => a?.ok).length;
       recordScore('ex', topic, correct, session.qs.length);
       persist({ ...session, finished: true });
+      window.scrollTo({ top: 0, behavior: 'auto' });
       return;
     }
     persist({ ...session, i: session.i + 1 });
@@ -174,9 +177,11 @@ export default function ExerciseRunner({ topic, title, groups, homeHref, listHre
 
   if (!session) {
     return (
-      <div class="card stack">
-        <p>Бу бўлимда ҳозир машқ йўқ.</p>
-        <a class="btn" href={listHref}>← Машқлар рўйхати</a>
+      <div class="rt-card">
+        <p style={{ margin: 0 }}>Бу бўлимда ҳозир машқ йўқ.</p>
+        <a class="rt-btn rt-btn--secondary" href={listHref}>
+          ← Машқлар рўйхати
+        </a>
       </div>
     );
   }
@@ -189,35 +194,53 @@ export default function ExerciseRunner({ topic, title, groups, homeHref, listHre
     const wrongIds = session.qs
       .map((q, idx) => (session.ans[idx] && !session.ans[idx]!.ok ? q.id : null))
       .filter(Boolean) as string[];
-    const pct = session.qs.length ? Math.round((correct / session.qs.length) * 100) : 0;
     return (
-      <div class="stack--lg">
-        <div class="card stack">
-          <h2>Натижа</h2>
-          <p class="result__score">
-            {correct} / {session.qs.length} тўғри <span class="muted">({pct}%)</span>
-          </p>
-          <div class="btnrow">
-            {wrongIds.length > 0 && (
-              <button class="btn btn--primary" type="button" onClick={() => start(session.cfg, wrongIds)}>
+      <>
+        <div class="rt-card">
+          <h2 class="rt-item__title">Натижа</h2>
+          <div class="rt-score">
+            <span class="rt-score__num">
+              {correct}/{session.qs.length}
+            </span>
+            <span class="rt-score__of">{title} бўйича машқлар</span>
+          </div>
+          <div class="rt-item__actions">
+            {wrongIds.length > 0 ? (
+              <button
+                class="rt-btn rt-btn--primary"
+                type="button"
+                onClick={() => start(session.cfg, wrongIds)}
+              >
                 Хатоларни қайта ишлаш ({wrongIds.length})
               </button>
+            ) : (
+              <button class="rt-btn rt-btn--primary" type="button" onClick={() => start(session.cfg)}>
+                Янги машқни бошлаш
+              </button>
             )}
-            <button class="btn" type="button" onClick={() => start(session.cfg)}>Янги машқ</button>
+            {wrongIds.length > 0 && (
+              <button class="rt-btn rt-btn--secondary" type="button" onClick={() => start(session.cfg)}>
+                Янги машқни бошлаш
+              </button>
+            )}
+          </div>
+          <div class="rt-row">
             <button
-              class="btn btn--ghost"
+              class="rt-link"
               type="button"
               onClick={() => {
                 setView(session.qs.length - 1);
                 persist({ ...session, finished: false, i: session.qs.length - 1 });
               }}
             >
-              ← Машқларни кўриш
+              Машқларни қайта кўриш
             </button>
-            <a class="btn btn--ghost" href={homeHref}>Барча бўлимлар</a>
+            <a class="rt-link" href={homeHref}>
+              Барча бўлимлар
+            </a>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
@@ -230,141 +253,213 @@ export default function ExerciseRunner({ topic, title, groups, homeHref, listHre
   const given = session.ans[idx];
   const reviewing = view !== null;
   const full = fullAnswer(item, type);
+  const last = session.i + 1 >= session.qs.length;
+
+  // Enter: жавоб берилмаган бўлса «Текшириш», берилган бўлса «Кейинги →».
+  const onSubmit = (e: Event): void => {
+    e.preventDefault();
+    if (reviewing) return;
+    if (given) next();
+    else submit(input);
+  };
 
   return (
-    <div class="stack--lg">
-      <Settings groups={groups} cfg={cfg} onStart={start} sessionKeyName={SESSION} title={title} />
+    <form class="rt-stack" onSubmit={onSubmit}>
+      <Progress
+        pos={idx + 1}
+        total={session.qs.length}
+        answered={done}
+        correct={correct}
+        wrong={wrong}
+      />
 
-      <ProgressRow done={done} total={session.qs.length} correct={correct} wrong={wrong} />
+      <Settings
+        groups={groups}
+        cfg={cfg}
+        onStart={start}
+        sessionKeyName={SESSION}
+        title={title}
+        topicHref={topicHref}
+      />
 
-      {reviewing && (
-        <p class="review-note">
-          Кўриб чиқиш режими: {idx + 1}-машқ. Бу ерда қайта жавоб бериб бўлмайди.{' '}
-          <button class="btn btn--sm" type="button" onClick={() => setView(null)}>
-            Жорийга қайтиш
-          </button>
-        </p>
-      )}
-
-      <div class="card quiz">
-        <p class="quiz__label">
-          {idx + 1}-машқ · {info.name}
-          {item.case && <span class="badge badge--accent">{CASES[item.case]}</span>}
-        </p>
-        <p class="muted">{info.ask}</p>
-        <p class={`quiz__task${type === 'translate' ? '' : ' ru'}`}>
-          <PromptText text={item.prompt} />
-        </p>
-        {item.hints && <p class="note">{item.hints}</p>}
+      <article class="rt-card">
+        <div class="rt-exercise">
+          <p class="rt-label">{info.ask}</p>
+          {type === 'translate' ? (
+            <p class="rt-prompt-uz">{item.prompt}</p>
+          ) : (
+            <p class="rt-sentence" lang="ru">
+              <PromptText text={item.prompt} />
+            </p>
+          )}
+          {item.hints && <Hints text={item.hints} />}
+        </div>
 
         {!given && !reviewing && (
-          <form
-            class="stack"
-            onSubmit={(e) => {
-              e.preventDefault();
-              submit(input);
-            }}
-          >
+          <>
             {type === 'choose' && item.options ? (
-              <ul class="optlist">
+              <ol class="rt-options">
                 {item.options.map((opt, n) => (
-                  <li key={opt}>
-                    <button type="button" class="opt" onClick={() => submit(opt)}>
-                      <span class="opt__no" aria-hidden="true">{n + 1}</span>
-                      <Ru text={opt} class="opt__text" />
-                    </button>
-                  </li>
+                  <Option key={opt} n={n + 1} text={opt} onPick={() => submit(opt)} />
                 ))}
-              </ul>
+              </ol>
             ) : (
               <>
-                <label class="field">
-                  <span class="field__label">Жавобингиз (рус ҳарфларида)</span>
+                <div class="rt-field">
+                  <label class="rt-label" for="rt-answer">
+                    Жавобингиз
+                  </label>
                   {info.long ? (
                     <textarea
+                      class="rt-input"
+                      id="rt-answer"
                       value={input}
                       onInput={(e) => setInput((e.target as HTMLTextAreaElement).value)}
-                      autocomplete="off"
-                      spellcheck={false}
                       lang="ru"
+                      placeholder="Русча ёзинг"
+                      autocomplete="off"
+                      autocapitalize="sentences"
+                      spellcheck={false}
+                      aria-invalid={warning ? 'true' : undefined}
+                      aria-describedby={warning ? 'rt-answer-warn' : undefined}
                     />
                   ) : (
                     <input
+                      class="rt-input"
+                      id="rt-answer"
                       type="text"
                       value={input}
                       onInput={(e) => setInput((e.target as HTMLInputElement).value)}
-                      autocomplete="off"
-                      spellcheck={false}
                       lang="ru"
+                      placeholder="Русча ёзинг"
+                      autocomplete="off"
+                      autocapitalize="none"
+                      autocorrect="off"
+                      spellcheck={false}
+                      enterkeyhint="done"
+                      aria-invalid={warning ? 'true' : undefined}
+                      aria-describedby={warning ? 'rt-answer-warn' : undefined}
                     />
                   )}
-                </label>
-                {warning && <Warning text={warning} />}
-                <div class="btnrow">
-                  <button class="btn btn--primary" type="submit">Текшириш</button>
-                  <button class="btn btn--ghost" type="button" onClick={giveUp}>
+                </div>
+                {warning && <Warn text={warning} id="rt-answer-warn" />}
+                <div>
+                  <button class="rt-link" type="button" onClick={giveUp}>
                     Билмайман, жавобни кўрсат
                   </button>
                 </div>
               </>
             )}
-          </form>
+          </>
         )}
 
-        <div aria-live="polite">
-          {given && (
-            <div class="feedback stack">
-              <Verdict ok={given.ok} />
-              {given.gaveUp ? (
-                <p class="muted">Жавоб кўрсатилди — бу хато деб ҳисобланади.</p>
-              ) : (
-                <p>
-                  <span class="muted">Сизнинг жавобингиз: </span>
-                  <Ru text={given.input} class={given.ok ? 'mark-good' : 'mark-bad'} />
-                </p>
-              )}
-              <p class="feedback__answer">
-                <span class="muted">Тўғри жавоб: </span>
-                {given.ok || given.gaveUp ? (
-                  <Ru text={full} />
-                ) : (
-                  <MaskedAnswer correct={full} user={given.input} />
-                )}
-              </p>
-              {item.answers.length > 1 && (
-                <p class="muted">
-                  Бошқа тўғри вариант:{' '}
-                  {item.answers.slice(1).map((a, i) => (
-                    <span key={a}>
-                      {i > 0 && ' · '}
-                      <Ru text={a} />
-                    </span>
-                  ))}
-                </p>
-              )}
-              <div class="btnrow">
-                <Speak text={full.replace(/\*/g, '')} />
-              </div>
-              <p class="note">{item.note}</p>
+        {given && reviewing && (
+          <p class={`rt-past ${given.ok ? 'rt-past--ok' : 'rt-past--no'}`}>
+            <Icon name={given.ok ? 'check' : 'cross'} size={18} />
+            {given.ok ? 'Бу машқни тўғри ишлагансиз' : 'Бу машқда хато қилгансиз'}
+          </p>
+        )}
+      </article>
+
+      {given && (
+        <section class={`rt-feedback ${given.ok ? 'is-correct' : 'is-wrong'}`} role="status">
+          <Verdict ok={given.ok} shown={given.gaveUp} />
+
+          {!given.gaveUp && (
+            <div class="rt-given">
+              <p class="rt-label">Сизнинг жавобингиз</p>
+              <p lang="ru">{given.input}</p>
             </div>
+          )}
+
+          <div class="rt-right">
+            <p class="rt-label">Тўғри жавоб</p>
+            <p class="rt-answer" lang="ru">
+              {given.ok || given.gaveUp ? (
+                <Ru text={full} />
+              ) : (
+                <MaskedAnswer correct={full} user={given.input} />
+              )}
+              <Speak text={full} small />
+            </p>
+          </div>
+
+          {item.answers.length > 1 && (
+            <p class="rt-explain">
+              <span class="rt-label">Бошқа тўғри вариант</span>
+              {item.answers.slice(1).map((a, i) => (
+                <span key={a}>
+                  {i > 0 && ' · '}
+                  <Ru text={a} />
+                </span>
+              ))}
+            </p>
+          )}
+
+          <p class="rt-explain">
+            <span class="rt-label">Изоҳ</span>
+            {item.note}
+          </p>
+        </section>
+      )}
+
+      <div class="rt-actionbar">
+        {reviewing && (
+          <p class="rt-reviewing">
+            Фақат кўриш учун
+            <button class="rt-link" type="button" onClick={() => setView(null)}>
+              Жорий саволга қайтиш
+            </button>
+          </p>
+        )}
+        <div class="rt-actions">
+          {idx > 0 && (
+            <button class="rt-btn rt-btn--secondary" type="button" onClick={() => setView(idx - 1)}>
+              ← Олдинги
+            </button>
+          )}
+          {reviewing ? (
+            <button
+              class="rt-btn rt-btn--primary"
+              type="button"
+              onClick={() => setView(idx + 1 >= session.i ? null : idx + 1)}
+            >
+              Кейинги →
+            </button>
+          ) : given ? (
+            <button class="rt-btn rt-btn--primary" type="button" onClick={next}>
+              {last ? 'Натижани кўриш →' : 'Кейинги →'}
+            </button>
+          ) : (
+            type !== 'choose' && (
+              <button class="rt-btn rt-btn--primary" type="submit">
+                Текшириш
+              </button>
+            )
           )}
         </div>
       </div>
+    </form>
+  );
+}
 
-      <div class="navrow">
-        <button class="btn" type="button" disabled={idx === 0} onClick={() => setView(idx - 1)}>
-          ← Олдинги
-        </button>
-        {reviewing ? (
-          <button class="btn" type="button" onClick={() => setView(idx + 1 >= session.i ? null : idx + 1)}>
-            Кейинги →
-          </button>
-        ) : (
-          <button class="btn btn--primary" type="button" disabled={!given} onClick={next}>
-            {session.i + 1 >= session.qs.length ? 'Натижа →' : 'Кейинги →'}
-          </button>
-        )}
-      </div>
+/** Таржима машқидаги сўзлар: «ўзбекча — русча» жуфтлари, `·` билан ажратилган. */
+function Hints({ text }: { text: string }): JSX.Element {
+  const pairs = text.split(/\s*·\s*/).filter(Boolean);
+  return (
+    <div class="rt-hints">
+      <p class="rt-label">Сўзлар</p>
+      <ul>
+        {pairs.map((pair) => {
+          const at = pair.indexOf('—');
+          if (at < 0) return <li key={pair}>{pair}</li>;
+          return (
+            <li key={pair}>
+              {pair.slice(0, at + 1)} <Ru text={pair.slice(at + 1).trim()} />
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }
@@ -380,11 +475,19 @@ function PromptText({ text }: { text: string }): JSX.Element {
     if (m.index > last) parts.push(<span key={key++}>{text.slice(last, m.index)}</span>);
     const token = m[0];
     if (token.startsWith('[[')) {
-      parts.push(<u class="prompt__target" key={key++}>{token.slice(2, -2)}</u>);
+      parts.push(
+        <span class="rt-target" key={key++}>
+          {token.slice(2, -2)}
+        </span>,
+      );
     } else if (token.startsWith('(')) {
-      parts.push(<em class="prompt__base" key={key++}>{token}</em>);
+      parts.push(
+        <span class="rt-bracket" key={key++}>
+          {token}
+        </span>,
+      );
     } else {
-      parts.push(<span class="prompt__gap" key={key++}>{token}</span>);
+      parts.push(<span class="rt-gap" role="img" aria-label="бўш жой" key={key++} />);
     }
     last = m.index + token.length;
   }
@@ -396,7 +499,7 @@ function PromptText({ text }: { text: string }): JSX.Element {
 function MaskedAnswer({ correct, user }: { correct: string; user: string }): JSX.Element {
   const words = maskWords(correct.replace(/\*/g, ''), user);
   return (
-    <span class="ru" lang="ru">
+    <span>
       {words.map((w, i) => (
         <span key={i}>
           {i > 0 && ' '}
@@ -408,72 +511,70 @@ function MaskedAnswer({ correct, user }: { correct: string; user: string }): JSX
 }
 
 function Settings({
-  groups, cfg, onStart, sessionKeyName, title,
+  groups, cfg, onStart, sessionKeyName, title, topicHref,
 }: {
   groups: ExerciseSet[];
   cfg: Cfg;
   onStart: (cfg: Cfg) => void;
   sessionKeyName: string;
   title: string;
+  topicHref?: string;
 }): JSX.Element {
   const [draft, setDraft] = useState<Cfg>(cfg);
   useEffect(() => setDraft(cfg), [cfg]);
 
   return (
-    <details class="card settings">
+    <details class="rt-settings">
       <summary>Созламалар · {title}</summary>
-      <div class="stack">
-        <fieldset class="fieldset">
+      <div class="rt-settings__body">
+        {topicHref && (
+          <p style={{ margin: 0 }}>
+            <a href={topicHref}>Шу мавзунинг тушунтиришини ўқиш</a>
+          </p>
+        )}
+
+        <fieldset>
           <legend>Машқ тури</legend>
-          <div class="chips">
-            <label class={`chip${draft.type === 'all' ? ' chip--on' : ''}`}>
-              <input
-                type="radio"
-                name="ex-type"
-                checked={draft.type === 'all'}
-                onChange={() => setDraft({ ...draft, type: 'all' })}
-              />
-              <span>Аралаш</span>
-            </label>
+          <div class="rt-chips">
+            <Chip
+              on={draft.type === 'all'}
+              label="Аралаш"
+              onPick={() => setDraft({ ...draft, type: 'all' })}
+            />
             {groups.map((g) => (
-              <label class={`chip${draft.type === g.type ? ' chip--on' : ''}`} key={g.type}>
-                <input
-                  type="radio"
-                  name="ex-type"
-                  checked={draft.type === g.type}
-                  onChange={() => setDraft({ ...draft, type: g.type })}
-                />
-                <span>
-                  {TYPE_INFO[g.type].name} <span class="muted">({g.items.length})</span>
-                </span>
-              </label>
+              <Chip
+                key={g.type}
+                on={draft.type === g.type}
+                label={TYPE_INFO[g.type].name}
+                count={g.items.length}
+                onPick={() => setDraft({ ...draft, type: g.type })}
+              />
             ))}
           </div>
         </fieldset>
 
-        <fieldset class="fieldset">
+        <fieldset>
           <legend>Машқлар сони</legend>
-          <div class="chips">
+          <div class="rt-chips">
             {([10, 20, 'all'] as Count[]).map((c) => (
-              <label class={`chip${draft.count === c ? ' chip--on' : ''}`} key={String(c)}>
-                <input
-                  type="radio"
-                  name="ex-count"
-                  checked={draft.count === c}
-                  onChange={() => setDraft({ ...draft, count: c })}
-                />
-                <span>{c === 'all' ? 'Ҳаммаси' : c}</span>
-              </label>
+              <Chip
+                key={String(c)}
+                on={draft.count === c}
+                label={c === 'all' ? 'Ҳаммаси' : String(c)}
+                onPick={() => setDraft({ ...draft, count: c })}
+              />
             ))}
           </div>
         </fieldset>
 
-        <div class="btnrow">
-          <button class="btn btn--primary" type="button" onClick={() => onStart(draft)}>
+        <div class="rt-item__actions">
+          <button class="rt-btn rt-btn--primary" type="button" onClick={() => onStart(draft)}>
             Янги машқни бошлаш
           </button>
+        </div>
+        <div>
           <button
-            class="btn btn--ghost"
+            class="rt-link"
             type="button"
             onClick={() => {
               removeRaw(sessionKeyName);

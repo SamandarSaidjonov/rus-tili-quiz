@@ -1,0 +1,27 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  /** Ўқиладиган русча матн (урғу белгиси билан ҳам ўқийверади). */
+  text: string;
+  small?: boolean;
+  label?: string;
+}
+
+const { text, small = false, label = 'Тинглаш' } = Astro.props;
+const clean = (text ?? '').replace(/\*/g, '');
+---
+
+{
+  clean && (
+    <button
+      type="button"
+      class:list={['rt-say', small && 'rt-say--sm']}
+      data-say={clean}
+      aria-label={label}
+      title={label}
+    >
+      <Icon name="speaker" />
+    </button>
+  )
+}

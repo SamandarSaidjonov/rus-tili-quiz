@@ -23,49 +23,59 @@ const hasExercises = (await getCollection('exercises')).some((e) => e.data.topic
 ---
 
 <Base title={entry.data.title} section="mavzular" description={entry.data.short}>
-  <p class="crumb"><a href={url('mavzular')}>← Мавзулар</a></p>
-  <h1>{entry.data.title}</h1>
-  <p class="muted">{entry.data.short}</p>
-  {
-    !entry.data.reviewed && (
-      <p class="card__meta">Бу мавзуни ўқитувчи ҳали текширмаган.</p>
-    )
-  }
+  <article class="rt-topic">
+    <header>
+      <p class="rt-label">{entry.data.order}-мавзу</p>
+      <h1>{entry.data.title}</h1>
+    </header>
 
-  <article class="prose">
-    <Content />
+    <p class="rt-lead">{entry.data.short}</p>
+
+    {
+      !entry.data.reviewed && (
+        <p class="rt-item__meta">Бу мавзуни ўқитувчи ҳали текширмаган.</p>
+      )
+    }
+
+    <div class="rt-prose">
+      <Content />
+    </div>
+
+    {
+      hasExercises && (
+        <aside class="rt-card">
+          <h2 class="rt-item__title">Шу мавзу бўйича машқлар</h2>
+          <p class="rt-item__meta">Жавобни рус ҳарфларида ўзингиз ёзасиз.</p>
+          <a class="rt-btn rt-btn--primary" href={url(`mashqlar/${exercisesTopic}`)}>
+            Машқларни бошлаш
+          </a>
+        </aside>
+      )
+    }
+
+    <nav class="rt-pager" aria-label="Мавзулар орасида юриш">
+      {
+        prev ? (
+          <a href={url(`mavzular/${prev.id}`)}>
+            <small>← Олдинги мавзу</small>
+            <b>{prev.data.title}</b>
+          </a>
+        ) : (
+          <span />
+        )
+      }
+      {
+        next ? (
+          <a href={url(`mavzular/${next.id}`)}>
+            <small>Кейинги мавзу →</small>
+            <b>{next.data.title}</b>
+          </a>
+        ) : (
+          <span />
+        )
+      }
+    </nav>
   </article>
-
-  {
-    hasExercises && (
-      <div class="card" style="margin-top:1.4rem">
-        <div class="card__top">
-          <span class="card__title">Шу мавзу бўйича машқлар</span>
-        </div>
-        <p class="card__meta" style="margin:.25rem 0 .7rem">
-          Жавобни рус ҳарфларида ўзингиз ёзасиз.
-        </p>
-        <a class="btn btn--primary btn--sm" href={url(`mashqlar/${exercisesTopic}`)}>Машқларни бошлаш</a>
-      </div>
-    )
-  }
-
-  <nav class="navrow" style="margin-top:1.4rem" aria-label="Мавзулар орасида юриш">
-    {
-      prev ? (
-        <a class="btn" href={url(`mavzular/${prev.id}`)}>← {prev.data.title}</a>
-      ) : (
-        <span></span>
-      )
-    }
-    {
-      next ? (
-        <a class="btn" href={url(`mavzular/${next.id}`)}>{next.data.title} →</a>
-      ) : (
-        <span></span>
-      )
-    }
-  </nav>
 
   <div id="topic-meta" data-topic={entry.id} hidden></div>
   <script>

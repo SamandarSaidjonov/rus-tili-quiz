@@ -2,8 +2,9 @@
  * Луғат сўраш режими.
  * Савол фақат ўзбекча, 4 та вариант русча. Автоматик ўтиш йўқ,
  * «← Олдинги» ўтган саволни фақат кўриш учун очади.
+ * Кўриниши: design/components/OptionList ва VocabCard.
  */
-import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import { useCallback, useEffect, useMemo, useState } from 'preact/hooks';
 import type { JSX } from 'preact';
 import type { VocabSet, VocabWord } from '../lib/types.ts';
 import { indexWords, pickOptions } from '../lib/distractors.ts';
@@ -11,7 +12,7 @@ import { shuffle } from '../lib/text.ts';
 import {
   mistakeIds, readJson, recordAnswer, recordScore, removeRaw, sessionKey, writeJson,
 } from '../lib/progress.ts';
-import { ProgressRow, Ru, Speak, Verdict } from './bits.tsx';
+import { Chip, Icon, Option, Progress, Ru, Speak, Verdict } from './bits.tsx';
 
 type Count = 20 | 40 | 'all';
 
@@ -79,7 +80,6 @@ export default function VocabQuiz({
   const [session, setSession] = useState<Session | null>(null);
   const [view, setView] = useState<number | null>(null);
   const [empty, setEmpty] = useState<string | null>(null);
-  const liveRef = useRef<HTMLDivElement>(null);
 
   const wordsOf = useCallback(
     (ids: string[]): VocabWord[] => sets.filter((s) => ids.includes(s.id)).flatMap((s) => s.words),
@@ -186,7 +186,6 @@ export default function VocabQuiz({
   const next = useCallback(() => {
     if (!session) return;
     if (session.i + 1 >= session.qs.length) {
-      const correct = session.ans.filter((a) => a?.ok).length;
       const bySet = new Map<string, { c: number; t: number }>();
       session.qs.forEach((q, idx) => {
         const setId = byId.get(q.id)?.setId;
@@ -198,7 +197,7 @@ export default function VocabQuiz({
       });
       for (const [setId, r] of bySet) recordScore('vocab', setId, r.c, r.t);
       persist({ ...session, finished: true });
-      void correct;
+      window.scrollTo({ top: 0, behavior: 'auto' });
       return;
     }
     persist({ ...session, i: session.i + 1 });
@@ -252,14 +251,18 @@ export default function VocabQuiz({
 
   if (empty && !session) {
     return (
-      <div class="card stack">
-        <p>{empty}</p>
-        <a class="btn" href={listHref}>← Луғатлар рўйхати</a>
+      <div class="rt-card">
+        <p style={{ margin: 0 }}>{empty}</p>
+        <a class="rt-btn rt-btn--secondary" href={listHref}>
+          ← Луғатлар рўйхати
+        </a>
       </div>
     );
   }
 
-  if (!session) return <div class="card muted">Юкланмоқда…</div>;
+  if (!session) {
+    return <p class="rt-muted">Юкланмоқда…</p>;
+  }
 
   const done = session.ans.filter(Boolean).length;
   const correct = session.ans.filter((a) => a?.ok).length;
@@ -271,50 +274,69 @@ export default function VocabQuiz({
       .filter(Boolean) as string[];
     const pct = session.qs.length ? Math.round((correct / session.qs.length) * 100) : 0;
     return (
-      <div class="stack--lg">
-        <div class="card stack">
-          <h2>Натижа</h2>
-          <p class="result__score">
-            {correct} / {session.qs.length} тўғри <span class="muted">({pct}%)</span>
-          </p>
-          <p class="muted">
+      <div class="rt-stack">
+        <div class="rt-card">
+          <h2 class="rt-item__title">Натижа</h2>
+          <div class="rt-score">
+            <span class="rt-score__num">
+              {correct}/{session.qs.length}
+            </span>
+            <span class="rt-score__of">{pct}% тўғри</span>
+          </div>
+          <p class="rt-item__meta">
             {pct >= 90
               ? 'Жуда яхши. Шу тезликда давом этинг.'
               : pct >= 70
                 ? 'Яхши натижа. Хато сўзларни қайта кўриб чиқинг.'
                 : 'Хато сўзларни қайта ишлаб, яна бир марта уриниб кўринг.'}
           </p>
-          <div class="btnrow">
-            {wrongIds.length > 0 && (
-              <button class="btn btn--primary" type="button" onClick={() => start(session.cfg, wrongIds)}>
+          <div class="rt-item__actions">
+            {wrongIds.length > 0 ? (
+              <button
+                class="rt-btn rt-btn--primary"
+                type="button"
+                onClick={() => start(session.cfg, wrongIds)}
+              >
                 Хатоларни қайта ишлаш ({wrongIds.length})
               </button>
+            ) : (
+              <button class="rt-btn rt-btn--primary" type="button" onClick={() => start(session.cfg)}>
+                Янги квизни бошлаш
+              </button>
             )}
-            <button class="btn" type="button" onClick={() => start(session.cfg)}>Янги квиз</button>
+            {wrongIds.length > 0 && (
+              <button class="rt-btn rt-btn--secondary" type="button" onClick={() => start(session.cfg)}>
+                Янги квизни бошлаш
+              </button>
+            )}
+          </div>
+          <div class="rt-row">
             <button
-              class="btn btn--ghost"
+              class="rt-link"
               type="button"
               onClick={() => {
                 setView(session.qs.length - 1);
                 persist({ ...session, finished: false, i: session.qs.length - 1 });
               }}
             >
-              ← Саволларни кўриш
+              Саволларни қайта кўриш
             </button>
-            <a class="btn btn--ghost" href={homeHref}>Барча бўлимлар</a>
+            <a class="rt-link" href={homeHref}>
+              Барча бўлимлар
+            </a>
           </div>
         </div>
 
         {wrongIds.length > 0 && (
-          <div class="card">
-            <h3>Хато қилинган сўзлар</h3>
-            <div class="tblwrap">
-              <table>
+          <div class="rt-card">
+            <h2 class="rt-item__title">Хато қилинган сўзлар</h2>
+            <div class="rt-table-wrap" role="region" aria-label="Хато қилинган сўзлар" tabindex={0}>
+              <table class="rt-table">
                 <thead>
                   <tr>
-                    <th>Ўзбекча</th>
-                    <th>Тўғри жавоб</th>
-                    <th>Сиз танладингиз</th>
+                    <th scope="col">Ўзбекча</th>
+                    <th scope="col">Тўғри жавоб</th>
+                    <th scope="col">Сиз танладингиз</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -326,8 +348,14 @@ export default function VocabQuiz({
                     return (
                       <tr key={q.id}>
                         <td>{right?.uz}</td>
-                        <td><Ru text={right?.ru ?? ''} /></td>
-                        <td class="mark-bad"><Ru text={picked?.ru ?? ''} /></td>
+                        <td lang="ru">
+                          <Ru text={right?.ru ?? ''} />
+                        </td>
+                        <td lang="ru">
+                          <s>
+                            <Ru text={picked?.ru ?? ''} />
+                          </s>
+                        </td>
                       </tr>
                     );
                   })}
@@ -345,91 +373,131 @@ export default function VocabQuiz({
   const word = byId.get(q.id)!.word;
   const given = session.ans[idx];
   const reviewing = view !== null;
+  const last = session.i + 1 >= session.qs.length;
 
   return (
-    <div class="stack--lg">
-      <Settings
-        sets={sets}
-        cfg={cfg}
-        onStart={start}
+    <div class="rt-stack">
+      <Progress
+        pos={idx + 1}
+        total={session.qs.length}
+        answered={done}
+        correct={correct}
+        wrong={wrong}
       />
 
-      <ProgressRow done={done} total={session.qs.length} correct={correct} wrong={wrong} />
+      <Settings sets={sets} cfg={cfg} onStart={start} />
 
-      {reviewing && (
-        <p class="review-note">
-          Кўриб чиқиш режими: {idx + 1}-савол. Бу ерда қайта жавоб бериб бўлмайди.{' '}
-          <button class="btn btn--sm" type="button" onClick={() => setView(null)}>
-            Жорий саволга қайтиш
-          </button>
-        </p>
-      )}
+      <article class="rt-card">
+        <p class="rt-label">Русчасини топинг</p>
+        <h2 class="rt-prompt-uz">{word.uz}</h2>
+        {word.example?.uz && <p class="rt-prompt-ctx">Гапда: {word.example.uz}</p>}
 
-      <div class="card quiz">
-        <p class="quiz__label">{idx + 1}-савол · ўзбекчадан русчага</p>
-        <h2 class="quiz__prompt">{word.uz}</h2>
-        {word.example?.uz && <p class="quiz__ex muted">Гапда: {word.example.uz}</p>}
-
-        <ul class="optlist">
+        <ol class="rt-options">
           {(q.opts ?? []).map((optId, n) => {
             const opt = byId.get(optId)?.word;
             const isRight = optId === q.id;
             const isPick = given?.pick === optId;
-            const state = !given ? '' : isRight ? ' opt--good' : isPick ? ' opt--bad' : ' opt--dim';
+            const state: 'correct' | 'wrong' | 'dim' | undefined = !given
+              ? undefined
+              : isRight
+                ? 'correct'
+                : isPick
+                  ? 'wrong'
+                  : 'dim';
             return (
-              <li key={optId}>
-                <button
-                  type="button"
-                  class={`opt${state}`}
-                  disabled={Boolean(given) || reviewing}
-                  onClick={() => answer(optId)}
-                >
-                  <span class="opt__no" aria-hidden="true">{n + 1}</span>
-                  <Ru text={opt?.ru ?? ''} class="opt__text" />
-                  {given && isRight && <span class="opt__mark mark-good" aria-hidden="true">✓</span>}
-                  {given && isPick && !isRight && <span class="opt__mark mark-bad" aria-hidden="true">✗</span>}
-                </button>
-              </li>
+              <Option
+                key={optId}
+                n={n + 1}
+                text={opt?.ru ?? ''}
+                state={state}
+                disabled={Boolean(given) || reviewing}
+                onPick={() => answer(optId)}
+              />
             );
           })}
-        </ul>
+        </ol>
 
-        <div aria-live="polite" ref={liveRef}>
-          {given && (
-            <div class="feedback stack">
-              <Verdict ok={given.ok} />
-              <p class="feedback__pair">
-                <Ru text={word.ru} class="feedback__ru" /> — {word.uz}
-                {word.pos && <span class="badge">{word.pos}</span>}
+        {given && reviewing && (
+          <p class={`rt-past ${given.ok ? 'rt-past--ok' : 'rt-past--no'}`}>
+            <Icon name={given.ok ? 'check' : 'cross'} size={18} />
+            {given.ok ? 'Бу сўзни тўғри топгансиз' : 'Бу сўзда хато қилгансиз'}
+          </p>
+        )}
+      </article>
+
+      {given && (
+        <section class={`rt-feedback ${given.ok ? 'is-correct' : 'is-wrong'}`} role="status">
+          <Verdict ok={given.ok} />
+
+          <div class="rt-vocab__head">
+            <div class="rt-vocab__words">
+              {word.pos && <p class="rt-vocab__pos">{word.pos}</p>}
+              <p class="rt-vocab__ru" lang="ru">
+                <Ru text={word.ru} />
               </p>
-              <div class="btnrow"><Speak text={word.ru} /></div>
-              {word.example?.ru && (
-                <div class="note stack">
-                  <p class="feedback__example"><Ru text={word.example.ru} /></p>
-                  {word.example.uz && <p class="muted">{word.example.uz}</p>}
-                  <div class="btnrow"><Speak text={word.example.ru} label="Гапни тинглаш" /></div>
-                </div>
-              )}
-              {word.note && <p class="note">{word.note}</p>}
+              <p class="rt-vocab__uz">{word.uz}</p>
+            </div>
+            <Speak text={word.ru} />
+          </div>
+
+          {word.example?.ru && (
+            <div class="rt-example">
+              <p class="rt-label">Мисол</p>
+              <p class="rt-example__ru" lang="ru">
+                <Ru text={word.example.ru} />
+                <Speak text={word.example.ru} small label="Гапни тинглаш" />
+              </p>
+              {word.example.uz && <p class="rt-example__uz">{word.example.uz}</p>}
             </div>
           )}
-        </div>
-      </div>
 
-      <div class="navrow">
-        <button class="btn" type="button" disabled={idx === 0} onClick={() => setView(idx - 1)}>
-          ← Олдинги
-        </button>
-        {reviewing ? (
-          <button class="btn" type="button" onClick={() => setView(idx + 1 >= session.i ? null : idx + 1)}>
-            Кейинги →
-          </button>
-        ) : (
-          <button class="btn btn--primary" type="button" disabled={!given} onClick={next}>
-            {session.i + 1 >= session.qs.length ? 'Натижа →' : 'Кейинги →'}
-          </button>
-        )}
-      </div>
+          {word.note && (
+            <p class="rt-explain">
+              <span class="rt-label">Изоҳ</span>
+              {word.note}
+            </p>
+          )}
+        </section>
+      )}
+
+      {(idx > 0 || given) && (
+        <div class="rt-actionbar">
+          {reviewing && (
+            <p class="rt-reviewing">
+              Фақат кўриш учун
+              <button class="rt-link" type="button" onClick={() => setView(null)}>
+                Жорий саволга қайтиш
+              </button>
+            </p>
+          )}
+          <div class="rt-actions">
+            {idx > 0 && (
+              <button
+                class="rt-btn rt-btn--secondary"
+                type="button"
+                onClick={() => setView(idx - 1)}
+              >
+                ← Олдинги
+              </button>
+            )}
+            {reviewing ? (
+              <button
+                class="rt-btn rt-btn--primary"
+                type="button"
+                onClick={() => setView(idx + 1 >= session.i ? null : idx + 1)}
+              >
+                Кейинги →
+              </button>
+            ) : (
+              given && (
+                <button class="rt-btn rt-btn--primary" type="button" onClick={next}>
+                  {last ? 'Натижани кўриш →' : 'Кейинги →'}
+                </button>
+              )
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -444,64 +512,66 @@ function Settings({
   const [draft, setDraft] = useState<Cfg>(cfg);
   useEffect(() => setDraft(cfg), [cfg]);
 
-  const toggleSet = (id: string) => {
+  const toggleSet = (id: string): void => {
     const has = draft.sets.includes(id);
-    const next = has ? draft.sets.filter((s) => s !== id) : [...draft.sets, id];
-    setDraft({ ...draft, sets: next.length ? next : [id] });
+    const nextSets = has ? draft.sets.filter((s) => s !== id) : [...draft.sets, id];
+    setDraft({ ...draft, sets: nextSets.length ? nextSets : [id] });
   };
 
+  const all = draft.sets.length === sets.length;
+
   return (
-    <details class="card settings">
+    <details class="rt-settings">
       <summary>Созламалар</summary>
-      <div class="stack">
-        <fieldset class="fieldset">
+      <div class="rt-settings__body">
+        <fieldset>
           <legend>Тўпламлар</legend>
-          <div class="chips">
+          <div class="rt-chips">
+            <Chip
+              on={all}
+              label="Ҳаммаси"
+              count={sets.reduce((n, s) => n + s.words.length, 0)}
+              onPick={() => setDraft({ ...draft, sets: sets.map((s) => s.id) })}
+            />
             {sets.map((s) => (
-              <label class={`chip${draft.sets.includes(s.id) ? ' chip--on' : ''}`} key={s.id}>
-                <input
-                  type="checkbox"
-                  checked={draft.sets.includes(s.id)}
-                  onChange={() => toggleSet(s.id)}
-                />
-                <span>{s.title}</span>
-              </label>
+              <Chip
+                key={s.id}
+                on={!all && draft.sets.includes(s.id)}
+                label={s.title}
+                count={s.words.length}
+                onPick={() => toggleSet(s.id)}
+              />
             ))}
+            <Chip
+              on={draft.mistakes}
+              label="Хато қилганларим"
+              onPick={() => setDraft({ ...draft, mistakes: !draft.mistakes })}
+            />
           </div>
         </fieldset>
 
-        <fieldset class="fieldset">
+        <fieldset>
           <legend>Саволлар сони</legend>
-          <div class="chips">
+          <div class="rt-chips">
             {([20, 40, 'all'] as Count[]).map((c) => (
-              <label class={`chip${draft.count === c ? ' chip--on' : ''}`} key={String(c)}>
-                <input
-                  type="radio"
-                  name="vocab-count"
-                  checked={draft.count === c}
-                  onChange={() => setDraft({ ...draft, count: c })}
-                />
-                <span>{c === 'all' ? 'Ҳаммаси' : c}</span>
-              </label>
+              <Chip
+                key={String(c)}
+                on={draft.count === c}
+                label={c === 'all' ? 'Ҳаммаси' : String(c)}
+                onPick={() => setDraft({ ...draft, count: c })}
+              />
             ))}
           </div>
         </fieldset>
 
-        <label class={`chip${draft.mistakes ? ' chip--on' : ''}`}>
-          <input
-            type="checkbox"
-            checked={draft.mistakes}
-            onChange={() => setDraft({ ...draft, mistakes: !draft.mistakes })}
-          />
-          <span>Фақат хато қилганларим</span>
-        </label>
-
-        <div class="btnrow">
-          <button class="btn btn--primary" type="button" onClick={() => onStart(draft)}>
+        <div class="rt-item__actions">
+          <button class="rt-btn rt-btn--primary" type="button" onClick={() => onStart(draft)}>
             Янги квизни бошлаш
           </button>
+        </div>
+        <div>
           <button
-            class="btn btn--ghost"
+            class="rt-link"
             type="button"
             onClick={() => {
               removeRaw(SESSION);

@@ -27,9 +27,11 @@ const fullTitle = title === 'Рус тили' ? title : `${title} · Рус ти
     <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={url('icon-192.png')} />
     <link rel="manifest" href={url('manifest.webmanifest')} />
-    <meta name="theme-color" content="#2f5bd4" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f5f4f0" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#111317" />
     <Font cssVariable="--font-uz" preload />
     <Font cssVariable="--font-ru" />
+    <Font cssVariable="--font-display" preload />
     <script is:inline>
       // Темани саҳифа чизилишидан олдин қўямиз, шунда ранг сакраб кетмайди.
       try {
@@ -41,38 +43,18 @@ const fullTitle = title === 'Рус тили' ? title : `${title} · Рус ти
     </script>
   </head>
   <body>
-    <a class="skip" href="#main">Асосий қисмга ўтиш</a>
-    <header class="site-head">
-      <div class="site-head__row">
-        <a class="site-head__name" href={url()}>Рус тили</a>
-        <button
-          class="iconbtn"
-          id="theme-btn"
-          type="button"
-          aria-label="Ёруғ ёки қоронғи тема"
-          title="Ёруғ ёки қоронғи тема"
-        >
-          <svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true">
-            <path
-              d="M12 3.5a8.5 8.5 0 1 0 8.5 8.5A6.5 6.5 0 0 1 12 3.5z"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.6"
-              stroke-linejoin="round"></path>
-          </svg>
-        </button>
-      </div>
-    </header>
+    <a class="rt-skip" href="#main">Асосий қисмга ўтиш</a>
 
-    <BottomNav section={section} />
+    <slot name="topbar" />
 
-    <main id="main">
+    <main id="main" class="rt-page">
       <slot />
     </main>
 
+    <BottomNav section={section} />
+
     <script>
       import { runMigration } from '../lib/migrate.ts';
-      import { writeRaw } from '../lib/progress.ts';
 
       // Эски версиянинг прогрессини бир марта кўчирамиз.
       try {
@@ -92,16 +74,6 @@ const fullTitle = title === 'Рус тили' ? title : `${title} · Рус ти
           });
         });
       }
-
-      document.getElementById('theme-btn')?.addEventListener('click', () => {
-        const root = document.documentElement;
-        const dark = root.dataset.theme
-          ? root.dataset.theme === 'dark'
-          : window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const next = dark ? 'light' : 'dark';
-        root.dataset.theme = next;
-        writeRaw('rt2:theme', next);
-      });
     </script>
   </body>
 </html>

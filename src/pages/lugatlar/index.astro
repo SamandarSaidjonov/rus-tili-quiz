@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
 import { url } from '../../lib/url.ts';
 
 const sets = (await getCollection('vocab')).sort((a, b) => b.data.order - a.data.order);
@@ -8,35 +9,47 @@ const total = sets.reduce((n, s) => n + s.data.words.length, 0);
 ---
 
 <Base title="Луғатлар" section="lugatlar">
-  <h1>Луғатлар</h1>
-  <p class="muted">
-    {sets.length} тўплам · {total} сўз. Савол ўзбекча берилади, 4 та жавоб варианти русча.
+  <div class="rt-pagehead">
+    <a class="rt-back" href={url()} aria-label="Бош саҳифага қайтиш">
+      <Icon name="arrow-left" />
+    </a>
+    <h1>Луғатлар</h1>
+  </div>
+
+  <p class="rt-muted">
+    {sets.length} та тўплам · {total} та сўз. Савол ўзбекча берилади, 4 та жавоб варианти русча.
     Янги тўпламлар тепада туради.
   </p>
 
-  <div class="btnrow" style="margin:.9rem 0 1.2rem">
-    <a class="btn btn--primary" href={url('lugatlar/quiz')}>Ҳаммасини сўраш</a>
-    <a class="btn" href={`${url('lugatlar/quiz')}?mode=mistakes`}>Хато қилганларим</a>
+  <div class="rt-row">
+    <a class="rt-btn rt-btn--primary" href={url('lugatlar/quiz')}>Ҳаммасини сўраш</a>
+    <a class="rt-btn rt-btn--secondary" href={`${url('lugatlar/quiz')}?mode=mistakes`}>
+      Хато қилганларимни сўраш
+    </a>
   </div>
 
-  <div class="cards">
+  <div class="rt-stack--tight">
     {
       sets.map((s) => (
-        <div class="card">
-          <div class="card__top">
-            <span class="card__title">{s.data.title}</span>
-            <span class="badge">{s.data.words.length} сўз</span>
+        <div class="rt-item">
+          <div class="rt-item__head">
+            <h2 class="rt-item__title">{s.data.title}</h2>
+            <span class="rt-badge rt-badge--score">{s.data.words.length} та сўз</span>
           </div>
-          {s.data.pages && <p class="card__meta" style="margin:.2rem 0 0">{s.data.pages}</p>}
-          <p class="card__meta" data-prog={`vocab:${s.id}:${s.data.words.length}`} style="margin:.35rem 0 0">
-            …
+          {s.data.pages && <p class="rt-item__meta">{s.data.pages}</p>}
+          <p class="rt-item__meta" data-prog={`vocab:${s.id}:${s.data.words.length}`}>
+            Ҳали бошланмаган
           </p>
-          <div class="bar" data-prog-bar={`vocab:${s.id}:${s.data.words.length}`}>
-            <div class="bar__fill" style="width:0%"></div>
-          </div>
-          <div class="btnrow" style="margin-top:.75rem">
-            <a class="btn btn--sm btn--primary" href={`${url('lugatlar/quiz')}?set=${s.id}`}>Сўраш</a>
-            <a class="btn btn--sm" href={url(`lugatlar/${s.id}`)}>Сўзларни кўриш</a>
+          <span class="rt-bar" data-prog-bar={`vocab:${s.id}:${s.data.words.length}`}>
+            <i style="width:0%" />
+          </span>
+          <div class="rt-item__actions">
+            <a class="rt-btn rt-btn--primary" href={`${url('lugatlar/quiz')}?set=${s.id}`}>
+              Сўрашни бошлаш
+            </a>
+            <a class="rt-btn rt-btn--secondary" href={url(`lugatlar/${s.id}`)}>
+              Сўзларни кўриш
+            </a>
           </div>
         </div>
       ))

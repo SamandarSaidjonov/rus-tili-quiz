@@ -1,0 +1,29 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  /** Экран номи (бир қатор, сиғмаса `…` билан қирқилади). */
+  title: string;
+  /** Ном остидаги қисқа изоҳ: «Қавсдаги сўз · 10 та машқ». */
+  sub?: string;
+  /** Рўйхатга қайтарадиган ҳавола (олдинги саволга эмас). */
+  backHref: string;
+  /** `aria-label`: қаерга қайтиши айтилади. */
+  backLabel: string;
+}
+
+const { title, sub, backHref, backLabel } = Astro.props;
+---
+
+<header class="rt-topbar">
+  <div class="rt-topbar__row">
+    <a class="rt-back" href={backHref} aria-label={backLabel}>
+      <Icon name="arrow-left" />
+    </a>
+    <div class="rt-topbar__text">
+      <h1 class="rt-topbar__title">{title}</h1>
+      {sub && <p class="rt-topbar__sub">{sub}</p>}
+    </div>
+  </div>
+  <slot />
+</header>

@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
 import { url } from '../../lib/url.ts';
 import { topicMeta } from '../../lib/topics.ts';
 import { TYPE_INFO } from '../../lib/exercise.ts';
@@ -35,35 +36,45 @@ const total = list.reduce((n, g) => n + g.items, 0);
 ---
 
 <Base title="Машқлар" section="mashqlar">
-  <h1>Машқлар</h1>
-  <p class="muted">
-    {total} машқ. Жавобни рус ҳарфларида ўзингиз ёзасиз. Катта-кичик ҳарф, тиниш белгилари,
+  <div class="rt-pagehead">
+    <a class="rt-back" href={url()} aria-label="Бош саҳифага қайтиш">
+      <Icon name="arrow-left" />
+    </a>
+    <h1>Машқлар</h1>
+  </div>
+
+  <p class="rt-muted">
+    {total} та машқ. Жавобни рус ҳарфларида ўзингиз ёзасиз. Катта-кичик ҳарф, тиниш белгилари,
     ё/е фарқи ва урғу белгиси хато ҳисобланмайди.
   </p>
 
   {
     list.length === 0 && (
-      <div class="card">
+      <div class="rt-card">
         <p style="margin:0">Машқлар ҳозир тайёрланмоқда.</p>
       </div>
     )
   }
 
-  <div class="cards" style="margin-top:1rem">
+  <div class="rt-stack--tight">
     {
       list.map((g) => (
-        <div class="card">
-          <div class="card__top">
-            <span class="card__title">{g.title}</span>
-            <span class="badge">{g.items} машқ</span>
+        <div class="rt-item">
+          <div class="rt-item__head">
+            <h2 class="rt-item__title">{g.title}</h2>
+            <span class="rt-badge rt-badge--score">{g.items} та машқ</span>
           </div>
-          <p class="card__meta" style="margin:.2rem 0 0">{g.types.length} тур: {g.types.join(' · ')}</p>
-          <p class="card__meta" data-prog={`ex:${g.slug}:${g.items}`} style="margin:.35rem 0 0">…</p>
-          <div class="bar" data-prog-bar={`ex:${g.slug}:${g.items}`}>
-            <div class="bar__fill" style="width:0%"></div>
-          </div>
-          <div class="btnrow" style="margin-top:.75rem">
-            <a class="btn btn--sm btn--primary" href={url(`mashqlar/${g.slug}`)}>Бошлаш</a>
+          <p class="rt-item__meta">
+            {g.types.length} тур: {g.types.join(' · ')}
+          </p>
+          <p class="rt-item__meta" data-prog={`ex:${g.slug}:${g.items}`}>Ҳали бошланмаган</p>
+          <span class="rt-bar" data-prog-bar={`ex:${g.slug}:${g.items}`}>
+            <i style="width:0%" />
+          </span>
+          <div class="rt-item__actions">
+            <a class="rt-btn rt-btn--primary" href={url(`mashqlar/${g.slug}`)}>
+              Машқни бошлаш
+            </a>
           </div>
         </div>
       ))

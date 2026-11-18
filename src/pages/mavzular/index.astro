@@ -1,36 +1,45 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
 import { url } from '../../lib/url.ts';
 
 const topics = (await getCollection('topics')).sort((a, b) => a.data.order - b.data.order);
 ---
 
 <Base title="Мавзулар" section="mavzular">
-  <h1>Мавзулар</h1>
-  <p class="muted">
+  <div class="rt-pagehead">
+    <a class="rt-back" href={url()} aria-label="Бош саҳифага қайтиш">
+      <Icon name="arrow-left" />
+    </a>
+    <h1>Мавзулар</h1>
+  </div>
+
+  <p class="rt-muted">
     Фақат тушунтириш ва жадваллар. Машқлар алоҳида бўлимда.
   </p>
 
   {
     topics.length === 0 && (
-      <div class="card">
+      <div class="rt-card">
         <p style="margin:0">Мавзулар ҳозир тайёрланмоқда.</p>
       </div>
     )
   }
 
-  <div class="cards" style="margin-top:1rem">
+  <div class="rt-stack--tight">
     {
-      topics.map((t, i) => (
-        <a class="card card-link" href={url(`mavzular/${t.id}`)}>
-          <div class="card__top">
-            <span class="card__title">
-              <span class="muted">{i + 1}.</span> {t.data.title}
+      topics.map((t) => (
+        <a class="rt-item" href={url(`mavzular/${t.id}`)}>
+          <div class="rt-item__head">
+            <h2 class="rt-item__title">
+              {t.data.order}. {t.data.title}
+            </h2>
+            <span class="rt-badge rt-badge--todo" data-prog-seen={t.id}>
+              Ўқилмаган
             </span>
-            <span class="badge" data-prog-seen={t.id}>…</span>
           </div>
-          <p class="card__meta" style="margin:.25rem 0 0">{t.data.short}</p>
+          <p class="rt-item__meta">{t.data.short}</p>
         </a>
       ))
     }
