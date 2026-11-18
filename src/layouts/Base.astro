@@ -65,13 +65,25 @@ const fullTitle = title === 'Рус тили' ? title : `${title} · Рус ти
 
       // Офлайн ишлаши ва бош экранга қўшиш учун
       if ('serviceWorker' in navigator) {
+        // Эски service worker янгиси билан алмашса, саҳифани бир марта қайта юклаймиз:
+        // акс ҳолда эски HTML ўчиб кетган CSS'ни сўраб, саҳифа услубсиз қолади.
+        const hadController = Boolean(navigator.serviceWorker.controller);
+        let reloading = false;
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          if (!hadController || reloading) return;
+          reloading = true;
+          location.reload();
+        });
+
         window.addEventListener('load', () => {
           const base = import.meta.env.BASE_URL.endsWith('/')
             ? import.meta.env.BASE_URL
             : `${import.meta.env.BASE_URL}/`;
-          navigator.serviceWorker.register(`${base}sw.js`, { scope: base }).catch(() => {
-            /* service worker ишламаса ҳам сайт ишлайди */
-          });
+          navigator.serviceWorker
+            .register(`${base}sw.js`, { scope: base, updateViaCache: 'none' })
+            .catch(() => {
+              /* service worker ишламаса ҳам сайт ишлайди */
+            });
         });
       }
     </script>
