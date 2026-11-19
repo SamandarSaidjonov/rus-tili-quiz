@@ -53,6 +53,20 @@ test('машқ: бўш жавобда огоҳлантиради, хато жа�
   await expect(page.locator('.rt-explain').last()).toBeVisible();
 });
 
+test('«Падежни топинг» да тўғри жавоб гап эмас, падеж номи бўлади', async ({ page }) => {
+  await page.goto('./mashqlar/roditelnyy/');
+  await page.locator('.rt-settings > summary').click();
+  await page.getByRole('button', { name: /Падежни топинг/ }).click();
+  await page.getByRole('button', { name: 'Янги машқни бошлаш' }).click();
+
+  await page.locator('.rt-input').first().fill('Д.п.');
+  await page.getByRole('button', { name: 'Текшириш' }).click();
+
+  await expect(page.locator('.rt-answer')).toHaveText(
+    /^(именительный|родительный|дательный|винительный|творительный|предложный)$/,
+  );
+});
+
 test('машқда «Билмайман» хато деб ҳисобланади', async ({ page }) => {
   await page.goto('./mashqlar/mixed/');
   await page.getByRole('button', { name: /Билмайман/ }).click();

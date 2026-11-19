@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { checkExercise, dealByType, fixWords, fullAnswer, maskWords } from '../src/lib/exercise.ts';
+import {
+  answerSpeech, canMask, checkExercise, dealByType, fixWords, fullAnswer, maskWords,
+} from '../src/lib/exercise.ts';
 import type { ExerciseItem } from '../src/lib/types.ts';
 
 const item = (over: Partial<ExerciseItem> = {}): ExerciseItem => ({
@@ -74,6 +76,25 @@ describe('checkExercise: турлар', () => {
     expect(checkExercise(it2, 'choose', 'маму').state).toBe('wrong');
   });
 
+  it('қўшимча ўрнига тўлиқ гап ёзилса ҳам тўғри', () => {
+    const end = item({ prompt: 'Я живу в Ташкент___.', answers: ['е'] });
+    expect(checkExercise(end, 'ending', 'я живу в ташкенте').state).toBe('correct');
+    expect(checkExercise(end, 'ending', 'Я живу в Ташкенту.').state).toBe('wrong');
+
+    const pn = item({ prompt: 'Я жду (вы) уже час.', answers: ['вас'] });
+    expect(checkExercise(pn, 'pronoun', 'вас').state).toBe('correct');
+    expect(checkExercise(pn, 'pronoun', 'я жду вас уже час.').state).toBe('correct');
+    expect(checkExercise(pn, 'pronoun', 'Я жду тебя уже час.').state).toBe('wrong');
+
+    const prep = item({ prompt: 'Книга лежит ___ столе.', answers: ['на'] });
+    expect(checkExercise(prep, 'preposition', 'Книга лежит на столе.').state).toBe('correct');
+  });
+
+  it('таржимада тўлиқ гапдан бошқаси қабул қилинмайди', () => {
+    const tr = item({ prompt: 'Мен кутяпман.', answers: ['Я жду вас.'] });
+    expect(checkExercise(tr, 'translate', 'вас').state).toBe('wrong');
+  });
+
   it('choose турида лотин огоҳлантириши чиқмайди', () => {
     const it2 = item({ answers: ['маме'], options: ['мама', 'маме', 'маму', 'мамой'] });
     expect(checkExercise(it2, 'choose', 'маме').state).toBe('correct');
@@ -93,10 +114,25 @@ describe('fullAnswer', () => {
     );
   });
 
-  it('identify турида таҳлил қилинган сўзни ажратади', () => {
+  it('identify турида падежнинг тўлиқ номини қайтаради', () => {
+    const it2 = item({ prompt: 'Я звоню [[другу]].', answers: ['Д.п.'] });
+    expect(fullAnswer(it2, 'identify')).toBe('дательный');
     expect(
       fullAnswer(item({ prompt: 'Я пишу [[ручкой]].', answers: ['творительный'] }), 'identify'),
-    ).toBe('Я пишу *ручкой*.');
+    ).toBe('творительный');
+  });
+
+  it('question турида савол сўзини қайтаради', () => {
+    expect(
+      fullAnswer(item({ prompt: '[[Брат]] работает в банке.', answers: ['кто?'] }), 'question'),
+    ).toBe('кто?');
+  });
+
+  it('identify ва question да овоз учун гапнинг ўзи ўқилади', () => {
+    const it2 = item({ prompt: 'Я звоню [[другу]].', answers: ['дательный'] });
+    expect(answerSpeech(it2, 'identify')).toBe('Я звоню другу.');
+    expect(canMask('identify')).toBe(false);
+    expect(canMask('bracket')).toBe(true);
   });
 
   it('таржимада тўлиқ гапни қайтаради', () => {

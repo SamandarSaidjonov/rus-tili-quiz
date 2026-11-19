@@ -71,7 +71,7 @@ body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f
 .rt-topbar__sub { margin: 0; font: 400 13px/18px var(--font-uz); color: var(--muted); }
 
 /* ---------- BottomNav ---------- */
-.rt-nav { display: grid; grid-template-columns: repeat(4, 1fr); min-height: var(--nav-height); padding-bottom: env(safe-area-inset-bottom); background: var(--surface); border-top: 1px solid var(--line); }
+.rt-nav { display: grid; grid-template-columns: repeat(4, 1fr); min-height: calc(var(--nav-height) + env(safe-area-inset-bottom, 0px)); padding-bottom: env(safe-area-inset-bottom, 0px); background: var(--surface); border-top: 1px solid var(--line); }
 .rt-nav__item { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font: 400 13px/18px var(--font-uz); color: var(--muted); text-decoration: none; }
 .rt-nav__item svg { width: var(--icon-size); height: var(--icon-size); }
 .rt-nav__item[aria-current="page"] { color: var(--accent); font-weight: 700; }

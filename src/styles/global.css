@@ -105,6 +105,12 @@
   --nav-bottom: var(--nav-height);
   --rail-width: 240px;
   --focus-width: 3px;
+  /* Тизим панеллари (status bar, жест чизиғи) эгаллаган жой. Браузерда 0,
+     бош экрандан очилганда — панелнинг баландлиги. */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
 }
 
 /* ---------- Асос ---------- */
@@ -120,7 +126,10 @@ html {
 
 body {
   margin: 0;
-  min-height: 100vh;
+  min-height: 100dvh;
+  /* Матн тизим панеллари остига тушиб кетмасин. */
+  padding-top: var(--safe-top);
+  padding-inline: var(--safe-left) var(--safe-right);
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-uz);
@@ -164,7 +173,7 @@ a {
 }
 .rt-skip:focus {
   left: var(--space-2);
-  top: var(--space-2);
+  top: calc(var(--safe-top) + var(--space-2));
 }
 
 .rt-muted {
@@ -204,7 +213,7 @@ a {
   max-width: var(--page-max);
   margin: 0 auto;
   padding: var(--page-pad) var(--page-pad)
-    calc(var(--nav-bottom) + var(--space-12) + env(safe-area-inset-bottom));
+    calc(var(--nav-bottom) + var(--space-12) + var(--safe-bottom));
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
@@ -470,9 +479,11 @@ a {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   /* Кенг экранда контент билан бир хил марказда туради. */
-  padding-inline: max(0px, calc((100% - var(--page-max)) / 2));
-  min-height: var(--nav-height);
-  padding-bottom: env(safe-area-inset-bottom);
+  padding-inline: max(var(--safe-left), calc((100% - var(--page-max)) / 2))
+    max(var(--safe-right), calc((100% - var(--page-max)) / 2));
+  min-height: calc(var(--nav-height) + var(--safe-bottom));
+  /* Жест чизиғи устида турсин: фон пастгача тушади, иконкалар тепада қолади. */
+  padding-bottom: var(--safe-bottom);
   background: var(--surface);
   border-top: 1px solid var(--line);
 }
@@ -913,7 +924,7 @@ textarea.rt-input {
 }
 .rt-actionbar {
   position: sticky;
-  bottom: calc(var(--nav-bottom) + env(safe-area-inset-bottom));
+  bottom: calc(var(--nav-bottom) + var(--safe-bottom));
   z-index: 10;
   margin-inline: calc(var(--page-pad) * -1);
   padding: var(--space-3) var(--page-pad);
@@ -1577,7 +1588,7 @@ a.rt-item:hover {
   }
 
   body {
-    padding-inline-start: var(--rail-width);
+    padding-inline-start: calc(var(--rail-width) + var(--safe-left));
   }
 
   /* Пастки навигация чап устунга айланади (HTML ўзгармайди). */
@@ -1588,8 +1599,9 @@ a.rt-item:hover {
     grid-template-columns: 1fr;
     align-content: start;
     gap: var(--space-1);
-    padding: var(--space-6) var(--space-3);
-    padding-bottom: var(--space-6);
+    padding: calc(var(--space-6) + var(--safe-top)) var(--space-3) var(--space-6);
+    padding-inline-start: calc(var(--space-3) + var(--safe-left));
+    min-height: 0;
     border-top: 0;
     border-inline-end: 1px solid var(--line);
   }

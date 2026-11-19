@@ -1,4 +1,4 @@
-import { norm, toks, hasLatin, lcsMask, parseCase, type CaseLetter } from './text.ts';
+import { CASES, norm, toks, hasLatin, lcsMask, parseCase, type CaseLetter } from './text.ts';
 import type { ExerciseItem, ExerciseType } from './types.ts';
 
 export interface TypeInfo {
@@ -39,6 +39,21 @@ export function fixWords(item: ExerciseItem): string {
 /** `ending` турида олдига қўйилган `-` ҳисобга олинмайди (`-ой` ва `ой` бир хил). */
 const stripDash = (s: string): string => s.replace(/^[\s\-–—]+/, '');
 
+/** Жавоб гапнинг бир бўлаги бўладиган турлар: бўш жой ёки қавс тўлдирилади. */
+const GAP_TYPES: readonly ExerciseType[] = [
+  'ending', 'bracket', 'preposition', 'pronoun', 'adjective', 'plural',
+];
+
+/**
+ * Машқ матнидаги бўш жойни (`___` ёки `(сўз)`) жавоб билан тўлдиради.
+ * Белги топилмаса `null` қайтаради.
+ */
+export function fillGap(prompt: string, answer: string): string | null {
+  if (/_{2,}/.test(prompt)) return prompt.replace(/_{2,}/, answer);
+  if (/\([^)]+\)/.test(prompt)) return prompt.replace(/\([^)]+\)/, answer);
+  return null;
+}
+
 export function checkExercise(item: ExerciseItem, type: ExerciseType, input: string): CheckResult {
   const raw = String(input ?? '').trim();
   if (!raw) return { state: 'empty', warning: 'Жавоб ёзилмади.' };
@@ -68,6 +83,17 @@ export function checkExercise(item: ExerciseItem, type: ExerciseType, input: str
     return { state: 'correct' };
   }
   if (type === 'fix' && n === fixWords(item)) return { state: 'correct' };
+
+  // Фақат қўшимча ёки битта сўз сўралса ҳам, тўлиқ гапни ёзган одам хато қилмаган:
+  // экранда тўғри жавоб тўлиқ гап бўлиб кўринади, шунинг учун у ҳам қабул қилинади.
+  if (GAP_TYPES.includes(type)) {
+    const whole = norm(raw);
+    const filled = item.answers
+      .map((a) => fillGap(item.prompt, type === 'ending' ? stripDash(a) : a))
+      .filter((s): s is string => s !== null);
+    if (filled.some((s) => norm(s) === whole)) return { state: 'correct' };
+  }
+
   return { state: 'wrong' };
 }
 
@@ -110,13 +136,30 @@ function shuffleLocal<T>(arr: T[], rnd: () => number): T[] {
 export function fullAnswer(item: ExerciseItem, type: ExerciseType): string {
   const a = item.answers[0] ?? '';
   if (type === 'translate' || type === 'fix' || type === 'choose') return a;
-  if (type === 'identify' || type === 'question') {
-    return item.prompt.replace(/\[\[([^\]]+)\]\]/g, '*$1*');
+  // Бу турларда сўралгани — гап эмас, падеж номи ёки савол сўзи. Гапнинг ўзи
+  // саволда турибди, шунинг учун тўғри жавоб деб айнан жавоб кўрсатилади.
+  if (type === 'identify') {
+    const letter = parseCase(a);
+    return letter ? CASES[letter] : a;
   }
-  let out = item.prompt;
-  if (/_{2,}/.test(out)) return out.replace(/_{2,}/, `*${a}*`);
-  if (/\([^)]+\)/.test(out)) return out.replace(/\([^)]+\)/, `*${a}*`);
-  return `${out} → *${a}*`;
+  if (type === 'question') return a;
+  return fillGap(item.prompt, `*${a}*`) ?? `${item.prompt} → *${a}*`;
+}
+
+/**
+ * Овоз тугмаси ўқийдиган матн. `identify` ва `question` да тўғри жавоб —
+ * падеж номи ёки савол сўзи, лекин ўқилиши керак бўлгани — машқдаги рус гапи.
+ */
+export function answerSpeech(item: ExerciseItem, type: ExerciseType): string {
+  if (type === 'identify' || type === 'question') {
+    return item.prompt.replace(/\[\[([^\]]+)\]\]/g, '$1');
+  }
+  return fullAnswer(item, type);
+}
+
+/** Тўғри жавобда топилмаган сўзларни белгилаш маъноли турлар (гап ёзиладиганлари). */
+export function canMask(type: ExerciseType): boolean {
+  return type !== 'identify' && type !== 'question' && type !== 'choose';
 }
 
 /**

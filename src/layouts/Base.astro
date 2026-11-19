@@ -26,7 +26,10 @@ const fullTitle = title === 'Рус тили' ? title : `${title} · Рус ти
 <html lang="uz">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- viewport-fit=cover: бош экрандан очилганда Android саҳифани тепа ва пастки
+         тизим панеллари остига ҳам чизади. Шунда env(safe-area-inset-*) ишлайди
+         ва пастки навигация панел остида қолиб кетмайди. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <meta name="color-scheme" content="light dark" />

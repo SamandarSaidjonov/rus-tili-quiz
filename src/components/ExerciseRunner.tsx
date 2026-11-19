@@ -7,7 +7,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'preact/hooks';
 import type { JSX } from 'preact';
 import type { ExerciseItem, ExerciseSet, ExerciseType } from '../lib/types.ts';
-import { TYPE_INFO, checkExercise, dealByType, fullAnswer, maskWords } from '../lib/exercise.ts';
+import {
+  TYPE_INFO, answerSpeech, canMask, checkExercise, dealByType, fullAnswer, maskWords,
+} from '../lib/exercise.ts';
 import {
   readJson, recordAnswer, recordScore, removeRaw, sessionKey, writeJson,
 } from '../lib/progress.ts';
@@ -253,6 +255,7 @@ export default function ExerciseRunner({
   const given = session.ans[idx];
   const reviewing = view !== null;
   const full = fullAnswer(item, type);
+  const speech = answerSpeech(item, type);
   const last = session.i + 1 >= session.qs.length;
 
   // Enter: жавоб берилмаган бўлса «Текшириш», берилган бўлса «Кейинги →».
@@ -375,12 +378,12 @@ export default function ExerciseRunner({
           <div class="rt-right">
             <p class="rt-label">Тўғри жавоб</p>
             <p class="rt-answer" lang="ru">
-              {given.ok || given.gaveUp ? (
+              {given.ok || given.gaveUp || !canMask(type) ? (
                 <Ru text={full} />
               ) : (
                 <MaskedAnswer correct={full} user={given.input} />
               )}
-              <Speak text={full} small />
+              <Speak text={speech} small />
             </p>
           </div>
 
