@@ -105,12 +105,31 @@
   --nav-bottom: var(--nav-height);
   --rail-width: 240px;
   --focus-width: 3px;
-  /* Тизим панеллари (status bar, жест чизиғи) эгаллаган жой. Браузерда 0,
-     бош экрандан очилганда — панелнинг баландлиги. */
+  /* Тизим панеллари (status bar, жест чизиғи ёки уч тугма) эгаллаган жой.
+     Браузерда 0, бош экрандан очилганда — панелнинг баландлиги. */
   --safe-top: env(safe-area-inset-top, 0px);
-  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-bottom: max(env(safe-area-inset-bottom, 0px), env(safe-area-max-inset-bottom, 0px));
   --safe-left: env(safe-area-inset-left, 0px);
   --safe-right: env(safe-area-inset-right, 0px);
+}
+
+/* Бош экранга қўйилган иловада Android саҳифани тизим панеллари остига ҳам
+   чизади, лекин Chrome'даги хато туфайли env(safe-area-inset-*) 0 қайтариши
+   мумкин — шунда сарлавҳа тепада, навигация эса пастда панел остида қолиб
+   кетади. Шунинг учун иловада энг кам қиймат қўйилади: Android'да status bar
+   36dp, уч тугмали навигация 48dp. env(...) тўғри ишласа, max() каттасини
+   олади. Кенг экранда (1024px дан) бу қиймат бекор қилинади — у ерда тизим
+   панеллари йўқ. */
+@media (display-mode: standalone), (display-mode: fullscreen),
+  (display-mode: minimal-ui) {
+  :root {
+    --safe-top: max(env(safe-area-inset-top, 0px), 36px);
+    --safe-bottom: max(
+      env(safe-area-inset-bottom, 0px),
+      env(safe-area-max-inset-bottom, 0px),
+      48px
+    );
+  }
 }
 
 /* ---------- Асос ---------- */
@@ -1585,6 +1604,9 @@ a.rt-item:hover {
   :root {
     /* Навигация пастда эмас — саҳифа остида жой қолдирилмайди. */
     --nav-bottom: 0px;
+    /* Компьютерда тизим панеллари йўқ: чек фақат қурилма берганича бўлади. */
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: max(env(safe-area-inset-bottom, 0px), env(safe-area-max-inset-bottom, 0px));
   }
 
   body {

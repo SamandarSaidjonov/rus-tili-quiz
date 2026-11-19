@@ -1,0 +1,94 @@
+---
+// Текшириш саҳифаси: телефон экранининг чеклари тўғри ҳисобланяптими.
+// Навигацияда йўқ — ҳавола қўлда очилади.
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Экран ўлчовлари">
+  <h1>Экран ўлчовлари</h1>
+  <p class="rt-muted">
+    Бу саҳифа телефон экранининг тепа ва пастки чеклари тўғри ҳисобланяптими, шуни кўрсатади.
+    Муаммо бўлса, шу саҳифанинг расмини юборинг.
+  </p>
+
+  <article class="rt-card">
+    <dl id="rt-holat" class="rt-holat">
+      <dt>Юкланмоқда…</dt>
+    </dl>
+  </article>
+
+  <p class="rt-muted">
+    Пастки навигация тўлиқ кўриниб турибдими, текшириб кўринг.
+  </p>
+</Base>
+
+<style>
+  .rt-holat {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-2) var(--space-3);
+    margin: 0;
+    font: 400 15px/22px var(--font-uz);
+  }
+  .rt-holat dt {
+    color: var(--muted);
+  }
+  .rt-holat dd {
+    margin: 0;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+  }
+</style>
+
+<script>
+  const box = document.getElementById('rt-holat');
+
+  const px = (v: string): number => Math.round(parseFloat(v) || 0);
+
+  const read = (name: string): number => {
+    const probe = document.createElement('div');
+    probe.style.cssText = `position:absolute;visibility:hidden;height:env(${name},0px)`;
+    document.body.appendChild(probe);
+    const h = px(getComputedStyle(probe).height);
+    probe.remove();
+    return h;
+  };
+
+  const token = (name: string): number =>
+    px(getComputedStyle(document.documentElement).getPropertyValue(name));
+
+  const mode = ['standalone', 'fullscreen', 'minimal-ui', 'browser'].find((m) =>
+    matchMedia(`(display-mode: ${m})`).matches,
+  );
+
+  const nav = document.querySelector('.rt-nav');
+  const navBox = nav ? nav.getBoundingClientRect() : null;
+
+  const rows: Array<[string, string]> = [
+    ['Очилиш тури', mode === 'browser' ? 'браузер' : `илова (${mode ?? '?'})`],
+    ['Экран кенглиги', `${px(String(innerWidth))} px`],
+    ['Экран баландлиги', `${px(String(innerHeight))} px`],
+    ['Тепа чек — Android берган', `${read('safe-area-inset-top')} px`],
+    ['Паст чек — Android берган', `${read('safe-area-inset-bottom')} px`],
+    ['Паст чек — энг катта', `${read('safe-area-max-inset-bottom')} px`],
+    ['Тепа чек — сайт қўйган', `${token('--safe-top')} px`],
+    ['Паст чек — сайт қўйган', `${token('--safe-bottom')} px`],
+    ['Навигация баландлиги', navBox ? `${Math.round(navBox.height)} px` : '—'],
+    [
+      'Навигация пастгача',
+      navBox ? `${Math.round(innerHeight - navBox.bottom)} px` : '—',
+    ],
+  ];
+
+  if (box) {
+    box.textContent = '';
+    for (const [k, v] of rows) {
+      const dt = document.createElement('dt');
+      dt.textContent = k;
+      const dd = document.createElement('dd');
+      dd.textContent = v;
+      box.append(dt, dd);
+    }
+  }
+</script>
