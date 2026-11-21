@@ -1,0 +1,108 @@
+{
+  "topic": "nastoyashchee",
+  "type": "pronoun",
+  "title": "Настоящее время",
+  "ask": "Феълга мос олмошни ёзинг",
+  "items": [
+    {
+      "id": "nv-pn-01",
+      "prompt": "___ хочешь кофе?",
+      "answers": [
+        "ты"
+      ],
+      "note": "-ешь (-ишь) билан тугаган феъл — ты шакли: ты хо́чешь.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-pn-02",
+      "prompt": "___ читаю книгу.",
+      "answers": [
+        "я"
+      ],
+      "note": "-ю (-у) билан тугаган феъл — я шакли: я чита́ю.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-pn-03",
+      "prompt": "___ говорим по-русски.",
+      "answers": [
+        "мы"
+      ],
+      "note": "-ем / -им билан тугаган феъл — мы шакли: мы говори́м.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-pn-04",
+      "prompt": "___ знаете его адрес?",
+      "answers": [
+        "вы"
+      ],
+      "note": "-ете / -ите билан тугаган феъл — вы шакли: вы зна́ете.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-pn-05",
+      "prompt": "___ живут в Ташкенте.",
+      "answers": [
+        "они"
+      ],
+      "note": "-ют / -ут билан тугаган феъл — они шакли: они́ живу́т.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-pn-06",
+      "prompt": "___ слушаешь музыку?",
+      "answers": [
+        "ты"
+      ],
+      "note": "-ешь — ты шакли: ты слу́шаешь.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-pn-07",
+      "prompt": "___ звоню маме каждый день.",
+      "answers": [
+        "я"
+      ],
+      "note": "-ю — я шакли: я звоню́.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-pn-08",
+      "prompt": "___ изучаем русский язык.",
+      "answers": [
+        "мы"
+      ],
+      "note": "-ем — мы шакли: мы изуча́ем.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-pn-09",
+      "prompt": "___ помните этот день?",
+      "answers": [
+        "вы"
+      ],
+      "note": "-ите — вы шакли: вы по́мните.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-pn-10",
+      "prompt": "___ готовят ужин.",
+      "answers": [
+        "они"
+      ],
+      "note": "-ят / -ат — они шакли: они́ гото́вят.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

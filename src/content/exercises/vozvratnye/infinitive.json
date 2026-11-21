@@ -1,0 +1,107 @@
+{
+  "topic": "vozvratnye",
+  "type": "infinitive",
+  "title": "Возвратные глаголы",
+  "items": [
+    {
+      "id": "vz-inf-01",
+      "prompt": "Мы [[встречаемся]] в пять.",
+      "answers": [
+        "встречаться"
+      ],
+      "note": "встреча́емся → встреча́ться: -ем олиб ташланиб -ть, кейин -ся.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-inf-02",
+      "prompt": "Я [[учусь]] в университете.",
+      "answers": [
+        "учиться"
+      ],
+      "note": "учу́сь → учи́ться. Бош шаклда -сь эмас, -ся.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-inf-03",
+      "prompt": "Она [[радуется]] подарку.",
+      "answers": [
+        "радоваться"
+      ],
+      "note": "ра́дуется → ра́доваться: -у- ўрнида -ова-.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-inf-04",
+      "prompt": "Он [[сердится]] на брата.",
+      "answers": [
+        "сердиться"
+      ],
+      "note": "се́рдится → серди́ться: Что де́лать? — -ться.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-inf-05",
+      "prompt": "Я [[занимаюсь]] спортом.",
+      "answers": [
+        "заниматься"
+      ],
+      "note": "занима́юсь → занима́ться.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-inf-06",
+      "prompt": "Урок [[начинается]] в девять.",
+      "answers": [
+        "начинаться"
+      ],
+      "note": "начина́ется → начина́ться.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-inf-07",
+      "prompt": "Мне [[нравится]] эта песня.",
+      "answers": [
+        "нравиться"
+      ],
+      "note": "нра́вится → нра́виться.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-inf-08",
+      "prompt": "Я [[боюсь]] собак.",
+      "answers": [
+        "бояться"
+      ],
+      "note": "бою́сь → боя́ться.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-inf-09",
+      "prompt": "Он [[отказался]] от помощи.",
+      "answers": [
+        "отказаться"
+      ],
+      "note": "отказа́лся → отказа́ться: -лся ўрнига -ться.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-inf-10",
+      "prompt": "Автобус [[остановился]].",
+      "answers": [
+        "остановиться"
+      ],
+      "note": "останови́лся → останови́ться.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

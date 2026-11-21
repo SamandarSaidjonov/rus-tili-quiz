@@ -1,0 +1,108 @@
+{
+  "topic": "nastoyashchee",
+  "type": "fix",
+  "title": "Настоящее время",
+  "ask": "Гапда феъл хатоси бор. Тўғри гапни ёзинг",
+  "items": [
+    {
+      "id": "nv-fix-01",
+      "prompt": "Я хотит кофе.",
+      "answers": [
+        "Я хочу кофе."
+      ],
+      "note": "хоте́ть: я бўлса хочу́.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-fix-02",
+      "prompt": "Ты читает книгу.",
+      "answers": [
+        "Ты читаешь книгу."
+      ],
+      "note": "ты бўлса -ешь: чита́ешь.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-fix-03",
+      "prompt": "Они говорут по-русски.",
+      "answers": [
+        "Они говорят по-русски."
+      ],
+      "note": "говори́ть — 2-спряжение: они бўлса -ят — говоря́т.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-fix-04",
+      "prompt": "Я ходю в школу.",
+      "answers": [
+        "Я хожу в школу."
+      ],
+      "note": "ходи́ть: я шаклида д → ж — хожу́.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-fix-05",
+      "prompt": "Я рисоваю картину.",
+      "answers": [
+        "Я рисую картину."
+      ],
+      "note": "рисова́ть: -ова- ўрнига -у- — рису́ю.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-fix-06",
+      "prompt": "Я даваю тебе книгу.",
+      "answers": [
+        "Я даю тебе книгу."
+      ],
+      "note": "дава́ть: -ва- тушиб қолади — даю́.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-fix-07",
+      "prompt": "Они можут помочь.",
+      "answers": [
+        "Они могут помочь."
+      ],
+      "note": "мочь: они шаклида г қайтади — мо́гут.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-fix-08",
+      "prompt": "Мы живим в Ташкенте.",
+      "answers": [
+        "Мы живём в Ташкенте."
+      ],
+      "note": "жить — 1-спряжение: мы живём.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-fix-09",
+      "prompt": "Я платю за обед.",
+      "answers": [
+        "Я плачу за обед."
+      ],
+      "note": "плати́ть: я шаклида т → ч — плачу́.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-fix-10",
+      "prompt": "Вы знаешь мой адрес?",
+      "answers": [
+        "Вы знаете мой адрес?"
+      ],
+      "note": "вы бўлса -ете: зна́ете.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

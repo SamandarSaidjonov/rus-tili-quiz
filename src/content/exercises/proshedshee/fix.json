@@ -1,0 +1,108 @@
+{
+  "topic": "proshedshee",
+  "type": "fix",
+  "title": "Прошедшее время",
+  "ask": "Гапда феъл хатоси бор. Тўғри гапни ёзинг",
+  "items": [
+    {
+      "id": "pv-fix-01",
+      "prompt": "Анна вчера работал.",
+      "answers": [
+        "Анна вчера работала."
+      ],
+      "note": "Анна — аёл: -ла.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-fix-02",
+      "prompt": "Вы был дома?",
+      "answers": [
+        "Вы были дома?"
+      ],
+      "note": "вы доим -ли билан: бы́ли.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-fix-03",
+      "prompt": "Она был в школе.",
+      "answers": [
+        "Она была в школе."
+      ],
+      "note": "она — женский род: была́.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-fix-04",
+      "prompt": "Он идёл домой.",
+      "answers": [
+        "Он шёл домой."
+      ],
+      "note": "идти́ — нотўғри феъл: шёл, шла, шли.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-fix-05",
+      "prompt": "Она мог помочь.",
+      "answers": [
+        "Она могла помочь."
+      ],
+      "note": "мочь: мог, могла́, могли́.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-fix-06",
+      "prompt": "Мой брат училась в Москве.",
+      "answers": [
+        "Мой брат учился в Москве."
+      ],
+      "note": "Брат — мужской род: -лся.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-fix-07",
+      "prompt": "Дети играл во дворе.",
+      "answers": [
+        "Дети играли во дворе."
+      ],
+      "note": "Дети — кўплик: -ли.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-fix-08",
+      "prompt": "Мама приготовил плов.",
+      "answers": [
+        "Мама приготовила плов."
+      ],
+      "note": "Мама — аёл: -ла.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-fix-09",
+      "prompt": "Мы купил хлеб.",
+      "answers": [
+        "Мы купили хлеб."
+      ],
+      "note": "мы — кўплик: -ли.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-fix-10",
+      "prompt": "Сестра взял мою книгу.",
+      "answers": [
+        "Сестра взяла мою книгу."
+      ],
+      "note": "Сестра — аёл: взяла́ (урғу охирида).",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

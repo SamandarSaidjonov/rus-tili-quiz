@@ -1,0 +1,107 @@
+{
+  "topic": "nastoyashchee",
+  "type": "ending",
+  "title": "Настоящее время",
+  "items": [
+    {
+      "id": "nv-end-01",
+      "prompt": "Они говор___ по-русски.",
+      "answers": [
+        "ят"
+      ],
+      "note": "говорить — 2-спряжение, они бўлса -ят: говоря́т.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-end-02",
+      "prompt": "Ты чита___ газету.",
+      "answers": [
+        "ешь"
+      ],
+      "note": "читать — 1-спряжение, ты бўлса -ешь: чита́ешь.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-end-03",
+      "prompt": "Мы дума___ о работе.",
+      "answers": [
+        "ем"
+      ],
+      "note": "думать — 1-спряжение, мы бўлса -ем: ду́маем.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-end-04",
+      "prompt": "Он звон___ маме.",
+      "answers": [
+        "ит"
+      ],
+      "note": "звонить — 2-спряжение, он бўлса -ит: звони́т.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-end-05",
+      "prompt": "Вы слуша___ радио?",
+      "answers": [
+        "ете"
+      ],
+      "note": "слушать — 1-спряжение, вы бўлса -ете: слу́шаете.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-end-06",
+      "prompt": "Я дела___ домашнее задание.",
+      "answers": [
+        "ю"
+      ],
+      "note": "делать — 1-спряжение, я бўлса -ю: де́лаю.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-end-07",
+      "prompt": "Они отвеча___ на вопросы.",
+      "answers": [
+        "ют"
+      ],
+      "note": "отвечать — 1-спряжение, они бўлса -ют: отвеча́ют.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-end-08",
+      "prompt": "Ты помн___ этот день?",
+      "answers": [
+        "ишь"
+      ],
+      "note": "помнить — 2-спряжение (-ить), ты бўлса -ишь: по́мнишь.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-end-09",
+      "prompt": "Вы говор___ по-узбекски?",
+      "answers": [
+        "ите"
+      ],
+      "note": "говорить — 2-спряжение, вы бўлса -ите: говори́те.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "nv-end-10",
+      "prompt": "Мы готов___ ужин.",
+      "answers": [
+        "им"
+      ],
+      "note": "готовить — 2-спряжение, мы бўлса -им: гото́вим.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "topic": "proshedshee",
+  "type": "infinitive",
+  "title": "Прошедшее время",
+  "items": [
+    {
+      "id": "pv-inf-01",
+      "prompt": "Он [[шёл]] домой.",
+      "answers": [
+        "идти"
+      ],
+      "note": "шёл → идти́. Нотўғри феъл: шёл, шла, шли.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-inf-02",
+      "prompt": "Она [[могла]] прийти.",
+      "answers": [
+        "мочь"
+      ],
+      "note": "могла́ → мочь: мог, могла́, могли́.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-inf-03",
+      "prompt": "Мы [[ели]] плов.",
+      "answers": [
+        "есть"
+      ],
+      "note": "е́ли → есть (емоқ): ел, е́ла, е́ли.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-inf-04",
+      "prompt": "Он [[помог]] мне.",
+      "answers": [
+        "помочь"
+      ],
+      "note": "помо́г → помо́чь: мужской родда -л йўқ.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-inf-05",
+      "prompt": "Она [[несла]] сумку.",
+      "answers": [
+        "нести"
+      ],
+      "note": "несла́ → нести́: нёс, несла́, несли́.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-inf-06",
+      "prompt": "Он [[лёг]] спать.",
+      "answers": [
+        "лечь"
+      ],
+      "note": "лёг → лечь: лёг, легла́, легли́.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-inf-07",
+      "prompt": "Она [[взяла]] мою ручку.",
+      "answers": [
+        "взять"
+      ],
+      "note": "взяла́ → взять: -ла олиб ташланиб, -ть қўшилади.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-inf-08",
+      "prompt": "Студенты [[перевели]] текст.",
+      "answers": [
+        "перевести"
+      ],
+      "note": "перевели́ → перевести́: перевёл, перевела́, перевели́.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-inf-09",
+      "prompt": "Мама [[приготовила]] ужин.",
+      "answers": [
+        "приготовить"
+      ],
+      "note": "пригото́вила → пригото́вить: -ла ўрнига -ть.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-inf-10",
+      "prompt": "Я [[понял]] вопрос.",
+      "answers": [
+        "понять"
+      ],
+      "note": "по́нял → поня́ть: -л ўрнига -ть.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

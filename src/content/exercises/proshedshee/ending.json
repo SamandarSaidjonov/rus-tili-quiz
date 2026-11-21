@@ -1,0 +1,107 @@
+{
+  "topic": "proshedshee",
+  "type": "ending",
+  "title": "Прошедшее время",
+  "items": [
+    {
+      "id": "pv-end-01",
+      "prompt": "Мой брат работа___ в Москве.",
+      "answers": [
+        "л"
+      ],
+      "note": "Брат — мужской род: -л.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-end-02",
+      "prompt": "Анна вчера чита___ книгу.",
+      "answers": [
+        "ла"
+      ],
+      "note": "Анна — женский род: -ла.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-end-03",
+      "prompt": "Дети игра___ во дворе.",
+      "answers": [
+        "ли"
+      ],
+      "note": "Дети — кўплик: -ли.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-end-04",
+      "prompt": "Солнце свети___ весь день.",
+      "answers": [
+        "ло"
+      ],
+      "note": "Солнце — средний род: -ло.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-end-05",
+      "prompt": "Сестра позвони___ маме.",
+      "answers": [
+        "ла"
+      ],
+      "note": "Сестра — женский род: -ла.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-end-06",
+      "prompt": "Вы бы___ дома?",
+      "answers": [
+        "ли"
+      ],
+      "note": "вы доим -ли билан: бы́ли.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-end-07",
+      "prompt": "Папа купи___ хлеб.",
+      "answers": [
+        "л"
+      ],
+      "note": "Папа — эркак, шунинг учун -л (сўз -а билан тугаса ҳам).",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-end-08",
+      "prompt": "Мы смотре___ фильм.",
+      "answers": [
+        "ли"
+      ],
+      "note": "мы — кўплик: -ли.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-end-09",
+      "prompt": "Мама приготови___ ужин.",
+      "answers": [
+        "ла"
+      ],
+      "note": "Мама — аёл: -ла.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-end-10",
+      "prompt": "Письмо лежа___ на столе.",
+      "answers": [
+        "ло"
+      ],
+      "note": "Письмо — средний род (-о билан тугайди): -ло.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

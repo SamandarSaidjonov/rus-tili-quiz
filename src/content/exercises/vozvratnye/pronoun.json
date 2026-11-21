@@ -1,0 +1,117 @@
+{
+  "topic": "vozvratnye",
+  "type": "pronoun",
+  "title": "Возвратные глаголы",
+  "items": [
+    {
+      "id": "vz-pn-01",
+      "case": "Д",
+      "prompt": "(Я) нравится эта песня.",
+      "answers": [
+        "Мне"
+      ],
+      "note": "нра́виться кому? — дательный: я → мне.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-pn-02",
+      "case": "Д",
+      "prompt": "(Он) нравится музыка.",
+      "answers": [
+        "Ему"
+      ],
+      "note": "нра́виться кому? — дательный: он → ему́.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-pn-03",
+      "case": "Д",
+      "prompt": "(Она) нравится этот фильм.",
+      "answers": [
+        "Ей"
+      ],
+      "note": "нра́виться кому? — дательный: она → ей.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-pn-04",
+      "case": "Т",
+      "prompt": "Я согласен с (ты).",
+      "answers": [
+        "тобой"
+      ],
+      "note": "с кем? — творительный: ты → тобо́й.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-pn-05",
+      "case": "Т",
+      "prompt": "Мы встречаемся с (они) завтра.",
+      "answers": [
+        "ними"
+      ],
+      "note": "с кем? — творительный: они → и́ми, предлогдан кейин н-: с ни́ми.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-pn-06",
+      "case": "В",
+      "prompt": "Почему ты сердишься на (я)?",
+      "answers": [
+        "меня"
+      ],
+      "note": "серди́ться на кого? — винительный: я → меня́.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-pn-07",
+      "case": "В",
+      "prompt": "Я сержусь на (он).",
+      "answers": [
+        "него"
+      ],
+      "note": "на кого? — винительный: он → его́, предлогдан кейин н-: на него́.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-pn-08",
+      "case": "Д",
+      "prompt": "(Мы) удалось сдать экзамен.",
+      "answers": [
+        "Нам"
+      ],
+      "note": "уда́ться кому? — дательный: мы → нам.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-pn-09",
+      "case": "Д",
+      "prompt": "Она всегда радуется (вы).",
+      "answers": [
+        "вам"
+      ],
+      "note": "ра́доваться кому? — дательный: вы → вам.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-pn-10",
+      "case": "Т",
+      "prompt": "Я хочу посоветоваться с (вы).",
+      "answers": [
+        "вами"
+      ],
+      "note": "посове́товаться с кем? — творительный: вы → ва́ми.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

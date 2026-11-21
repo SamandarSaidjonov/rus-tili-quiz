@@ -1,0 +1,107 @@
+{
+  "topic": "vozvratnye",
+  "type": "ending",
+  "title": "Возвратные глаголы",
+  "items": [
+    {
+      "id": "vz-end-01",
+      "prompt": "Я занимаю___ спортом.",
+      "answers": [
+        "сь"
+      ],
+      "note": "занима́ю — охири унли (ю), шунинг учун -сь.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-end-02",
+      "prompt": "Мне надо остановит___.",
+      "answers": [
+        "ься"
+      ],
+      "note": "Что де́лать? — инфинитив: -ть + -ся = -ться.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-end-03",
+      "prompt": "Фильм начинает___ в семь.",
+      "answers": [
+        "ся"
+      ],
+      "note": "Что де́лает? — ь йўқ: начина́ется.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-end-04",
+      "prompt": "Вы встречаете___ с друзьями?",
+      "answers": [
+        "сь"
+      ],
+      "note": "встреча́ете — охири унли (е), шунинг учун -сь.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-end-05",
+      "prompt": "Она часто улыбает___.",
+      "answers": [
+        "ся"
+      ],
+      "note": "Что де́лает? — ь йўқ: улыба́ется.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-end-06",
+      "prompt": "Надо занимат___ спортом каждый день.",
+      "answers": [
+        "ься"
+      ],
+      "note": "Что де́лать? — ь бор: занима́ться.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-end-07",
+      "prompt": "Она радовала___ подарку.",
+      "answers": [
+        "сь"
+      ],
+      "note": "ра́довала — охири унли (а), шунинг учун -сь.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-end-08",
+      "prompt": "Он долго сердил___ на брата.",
+      "answers": [
+        "ся"
+      ],
+      "note": "серди́л — охири ундош (л), шунинг учун -ся.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-end-09",
+      "prompt": "Магазин открывает___ в восемь.",
+      "answers": [
+        "ся"
+      ],
+      "note": "Что де́лает? — ь йўқ: открыва́ется.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "vz-end-10",
+      "prompt": "Я хочу встретит___ с другом.",
+      "answers": [
+        "ься"
+      ],
+      "note": "Что де́лать? — ь бор: встре́титься.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}

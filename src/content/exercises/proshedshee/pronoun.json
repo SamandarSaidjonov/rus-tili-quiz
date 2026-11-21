@@ -1,0 +1,108 @@
+{
+  "topic": "proshedshee",
+  "type": "pronoun",
+  "title": "Прошедшее время",
+  "ask": "Феълга мос олмошни ёзинг",
+  "items": [
+    {
+      "id": "pv-pn-01",
+      "prompt": "Где ты был? — ___ был на работе.",
+      "answers": [
+        "я"
+      ],
+      "note": "Жавоб берувчи ўзи ҳақида гапиряпти: я был.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-pn-02",
+      "prompt": "___ была дома? — Да, я была дома.",
+      "answers": [
+        "ты"
+      ],
+      "note": "Жавоб «я была» — демак, савол ты га берилган: ты была́.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-pn-03",
+      "prompt": "___ были в театре? — Да, мы были в театре.",
+      "answers": [
+        "вы"
+      ],
+      "note": "Жавоб «мы» — демак, савол вы га: вы бы́ли.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-pn-04",
+      "prompt": "Где Анна? — ___ была на работе.",
+      "answers": [
+        "она"
+      ],
+      "note": "Анна — аёл: она́ была́.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-pn-05",
+      "prompt": "Где Олег? — ___ был дома.",
+      "answers": [
+        "он"
+      ],
+      "note": "Олег — эркак: он был.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-pn-06",
+      "prompt": "Где дети? — ___ были в школе.",
+      "answers": [
+        "они"
+      ],
+      "note": "Дети — кўплик: они́ бы́ли.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-pn-07",
+      "prompt": "Вы купили хлеб? — Да, ___ купили хлеб.",
+      "answers": [
+        "мы"
+      ],
+      "note": "Савол вы га — жавоб мы: мы купи́ли.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-pn-08",
+      "prompt": "Ты позвонил маме? — Да, ___ позвонил.",
+      "answers": [
+        "я"
+      ],
+      "note": "Савол ты га — жавоб я: я позвони́л.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-pn-09",
+      "prompt": "Где письмо? — ___ лежало на столе.",
+      "answers": [
+        "оно"
+      ],
+      "note": "Письмо — средний род: оно́ лежа́ло.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "pv-pn-10",
+      "prompt": "Где Анна и Олег? — ___ были дома.",
+      "answers": [
+        "они"
+      ],
+      "note": "Икки киши — кўплик: они́ бы́ли.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}
