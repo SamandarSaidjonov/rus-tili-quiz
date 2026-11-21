@@ -1,0 +1,107 @@
+{
+  "topic": "mixed",
+  "type": "infinitive",
+  "title": "Аралаш",
+  "items": [
+    {
+      "id": "m-inf-01",
+      "prompt": "Я [[могу]] помочь.",
+      "answers": [
+        "мочь"
+      ],
+      "note": "могу́ → мочь. Нотўғри феъл.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "m-inf-02",
+      "prompt": "Она [[шла]] домой.",
+      "answers": [
+        "идти"
+      ],
+      "note": "шла → идти́: шёл, шла, шли.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "m-inf-03",
+      "prompt": "Мы [[едем]] в Самарканд.",
+      "answers": [
+        "ехать"
+      ],
+      "note": "е́дем → е́хать: е́ду, е́дешь, е́дут.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "m-inf-04",
+      "prompt": "Он [[ест]] плов.",
+      "answers": [
+        "есть"
+      ],
+      "note": "ест → есть (емоқ).",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "m-inf-05",
+      "prompt": "Ты [[встаёшь]] рано?",
+      "answers": [
+        "вставать"
+      ],
+      "note": "встаёшь → встава́ть: ҳозирги замонда -ва- тушиб қолади.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "m-inf-06",
+      "prompt": "Я [[прошу]] помощи.",
+      "answers": [
+        "просить"
+      ],
+      "note": "прошу́ → проси́ть: я шаклида с → ш.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "m-inf-07",
+      "prompt": "Брат [[учится]] в школе.",
+      "answers": [
+        "учиться"
+      ],
+      "note": "у́чится → учи́ться. Бош шаклда ь бор: -ться.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "m-inf-08",
+      "prompt": "Мы [[советуемся]] с мамой.",
+      "answers": [
+        "советоваться"
+      ],
+      "note": "сове́туемся → сове́товаться: -у- ўрнида -ова-.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "m-inf-09",
+      "prompt": "Я [[живу]] в Ташкенте.",
+      "answers": [
+        "жить"
+      ],
+      "note": "живу́ → жить.",
+      "source": "claude",
+      "reviewed": false
+    },
+    {
+      "id": "m-inf-10",
+      "prompt": "Мама [[готовит]] ужин.",
+      "answers": [
+        "готовить"
+      ],
+      "note": "гото́вит → гото́вить.",
+      "source": "claude",
+      "reviewed": false
+    }
+  ]
+}
