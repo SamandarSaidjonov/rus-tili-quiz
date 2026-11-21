@@ -17,7 +17,7 @@ export const getStaticPaths = (async () => {
       topic,
       groups: entries
         .filter((e) => e.data.topic === topic)
-        .map((e) => ({ topic: e.data.topic, type: e.data.type, title: e.data.title, items: e.data.items })),
+        .map((e) => ({ topic: e.data.topic, type: e.data.type, title: e.data.title, ask: e.data.ask, items: e.data.items })),
     },
   }));
 }) satisfies GetStaticPaths;

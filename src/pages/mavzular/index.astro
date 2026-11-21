@@ -3,8 +3,14 @@ import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import { url } from '../../lib/url.ts';
+import { TOPIC_GROUPS } from '../../lib/topics.ts';
 
 const topics = (await getCollection('topics')).sort((a, b) => a.data.order - b.data.order);
+// Мавзулар бўлимида фақат Падежлар ва Феъллар гуруҳи бор (аралаш мавзу йўқ).
+const groups = TOPIC_GROUPS.map((g) => ({
+  ...g,
+  topics: topics.filter((t) => t.data.kind === g.kind),
+})).filter((g) => g.topics.length > 0);
 ---
 
 <Base title="Мавзулар" section="mavzular" wide>
@@ -27,23 +33,28 @@ const topics = (await getCollection('topics')).sort((a, b) => a.data.order - b.d
     )
   }
 
-  <div class="rt-stack--tight rt-grid">
-    {
-      topics.map((t) => (
-        <a class="rt-item" href={url(`mavzular/${t.id}`)}>
-          <div class="rt-item__head">
-            <h2 class="rt-item__title">
-              {t.data.order}. {t.data.title}
-            </h2>
-            <span class="rt-badge rt-badge--todo" data-prog-seen={t.id}>
-              Ўқилмаган
-            </span>
-          </div>
-          <p class="rt-item__meta">{t.data.short}</p>
-        </a>
-      ))
-    }
-  </div>
+  {
+    groups.map((g) => (
+      <>
+        <h2>{g.title}</h2>
+        <div class="rt-stack--tight rt-grid">
+          {g.topics.map((t) => (
+            <a class="rt-item" href={url(`mavzular/${t.id}`)}>
+              <div class="rt-item__head">
+                <h3 class="rt-item__title">
+                  {t.data.order}. {t.data.title}
+                </h3>
+                <span class="rt-badge rt-badge--todo" data-prog-seen={t.id}>
+                  Ўқилмаган
+                </span>
+              </div>
+              <p class="rt-item__meta">{t.data.short}</p>
+            </a>
+          ))}
+        </div>
+      </>
+    ))
+  }
 
   <script>
     import { hydrateProgress } from '../../lib/progress-ui.ts';

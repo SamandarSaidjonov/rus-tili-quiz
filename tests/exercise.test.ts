@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
-  answerSpeech, canMask, checkExercise, dealByType, fixWords, fullAnswer, maskWords,
+  TYPE_INFO, answerSpeech, canMask, checkExercise, dealByType, fixWords, fullAnswer, maskWords,
+  resolveAsk,
 } from '../src/lib/exercise.ts';
 import type { ExerciseItem } from '../src/lib/types.ts';
 
@@ -63,7 +64,7 @@ describe('checkExercise: турлар', () => {
     expect(checkExercise(it2, 'identify', 'творительный').state).toBe('correct');
     expect(checkExercise(it2, 'identify', 'Т.п.').state).toBe('correct');
     expect(checkExercise(it2, 'identify', 'дательный').state).toBe('wrong');
-    expect(checkExercise(it2, 'identify', 'шунчаки матн').state).toBe('unknown-case');
+    expect(checkExercise(it2, 'identify', 'шунчаки матн').state).toBe('unknown-label');
   });
 
   it('choose турида танланган вариант солиштирилади', () => {
@@ -159,5 +160,78 @@ describe('dealByType', () => {
     expect(three).toHaveLength(3);
     const types = new Set(three.map((t) => t.type));
     expect(types.size).toBe(2);
+  });
+});
+
+describe('феъл турлари', () => {
+  it('verb турида қисқа жавоб ҳам, тўлиқ гап ҳам қабул қилинади', () => {
+    const vb = item({ prompt: 'Ты (читать) книгу каждый вечер.', answers: ['читаешь'] });
+    expect(checkExercise(vb, 'verb', 'читаешь').state).toBe('correct');
+    expect(checkExercise(vb, 'verb', 'чита́ешь').state).toBe('correct');
+    expect(checkExercise(vb, 'verb', 'Ты читаешь книгу каждый вечер.').state).toBe('correct');
+    expect(checkExercise(vb, 'verb', 'читает').state).toBe('wrong');
+    expect(checkExercise(vb, 'verb', 'Ты читает книгу каждый вечер.').state).toBe('wrong');
+    expect(checkExercise(vb, 'verb', 'chitaesh').state).toBe('latin');
+  });
+
+  it('verb турида иккала род ҳам бўлса, иккаласи қабул қилинади', () => {
+    const vb = item({ prompt: 'Я (читать) эту книгу.', answers: ['читал', 'читала'] });
+    expect(checkExercise(vb, 'verb', 'читал').state).toBe('correct');
+    expect(checkExercise(vb, 'verb', 'Я читала эту книгу.').state).toBe('correct');
+  });
+
+  it('verb турида тўлиқ жавоб гапнинг ичида кўрсатилади', () => {
+    const vb = item({ prompt: 'Ты (читать) книгу.', answers: ['читаешь'] });
+    expect(fullAnswer(vb, 'verb')).toBe('Ты *читаешь* книгу.');
+    expect(canMask('verb')).toBe(true);
+  });
+
+  it('tense турида замон номининг қисқа шакли ҳам бўлади', () => {
+    const tn = item({ prompt: 'Завтра я [[прочитаю]] эту книгу.', answers: ['будущее'] });
+    expect(checkExercise(tn, 'tense', 'будущее').state).toBe('correct');
+    expect(checkExercise(tn, 'tense', 'Б.В.').state).toBe('correct');
+    expect(checkExercise(tn, 'tense', 'келаси').state).toBe('correct');
+    expect(checkExercise(tn, 'tense', 'настоящее').state).toBe('wrong');
+    const unknown = checkExercise(tn, 'tense', 'шунчаки матн');
+    expect(unknown.state).toBe('unknown-label');
+    expect(unknown.warning).toContain('Замон номи тушунилмади');
+  });
+
+  it('tense турида тўғри жавоб — замоннинг тўлиқ номи, овоз — гапнинг ўзи', () => {
+    const tn = item({ prompt: 'Вчера я [[читал]] книгу.', answers: ['прошедшее'] });
+    expect(fullAnswer(tn, 'tense')).toBe('прошедшее');
+    expect(answerSpeech(tn, 'tense')).toBe('Вчера я читал книгу.');
+    expect(canMask('tense')).toBe(false);
+  });
+
+  it('infinitive тури оддий матн каби текширилади', () => {
+    const inf = item({ prompt: 'Он [[пишет]] письмо.', answers: ['писать'] });
+    expect(checkExercise(inf, 'infinitive', 'писать').state).toBe('correct');
+    expect(checkExercise(inf, 'infinitive', 'Писа́ть').state).toBe('correct');
+    expect(checkExercise(inf, 'infinitive', 'пишет').state).toBe('wrong');
+    expect(checkExercise(inf, 'infinitive', 'pisat').state).toBe('latin');
+    expect(fullAnswer(inf, 'infinitive')).toBe('писать');
+    expect(answerSpeech(inf, 'infinitive')).toBe('Он пишет письмо.');
+    expect(canMask('infinitive')).toBe(false);
+  });
+
+  it('қайтма феълда ё/е ва урғу ҳисобга олинмайди', () => {
+    const inf = item({ prompt: 'Мы [[встречаемся]] в пять.', answers: ['встречаться'] });
+    expect(checkExercise(inf, 'infinitive', 'встреча́ться').state).toBe('correct');
+  });
+});
+
+describe('resolveAsk: топшириқ матнини танлаш', () => {
+  it('машқнинг ask и биринчи ўринда', () => {
+    expect(resolveAsk({ ask: 'Машқ матни' }, 'Тўплам матни', 'fix')).toBe('Машқ матни');
+  });
+
+  it('машқда бўлмаса, тўпламнинг ask и', () => {
+    expect(resolveAsk({}, 'Тўплам матни', 'verb')).toBe('Тўплам матни');
+  });
+
+  it('иккаласи ҳам бўлмаса, турнинг оддий матни', () => {
+    expect(resolveAsk({}, undefined, 'fix')).toBe(TYPE_INFO.fix.ask);
+    expect(resolveAsk({}, undefined, 'verb')).toBe(TYPE_INFO.verb.ask);
   });
 });

@@ -8,7 +8,7 @@ import { useCallback, useEffect, useMemo, useState } from 'preact/hooks';
 import type { JSX } from 'preact';
 import type { ExerciseItem, ExerciseSet, ExerciseType } from '../lib/types.ts';
 import {
-  TYPE_INFO, answerSpeech, canMask, checkExercise, dealByType, fullAnswer, maskWords,
+  TYPE_INFO, answerSpeech, canMask, checkExercise, dealByType, fullAnswer, maskWords, resolveAsk,
 } from '../lib/exercise.ts';
 import {
   readJson, recordAnswer, recordScore, removeRaw, sessionKey, writeJson,
@@ -53,8 +53,10 @@ export default function ExerciseRunner({
   const SESSION = sessionKey('ex', topic);
 
   const byId = useMemo(() => {
-    const m = new Map<string, { item: ExerciseItem; type: ExerciseType }>();
-    for (const g of groups) for (const item of g.items) m.set(item.id, { item, type: g.type });
+    const m = new Map<string, { item: ExerciseItem; type: ExerciseType; ask?: string }>();
+    for (const g of groups) {
+      for (const item of g.items) m.set(item.id, { item, type: g.type, ask: g.ask });
+    }
     return m;
   }, [groups]);
 
@@ -138,7 +140,7 @@ export default function ExerciseRunner({
       if (!entry) return;
 
       const res = checkExercise(entry.item, entry.type, raw);
-      if (res.state === 'empty' || res.state === 'latin' || res.state === 'unknown-case') {
+      if (res.state === 'empty' || res.state === 'latin' || res.state === 'unknown-label') {
         setWarning(res.warning ?? 'Жавоб ҳисобга олинмади.');
         return;
       }
@@ -252,6 +254,7 @@ export default function ExerciseRunner({
   const item = entry.item;
   const type = entry.type;
   const info = TYPE_INFO[type];
+  const ask = resolveAsk(item, entry.ask, type);
   const given = session.ans[idx];
   const reviewing = view !== null;
   const full = fullAnswer(item, type);
@@ -287,7 +290,7 @@ export default function ExerciseRunner({
 
       <article class="rt-card">
         <div class="rt-exercise">
-          <p class="rt-label">{info.ask}</p>
+          <p class="rt-label">{ask}</p>
           {type === 'translate' ? (
             <p class="rt-prompt-uz">{item.prompt}</p>
           ) : (

@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { lcsMask, norm, parseCase, hasLatin, splitStars, stripAccent } from '../src/lib/text.ts';
+import {
+  lcsMask, norm, parseCase, parseTense, hasLatin, splitStars, stripAccent,
+} from '../src/lib/text.ts';
 
 describe('norm', () => {
   it('катта-кичик ҳарф, тиниш белгиси ва урғуни ҳисобга олмайди', () => {
@@ -68,5 +70,31 @@ describe('lcsMask', () => {
     const { hit, score } = lcsMask([], ['я', 'живу']);
     expect(hit).toEqual([false, false]);
     expect(score).toBe(0);
+  });
+});
+
+describe('parseTense', () => {
+  it('ҳозирги замоннинг ҳамма ёзувини танийди', () => {
+    for (const s of ['настоящее', 'Настоящее время', 'наст', 'н.в.', 'Н.В.', 'нв', 'н', 'ҳозирги']) {
+      expect(parseTense(s), s).toBe('настоящее');
+    }
+  });
+
+  it('ўтган замоннинг ҳамма ёзувини танийди', () => {
+    for (const s of ['прошедшее', 'прош', 'п.в.', 'пв', 'п', 'ўтган', 'Ўтган замон']) {
+      expect(parseTense(s), s).toBe('прошедшее');
+    }
+  });
+
+  it('келаси замоннинг ҳамма ёзувини танийди', () => {
+    for (const s of ['будущее', 'буд', 'б.в.', 'бв', 'б', 'келаси']) {
+      expect(parseTense(s), s).toBe('будущее');
+    }
+  });
+
+  it('танимаса null қайтаради', () => {
+    for (const s of ['', '   ', 'билмадим', 'дательный', 'в', 'нп', 'present']) {
+      expect(parseTense(s), s).toBe(null);
+    }
   });
 });

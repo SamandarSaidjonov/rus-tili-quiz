@@ -1,4 +1,6 @@
-import { CASES, norm, toks, hasLatin, lcsMask, parseCase, type CaseLetter } from './text.ts';
+import {
+  CASES, norm, toks, hasLatin, lcsMask, parseCase, parseTense, type CaseLetter,
+} from './text.ts';
 import type { ExerciseItem, ExerciseType } from './types.ts';
 
 export interface TypeInfo {
@@ -20,9 +22,27 @@ export const TYPE_INFO: Record<ExerciseType, TypeInfo> = {
   plural: { name: 'Кўплик', ask: 'Қавсдаги сўзни кўпликда, керакли падежда ёзинг' },
   question: { name: 'Савол', ask: 'Белгиланган сўзга қайси савол берилади? Масалан: кому?' },
   choose: { name: 'Тўғрисини танланг', ask: 'Тўғри шаклни танланг' },
+  verb: { name: 'Феъл шакли', ask: 'Қавсдаги феълни керакли шаклда ёзинг' },
+  tense: {
+    name: 'Замонни топинг',
+    ask: 'Белгиланган феъл қайси замонда? Масалан: настоящее ёки н.в.',
+  },
+  infinitive: {
+    name: 'Бош шакл',
+    ask: 'Белгиланган феълнинг бош шаклини (инфинитив) ёзинг. Масалан: пишешь → писать',
+  },
 };
 
-export type CheckState = 'empty' | 'latin' | 'unknown-case' | 'correct' | 'wrong';
+/**
+ * Экранда кўрсатиладиган топшириқ матни.
+ * Тартиб: машқнинг `ask` и → тўпламнинг `ask` и → `TYPE_INFO[type].ask`.
+ */
+export function resolveAsk(item: Pick<ExerciseItem, 'ask'>, setAsk: string | undefined, type: ExerciseType): string {
+  return item.ask || setAsk || TYPE_INFO[type].ask;
+}
+
+/** `unknown-label` — падеж ёки замон номи тушунилмади (жавоб ҳисобга олинмайди). */
+export type CheckState = 'empty' | 'latin' | 'unknown-label' | 'correct' | 'wrong';
 
 export interface CheckResult {
   state: CheckState;
@@ -41,7 +61,7 @@ const stripDash = (s: string): string => s.replace(/^[\s\-–—]+/, '');
 
 /** Жавоб гапнинг бир бўлаги бўладиган турлар: бўш жой ёки қавс тўлдирилади. */
 const GAP_TYPES: readonly ExerciseType[] = [
-  'ending', 'bracket', 'preposition', 'pronoun', 'adjective', 'plural',
+  'ending', 'bracket', 'preposition', 'pronoun', 'adjective', 'plural', 'verb',
 ];
 
 /**
@@ -62,11 +82,23 @@ export function checkExercise(item: ExerciseItem, type: ExerciseType, input: str
     const got = parseCase(raw);
     if (!got) {
       return {
-        state: 'unknown-case',
+        state: 'unknown-label',
         warning: 'Падеж номи тушунилмади. Масалан: дательный, дат, Д.п. ёки Д деб ёзинг.',
       };
     }
     const want = item.answers.map((a) => parseCase(a)).filter(Boolean) as CaseLetter[];
+    return { state: want.includes(got) ? 'correct' : 'wrong' };
+  }
+
+  if (type === 'tense') {
+    const got = parseTense(raw);
+    if (!got) {
+      return {
+        state: 'unknown-label',
+        warning: 'Замон номи тушунилмади. Масалан: настоящее, наст ёки н.в. деб ёзинг.',
+      };
+    }
+    const want = item.answers.map((a) => parseTense(a));
     return { state: want.includes(got) ? 'correct' : 'wrong' };
   }
 
@@ -142,16 +174,20 @@ export function fullAnswer(item: ExerciseItem, type: ExerciseType): string {
     const letter = parseCase(a);
     return letter ? CASES[letter] : a;
   }
-  if (type === 'question') return a;
+  if (type === 'tense') return parseTense(a) ?? a;
+  if (type === 'question' || type === 'infinitive') return a;
   return fillGap(item.prompt, `*${a}*`) ?? `${item.prompt} → *${a}*`;
 }
 
+/** Тўғри жавоб гап эмас, балки ном ёки битта сўз бўладиган турлар. */
+const LABEL_TYPES: readonly ExerciseType[] = ['identify', 'question', 'tense', 'infinitive'];
+
 /**
- * Овоз тугмаси ўқийдиган матн. `identify` ва `question` да тўғри жавоб —
- * падеж номи ёки савол сўзи, лекин ўқилиши керак бўлгани — машқдаги рус гапи.
+ * Овоз тугмаси ўқийдиган матн. `identify`, `question`, `tense` ва `infinitive` да тўғри
+ * жавоб — падеж ёки замон номи, савол сўзи, инфинитив; ўқилиши керак бўлгани эса машқдаги рус гапи.
  */
 export function answerSpeech(item: ExerciseItem, type: ExerciseType): string {
-  if (type === 'identify' || type === 'question') {
+  if (LABEL_TYPES.includes(type)) {
     return item.prompt.replace(/\[\[([^\]]+)\]\]/g, '$1');
   }
   return fullAnswer(item, type);
@@ -159,7 +195,7 @@ export function answerSpeech(item: ExerciseItem, type: ExerciseType): string {
 
 /** Тўғри жавобда топилмаган сўзларни белгилаш маъноли турлар (гап ёзиладиганлари). */
 export function canMask(type: ExerciseType): boolean {
-  return type !== 'identify' && type !== 'question' && type !== 'choose';
+  return !LABEL_TYPES.includes(type) && type !== 'choose';
 }
 
 /**

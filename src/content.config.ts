@@ -7,6 +7,7 @@ const SOURCE = z.enum(['claude', 'daftar']);
 const EXERCISE_TYPE = z.enum([
   'translate', 'fix', 'ending', 'bracket', 'preposition',
   'pronoun', 'adjective', 'identify', 'plural', 'question', 'choose',
+  'verb', 'tense', 'infinitive',
 ]);
 
 /** Мавзулар: ҳар бир мавзу — алоҳида MDX файл. Янги мавзу = битта янги файл. */
@@ -17,6 +18,8 @@ const topics = defineCollection({
     /** Рўйхатдаги карточка учун бир қатор. */
     short: z.string().min(1),
     case: CASE.optional(),
+    /** Мавзу тури: падеж (`case`) ёки феъл (`verb`). Рўйхатда гуруҳлаш ва текширув учун. */
+    kind: z.enum(['case', 'verb']).default('case'),
     /** Машқлар бўлимидаги мос тўплам (папка номи). */
     exercises: z.string().optional(),
     order: z.number().int(),
@@ -32,10 +35,14 @@ const exercises = defineCollection({
     topic: z.string().min(1),
     type: EXERCISE_TYPE,
     title: z.string().optional(),
+    /** Тўпламнинг топшириқ матни. Бўлмаса `TYPE_INFO[type].ask` кўрсатилади. */
+    ask: z.string().min(1).optional(),
     items: z.array(
       z.object({
         id: z.string().min(1),
         case: CASE.optional(),
+        /** Шу машқнинг топшириқ матни (тўпламникидан устун туради). */
+        ask: z.string().min(1).optional(),
         prompt: z.string().min(1),
         answers: z.array(z.string().min(1)).min(1),
         options: z.array(z.string().min(1)).min(2).optional(),

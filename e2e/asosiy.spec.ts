@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { expect, test } from '@playwright/test';
 
 test('бош саҳифада тўртта бўлим бор', async ({ page }) => {
@@ -141,4 +142,33 @@ test.describe('компьютер экрани', () => {
     const main = await page.locator('#main').boundingBox();
     expect(main?.x).toBeGreaterThanOrEqual(navBox!.width);
   });
+});
+
+test('феъл мавзулари: 9 та мавзу, феъл машқига тўғри жавоб', async ({ page }) => {
+  await page.goto('./mavzular/');
+  await expect(page.locator('a.rt-item')).toHaveCount(9);
+  await expect(page.getByRole('heading', { level: 2, name: 'Падежлар' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: 'Феъллар' })).toBeVisible();
+
+  await page.goto('./mashqlar/nastoyashchee/');
+  await expect(page.locator('.rt-exercise')).toBeVisible();
+  await page.locator('.rt-settings > summary').click();
+  await page.getByRole('button', { name: /Феъл шакли/ }).click();
+  await page.getByRole('button', { name: 'Янги машқни бошлаш' }).click();
+
+  // Тўпламнинг ўз топшириғи кўринади (падежга оид матн эмас).
+  await expect(page.locator('.rt-exercise .rt-label')).toHaveText(/ҳозирги замонда/);
+
+  // Тўғри жавоб: машқ матни бўйича JSON дан топилади.
+  const prompt = (await page.locator('.rt-sentence').textContent())?.trim() ?? '';
+  const set = JSON.parse(
+    readFileSync(new URL('../src/content/exercises/nastoyashchee/verb.json', import.meta.url), 'utf8'),
+  ) as { items: Array<{ prompt: string; answers: string[] }> };
+  const plain = (s: string): string => s.replace(/\s+/g, ' ').trim();
+  const item = set.items.find((it) => plain(it.prompt) === plain(prompt));
+  expect(item, `машқ топилмади: ${prompt}`).toBeTruthy();
+
+  await page.locator('.rt-input').first().fill(item!.answers[0]!);
+  await page.getByRole('button', { name: 'Текшириш' }).click();
+  await expect(page.locator('.rt-feedback.is-correct')).toBeVisible();
 });

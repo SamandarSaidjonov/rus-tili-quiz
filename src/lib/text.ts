@@ -64,6 +64,29 @@ export function parseCase(s: string): CaseLetter | null {
   return one ? (one[1]!.toUpperCase() as CaseLetter) : null;
 }
 
+export const TENSES = ['настоящее', 'прошедшее', 'будущее'] as const;
+
+export type Tense = (typeof TENSES)[number];
+
+/**
+ * Замон номини танийди: «настоящее», «наст», «н.в.», «нв», «н», «ҳозирги» → настоящее;
+ * прошедшее (прош, п.в., пв, п, ўтган) ва будущее (буд, б.в., бв, б, келаси) ҳам шундай.
+ */
+export function parseTense(s: string): Tense | null {
+  const n = norm(s).replace(/\s+/g, '');
+  if (!n) return null;
+  const prefixes: Array<[string, Tense]> = [
+    ['наст', 'настоящее'], ['ҳозир', 'настоящее'], ['хозир', 'настоящее'],
+    ['прош', 'прошедшее'], ['ўтган', 'прошедшее'], ['утган', 'прошедшее'],
+    ['буд', 'будущее'], ['келаси', 'будущее'],
+  ];
+  const hit = prefixes.find(([p]) => n.startsWith(p));
+  if (hit) return hit[1];
+  const one = /^([нпб])в?$/.exec(n);
+  if (!one) return null;
+  return one[1] === 'н' ? 'настоящее' : one[1] === 'п' ? 'прошедшее' : 'будущее';
+}
+
 /**
  * Сўзлар бўйича энг узун умумий кетма-кетлик.
  * `hit[j]` — тўғри жавобдаги j-сўзни фойдаланувчи ҳам ёзганми.

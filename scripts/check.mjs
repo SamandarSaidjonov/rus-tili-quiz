@@ -24,12 +24,24 @@ const VOWELS = /[аеёиоуыэюяАЕЁИОУЫЭЮЯ]/g;
 const EXERCISE_TYPES = [
   'translate', 'fix', 'ending', 'bracket', 'preposition',
   'pronoun', 'adjective', 'identify', 'plural', 'question', 'choose',
+  'verb', 'tense', 'infinitive',
 ];
 
-/** Мавзу саҳифасида бўлиши керак бўлган қисмлар (2.1-бўлим). */
+/** Бўш жой ёки қавс тўлдириладиган турлар. */
+const GAP_TYPES = ['ending', 'bracket', 'preposition', 'pronoun', 'adjective', 'plural', 'verb'];
+const TENSE_NAMES = ['настоящее', 'прошедшее', 'будущее'];
+const INFINITIVE_END = /(ть|ти|чь|ться|тись|чься)$/;
+
+/** Падеж мавзуси саҳифасида бўлиши керак бўлган қисмлар (2.1-бўлим). */
 const TOPIC_SECTIONS = [
   'Қисқача', 'Саволлар', 'Қачон ишлатилади', 'Предлог',
   'Отларнинг қўшимчалари', 'Сифат', 'Олмош', 'Мисол гаплар', 'Хато', 'Эслаб қол',
+];
+
+/** Феъл мавзуси (`kind: verb`) саҳифасидаги 10 қисм. */
+const VERB_TOPIC_SECTIONS = [
+  'Қисқача', 'Қандай ясалади', 'Шакллар жадвали', 'Қачон ишлатилади', 'Истиснолар',
+  'Урғу', 'Луғатдаги феъллар', 'Мисол гаплар', 'Хато', 'Эслаб қол',
 ];
 
 const norm = (s) =>
@@ -197,6 +209,7 @@ function checkExercises() {
       err(f, 'items рўйхати бўш');
       continue;
     }
+    noLatin(file, 'ask', data.ask);
 
     const byType = topics.get(data.topic) ?? new Map();
     byType.set(data.type, (byType.get(data.type) ?? 0) + data.items.length);
@@ -217,6 +230,7 @@ function checkExercises() {
       noLatin(file, `${it.id}.prompt`, it.prompt);
       noLatin(file, `${it.id}.note`, it.note);
       noLatin(file, `${it.id}.hints`, it.hints);
+      noLatin(file, `${it.id}.ask`, it.ask);
       (it.answers ?? []).forEach((a, i) => noLatin(file, `${it.id}.answers[${i}]`, a));
 
       // Жавоблар такрорланмаслиги керак
@@ -231,10 +245,12 @@ function checkExercises() {
       const hasGap = /_{2,}/.test(it.prompt ?? '');
       const hasBracket = /\([^)]+\)/.test(it.prompt ?? '');
       const hasTarget = /\[\[[^\]]+\]\]/.test(it.prompt ?? '');
-      if (['ending', 'bracket', 'preposition', 'pronoun', 'adjective', 'plural'].includes(data.type)) {
+      if (data.type === 'verb') {
+        if (!hasBracket) err(f, `${it.id}: verb турида матнда «(инфинитив)» белгиси бўлиши керак`);
+      } else if (GAP_TYPES.includes(data.type)) {
         if (!hasGap && !hasBracket) err(f, `${it.id}: матнда «___» ёки «(сўз)» белгиси йўқ`);
       }
-      if (['identify', 'question'].includes(data.type) && !hasTarget) {
+      if (['identify', 'question', 'tense', 'infinitive'].includes(data.type) && !hasTarget) {
         err(f, `${it.id}: матнда «[[сўз]]» белгиси йўқ`);
       }
       if (['translate', 'fix'].includes(data.type) && (hasGap || hasTarget)) {
@@ -262,6 +278,16 @@ function checkExercises() {
           ),
         );
         if (!ok) err(f, `${it.id}: жавоб падежнинг тўлиқ номи бўлиши керак`);
+      }
+
+      if (data.type === 'tense') {
+        const ok = (it.answers ?? []).every((a) => TENSE_NAMES.includes(norm(a)));
+        if (!ok) err(f, `${it.id}: жавоб «настоящее», «прошедшее» ёки «будущее» бўлиши керак`);
+      }
+
+      if (data.type === 'infinitive') {
+        const bad = (it.answers ?? []).find((a) => !INFINITIVE_END.test(norm(a)));
+        if (bad) err(f, `${it.id}: «${bad}» инфинитив эмас (-ть, -ти, -чь, -ться, -тись, -чься)`);
       }
     }
   }
@@ -360,16 +386,22 @@ function checkTopics() {
       if (!head.includes(key)) err(f, `frontmatter да ${key} йўқ`);
     }
     const body = raw.slice(fm[0].length);
+    const kind = /^kind:\s*(\S+)/m.exec(head)?.[1] ?? 'case';
+    if (!['case', 'verb'].includes(kind)) err(f, `kind нотўғри: ${kind} (case ёки verb)`);
+    const sections = kind === 'verb' ? VERB_TOPIC_SECTIONS : TOPIC_SECTIONS;
 
     const headings = [...body.matchAll(/^#{2,3}\s+(.+)$/gm)].map((m) => m[1]);
-    for (const section of TOPIC_SECTIONS) {
+    for (const section of sections) {
       if (!headings.some((h) => h.toLowerCase().includes(section.toLowerCase()))) {
         todo(f, `«${section}» қисми йўқ`);
       }
     }
 
     const accents = (body.match(/́/g) ?? []).length;
-    if (accents < 20) todo(f, `урғу белгиси кам (${accents} та) — русча мисолларда урғу бўлиши керак`);
+    const minAccents = kind === 'verb' ? 40 : 20;
+    if (accents < minAccents) {
+      todo(f, `урғу белгиси кам (${accents} та, камида ${minAccents}) — русча мисолларда урғу бўлиши керак`);
+    }
 
     // Код ва ҳаволалардан ташқари жойда лотин ҳарфи бўлмаслиги керак
     const text = body
@@ -379,6 +411,9 @@ function checkTopics() {
       .replace(/<[^>]+>/g, ' ');
     const latin = text.match(/[A-Za-z]{2,}/g);
     if (latin) todo(f, `лотин ёзуви бор: ${[...new Set(latin)].slice(0, 5).join(', ')}`);
+    // Рим рақами ҳам лотин ҳарфи: «I спряжение» эмас, «1-спряжение».
+    const roman = text.match(/(?<![A-Za-z])[IVX]{1,4}(?![A-Za-z])/g);
+    if (roman) err(f, `Рим рақами бор: ${[...new Set(roman)].join(', ')} — «1-спряжение» деб ёзинг`);
   }
   return { count: files.length };
 }

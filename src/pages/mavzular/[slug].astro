@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
 import { url } from '../../lib/url.ts';
 
 export const getStaticPaths = (async () => {
@@ -24,9 +25,14 @@ const hasExercises = (await getCollection('exercises')).some((e) => e.data.topic
 
 <Base title={entry.data.title} section="mavzular" description={entry.data.short}>
   <article class="rt-topic">
-    <header>
-      <p class="rt-label">{entry.data.order}-мавзу</p>
-      <h1>{entry.data.title}</h1>
+    <header class="rt-pagehead">
+      <a class="rt-back" href={url('mavzular')} aria-label="Мавзулар рўйхатига қайтиш">
+        <Icon name="arrow-left" />
+      </a>
+      <div>
+        <p class="rt-label">{entry.data.order}-мавзу</p>
+        <h1>{entry.data.title}</h1>
+      </div>
     </header>
 
     <p class="rt-lead">{entry.data.short}</p>
