@@ -1,27 +1,12 @@
 ---
-import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
+import ProgressRing from '../components/ProgressRing.astro';
+import { dashCatalog } from '../lib/dash-catalog.ts';
 import { url, SECTIONS } from '../lib/url.ts';
 import type { IconName } from '../lib/icons.ts';
 
-const topics = await getCollection('topics');
-const vocab = await getCollection('vocab');
-const exercises = await getCollection('exercises');
-const tests = await getCollection('tests');
-
-// Машқлар мавзу (папка) бўйича бирлаштирилади: mixed/translate → mixed
-const exByTopic = new Map<string, number>();
-for (const e of exercises) {
-  exByTopic.set(e.data.topic, (exByTopic.get(e.data.topic) ?? 0) + e.data.items.length);
-}
-
-const catalog = {
-  topics: topics.map((t) => t.id),
-  vocab: vocab.map((v) => ({ id: v.id, n: v.data.words.length })),
-  ex: [...exByTopic.entries()].map(([id, n]) => ({ id, n })),
-  tests: tests.map((t) => t.id),
-};
+const catalog = await dashCatalog();
 
 const icons: Record<string, IconName> = {
   mavzular: 'book',
@@ -31,10 +16,10 @@ const icons: Record<string, IconName> = {
 };
 
 const counts: Record<string, string> = {
-  mavzular: `${topics.length} та мавзу`,
-  mashqlar: `${[...exByTopic.values()].reduce((a, b) => a + b, 0)} та машқ`,
-  lugatlar: `${vocab.reduce((a, v) => a + v.data.words.length, 0)} та сўз`,
-  testlar: `${tests.length} та тест`,
+  mavzular: `${catalog.topics.length} та мавзу`,
+  mashqlar: `${catalog.exSets.reduce((a, s) => a + s.n, 0)} та машқ`,
+  lugatlar: `${catalog.vocab.reduce((a, v) => a + v.n, 0)} та сўз`,
+  testlar: `${catalog.tests.length} та тест`,
 };
 ---
 
@@ -68,6 +53,23 @@ const counts: Record<string, string> = {
 
   <p id="clear-msg" class="rt-notice" role="status"></p>
 
+  <div class="rt-stack--tight rt-stack">
+    <a class="rt-overall" href={url('natijalar')}>
+      <ProgressRing />
+      <span>
+        <span class="rt-overall__title" role="heading" aria-level="2">Умумий прогресс</span>
+        <span class="rt-overall__meta" data-activity>Натижаларни кўриш</span>
+      </span>
+      <span class="rt-section__go">
+        <Icon name="chevron-right" />
+      </span>
+    </a>
+    <a class="rt-btn rt-btn--secondary rt-btn--block" data-next hidden href={url('mavzular')}>
+      <span data-next-text>Давом этиш</span>
+      <Icon name="arrow-right" />
+    </a>
+  </div>
+
   <div class="rt-stack--tight rt-grid rt-grid--2">
     {
       SECTIONS.map((s) => (
@@ -97,12 +99,13 @@ const counts: Record<string, string> = {
   <script type="application/json" id="catalog" set:html={JSON.stringify(catalog)} is:inline />
 
   <script>
-    import { hydrateHome, type Catalog } from '../lib/progress-ui.ts';
+    import { hydrateHomeDashboard } from '../lib/dashboard-ui.ts';
+    import type { DashCatalog } from '../lib/dashboard.ts';
     import { clearAllProgress, storageAvailable, writeRaw } from '../lib/progress.ts';
 
     const raw = document.getElementById('catalog')?.textContent ?? '{}';
     try {
-      hydrateHome(JSON.parse(raw) as Catalog);
+      hydrateHomeDashboard(JSON.parse(raw) as DashCatalog);
     } catch {
       /* прогресс кўрсатилмаса ҳам саҳифа ишлайди */
     }

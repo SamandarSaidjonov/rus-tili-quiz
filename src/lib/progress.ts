@@ -118,9 +118,35 @@ export function writeStats(kind: Kind, id: string, stats: SetStats): void {
 
 export function recordAnswer(kind: Kind, id: string, itemId: string, ok: boolean): SetStats {
   const stats = readStats(kind, id);
-  stats.items[itemId] = { ok, at: Date.now() };
+  const at = Date.now();
+  stats.items[itemId] = { ok, at };
   writeStats(kind, id, stats);
+  markActive(at);
   return stats;
+}
+
+/** Фаол кунлар рўйхати (кетма-кет кунларни ҳисоблаш учун). */
+export const DAYS_KEY = `${PREFIX}days`;
+const DAYS_MAX = 400;
+
+/** Маҳаллий сана: `2026-11-21`. */
+export function dayKey(at: number): string {
+  const d = new Date(at);
+  const p = (n: number): string => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+}
+
+export function readDays(): string[] {
+  const days = readJson<unknown>(DAYS_KEY, []);
+  return Array.isArray(days) ? days.filter((d): d is string => typeof d === 'string') : [];
+}
+
+export function markActive(at: number = Date.now()): void {
+  const key = dayKey(at);
+  const days = readDays();
+  if (days.includes(key)) return;
+  days.push(key);
+  writeJson(DAYS_KEY, days.slice(-DAYS_MAX));
 }
 
 export function recordScore(kind: Kind, id: string, correct: number, total: number): SetStats {

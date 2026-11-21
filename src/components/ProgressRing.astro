@@ -1,0 +1,23 @@
+---
+// Умумий прогресс ҳалқаси. Рақамни `dashboard-ui.ts` даги `fillRing` тўлдиради (`data-ring`).
+interface Props {
+  size?: 'md' | 'lg';
+}
+const { size = 'md' } = Astro.props;
+---
+
+<span
+  class:list={['rt-ring', `rt-ring--${size}`]}
+  data-ring
+  role="progressbar"
+  aria-label="Умумий прогресс"
+  aria-valuemin="0"
+  aria-valuemax="100"
+  aria-valuenow="0"
+>
+  <svg viewBox="0 0 36 36" aria-hidden="true" focusable="false">
+    <circle class="rt-ring__track" cx="18" cy="18" r="15.5" pathLength="100" />
+    <circle class="rt-ring__fill" cx="18" cy="18" r="15.5" pathLength="100" stroke-dasharray="0 100" />
+  </svg>
+  <span class="rt-ring__num">0%</span>
+</span>

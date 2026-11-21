@@ -1,0 +1,112 @@
+---
+// Натижалар: умумий прогресс, бўлимлар, тестлар ва мавзулар бўйича ҳолат.
+// Скелет шу ерда чизилади, рақамлар `dashboard-ui.ts` да `localStorage` дан тўлдирилади.
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import ProgressRing from '../components/ProgressRing.astro';
+import { dashCatalog } from '../lib/dash-catalog.ts';
+import { PASS } from '../lib/dashboard.ts';
+import { url, SECTIONS } from '../lib/url.ts';
+import type { IconName } from '../lib/icons.ts';
+
+const catalog = await dashCatalog();
+const passPct = `${Math.round(PASS * 100)}%`;
+
+const icons: Record<string, IconName> = {
+  mavzular: 'book',
+  mashqlar: 'pencil',
+  lugatlar: 'cards',
+  testlar: 'test',
+};
+---
+
+<Base title="Натижалар" description="Мавзулар, машқлар, луғат ва тестлар бўйича прогресс." wide>
+  <div class="rt-pagehead">
+    <a class="rt-back" href={url()} aria-label="Бош саҳифага қайтиш">
+      <Icon name="arrow-left" />
+    </a>
+    <h1>Натижалар</h1>
+  </div>
+
+  <article class="rt-card rt-dhero">
+    <ProgressRing size="lg" />
+    <div class="rt-stack--tight rt-stack">
+      <h2 class="rt-dhero__title">Умумий прогресс</h2>
+      <p class="rt-muted" data-activity>Бугун ҳали жавоб берилмаган</p>
+    </div>
+    <a class="rt-btn rt-btn--primary rt-btn--block" data-next hidden href={url('mavzular')}>
+      <span data-next-text>Давом этиш</span>
+      <Icon name="arrow-right" />
+    </a>
+  </article>
+
+  <p class="rt-muted">
+    Тўртта бўлим тенг улушда ҳисобланади. Тест {passPct} ва ундан юқори натижа билан ўтилган
+    ҳисобланади. Натижалар фақат шу қурилмада сақланади.
+  </p>
+
+  <h2>Бўлимлар</h2>
+  <div class="rt-stack--tight rt-grid rt-grid--2">
+    {
+      SECTIONS.map((s) => (
+        <a class="rt-section" href={url(s.key)} data-dsec={s.key}>
+          <span class="rt-section__icon">
+            <Icon name={icons[s.key]} />
+          </span>
+          <span>
+            <span class="rt-section__title" role="heading" aria-level="3">
+              {s.title}
+            </span>
+            <span class="rt-section__meta" data-dsec-main>
+              Ҳали бошланмаган
+            </span>
+            <span class="rt-bar">
+              <i style="width:0%" />
+            </span>
+            <span class="rt-section__meta rt-dsub" data-dsec-sub />
+          </span>
+          <span class="rt-section__go">
+            <Icon name="chevron-right" />
+          </span>
+        </a>
+      ))
+    }
+  </div>
+
+  <div class="rt-card rt-dmistakes" data-dmistakes hidden>
+    <p data-dmistakes-text>Луғатда хато қилинган сўзлар</p>
+    <a class="rt-btn rt-btn--secondary" href={`${url('lugatlar/quiz')}?mode=mistakes`}>
+      Хатоларни такрорлаш
+    </a>
+  </div>
+
+  <h2>Тестлар</h2>
+  <ul class="rt-dtests" data-dtests>
+    {
+      catalog.tests.map((t) => (
+        <li>
+          <a class="rt-dtest" href={url(`testlar/${t.id}`)}>
+            <span class="rt-badge rt-badge--todo">Тест {t.no}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <h2>Мавзулар бўйича</h2>
+  <div class="rt-stack" data-drows></div>
+
+  <script type="application/json" id="catalog" set:html={JSON.stringify(catalog)} is:inline />
+
+  <script>
+    import { hydrateResults } from '../lib/dashboard-ui.ts';
+    import type { DashCatalog } from '../lib/dashboard.ts';
+
+    const raw = document.getElementById('catalog')?.textContent ?? '{}';
+    try {
+      hydrateResults(JSON.parse(raw) as DashCatalog);
+    } catch {
+      /* прогресс кўрсатилмаса ҳам саҳифа ишлайди */
+    }
+  </script>
+</Base>

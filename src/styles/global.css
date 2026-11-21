@@ -1538,6 +1538,198 @@ a.rt-item:hover {
   border-top: 1px solid var(--line);
 }
 
+/* ---------- Натижалар (dashboard) ---------- */
+/* `hidden` атрибути `display` берилган класслардан устун турсин. */
+.rt-btn[hidden],
+.rt-card[hidden] {
+  display: none;
+}
+
+.rt-badge--warn {
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+
+/* Умумий прогресс ҳалқаси. */
+.rt-ring {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 64px;
+  height: 64px;
+}
+.rt-ring--lg {
+  width: 112px;
+  height: 112px;
+}
+.rt-ring svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+.rt-ring circle {
+  fill: none;
+  stroke-width: 4;
+}
+.rt-ring__track {
+  stroke: var(--surface-sunk);
+}
+.rt-ring__fill {
+  stroke: var(--accent);
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.4s ease;
+}
+.rt-ring__num {
+  position: relative;
+  font: 700 18px/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.rt-ring--lg .rt-ring__num {
+  font-size: 30px;
+}
+
+/* Бош саҳифадаги умумий прогресс карточкаси (`rt-section` га ўхшаш). */
+.rt-overall {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  color: var(--ink);
+  text-decoration: none;
+}
+.rt-overall:hover {
+  border-color: var(--line-strong);
+}
+.rt-overall__title {
+  display: block;
+  font: 700 20px/24px var(--font-display);
+}
+.rt-overall__meta {
+  display: block;
+  margin-top: 2px;
+  font: 400 15px/22px var(--font-uz);
+  color: var(--muted);
+}
+
+/* «Натижалар» саҳифасининг тепасидаги карточка. */
+.rt-dhero {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: var(--space-4) var(--space-5);
+}
+.rt-dhero > .rt-btn {
+  grid-column: 1 / -1;
+}
+.rt-dhero p {
+  margin: 0;
+}
+.rt-dhero__title {
+  margin: 0;
+  font: 700 24px/28px var(--font-display);
+}
+.rt-dsub {
+  margin: var(--space-2) 0 0;
+  font-size: 14px;
+}
+.rt-dsub:empty {
+  display: none;
+}
+
+.rt-dmistakes {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.rt-dmistakes p {
+  margin: 0;
+  font-weight: 700;
+}
+
+/* Тестлар: ҳар бир тест битта белги. */
+.rt-dtests {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.rt-dtest {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-min);
+  text-decoration: none;
+}
+.rt-dtest .rt-badge {
+  padding: 6px 12px;
+  font-size: 14px;
+}
+
+/* Мавзулар бўйича қаторлар. */
+.rt-drows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.rt-drow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  color: var(--ink);
+  text-decoration: none;
+}
+.rt-drow:hover {
+  border-color: var(--line-strong);
+}
+.rt-drow--weak {
+  border-color: var(--warn);
+}
+.rt-drow__head,
+.rt-drow__line {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.rt-drow__head {
+  justify-content: space-between;
+}
+.rt-drow__title {
+  min-width: 0;
+  font: 700 16px/22px var(--font-uz);
+}
+.rt-drow__title[lang='ru'] {
+  font-family: var(--font-ru);
+}
+.rt-drow__line .rt-bar {
+  display: block;
+  height: 6px;
+}
+.rt-drow__count {
+  min-width: 4.5em;
+  text-align: end;
+  font: 400 14px/20px var(--font-uz);
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
