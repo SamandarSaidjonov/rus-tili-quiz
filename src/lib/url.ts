@@ -13,7 +13,7 @@ export const SECTIONS = [
   { key: 'mavzular', title: 'Мавзулар', hint: 'Тушунтириш ва жадваллар' },
   { key: 'mashqlar', title: 'Машқлар', hint: 'Жавобни ўзингиз ёзасиз' },
   { key: 'lugatlar', title: 'Луғатлар', hint: 'Сўзларни ёдлаш' },
-  { key: 'testlar', title: 'Тестлар', hint: '10 та саволли тестлар' },
+  { key: 'testlar', title: 'Тестлар', hint: '20 та саволли тестлар' },
 ] as const;
 
 export type SectionKey = (typeof SECTIONS)[number]['key'];

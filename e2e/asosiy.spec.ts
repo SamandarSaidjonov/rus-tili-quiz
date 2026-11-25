@@ -90,7 +90,7 @@ test('тест: натижа охирида чиқади ва изоҳлар к�
   await page.goto('./testlar/test-001/');
   await expect(page.getByRole('heading', { level: 1, name: '№-1' })).toBeVisible();
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 20; i++) {
     await page.locator('.rt-option').first().click();
     // Тест давомида тўғри ёки хато кўрсатилмайди
     await expect(page.locator('.rt-feedback')).toHaveCount(0);
@@ -100,13 +100,13 @@ test('тест: натижа охирида чиқади ва изоҳлар к�
 
   await page.getByRole('button', { name: 'Якунлаш' }).click();
   await expect(page.getByRole('heading', { name: 'Натижа' })).toBeVisible();
-  await expect(page.locator('.rt-review > li')).toHaveCount(10);
-  await expect(page.locator('.rt-score__num')).toContainText('/10');
+  await expect(page.locator('.rt-review > li')).toHaveCount(20);
+  await expect(page.locator('.rt-score__num')).toContainText('%');
 
   // Рўйхатда натижа кўринади
   await page.goto('./testlar/mixed/');
-  await expect(page.locator('[data-prog-badge="test:test-001:10"]')).toContainText('/10');
-  await expect(page.locator('[data-prog-badge="test:test-001:10"]')).toHaveClass(/rt-lvl--(low|mid|high)/);
+  await expect(page.locator('[data-prog-badge="test:test-001:20"]')).toContainText('%');
+  await expect(page.locator('[data-prog-badge="test:test-001:20"]')).toHaveClass(/rt-lvl--(low|mid|high)/);
 });
 
 test('машқ ва тестлар икки бўлимга бўлинган', async ({ page }) => {

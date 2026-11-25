@@ -15,3 +15,7 @@ export function setLevel(el: Element | null | undefined, pct: number): void {
   el.classList.remove('rt-lvl--low', 'rt-lvl--mid', 'rt-lvl--high');
   el.classList.add(levelClass(pct));
 }
+
+/** Балл фоизда (бутун сон). Ҳеч қачон 100 га яхлитланмайди, агар битта бўлса ҳам хато бор бўлса. */
+export const scorePct = (correct: number, total: number): number =>
+  !total ? 0 : correct >= total ? 100 : Math.min(99, Math.round((correct / total) * 100));

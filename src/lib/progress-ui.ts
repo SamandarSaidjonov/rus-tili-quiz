@@ -7,7 +7,7 @@
  * `<span data-prog-badge="test:test-001:10">`, `<span data-prog-seen="predlozhnyy">`.
  */
 import { ICONS } from './icons.ts';
-import { setLevel } from './level.ts';
+import { scorePct, setLevel } from './level.ts';
 import { answeredCount, readStats, type Kind } from './progress.ts';
 
 function parse(spec: string): { kind: Kind; id: string; total: number } | null {
@@ -25,7 +25,7 @@ function statusText(kind: Kind, id: string, total: number): string | null {
   const stats = readStats(kind, id);
 
   if (kind === 'test') {
-    return stats.best ? `Энг яхши натижа: ${stats.best.correct}/${stats.best.total}` : null;
+    return stats.best ? `Энг яхши натижа: ${scorePct(stats.best.correct, Math.max(stats.best.total, total))}%` : null;
   }
 
   const { answered, correct } = answeredCount(stats);
@@ -62,8 +62,10 @@ export function hydrateProgress(root: ParentNode = document): void {
     if (!stats.last) return;
     el.classList.remove('rt-badge--todo');
     el.classList.add('rt-badge--lvl');
-    setLevel(el, (stats.last.correct / stats.last.total) * 100);
-    el.textContent = `${stats.last.correct}/${stats.last.total}`;
+    // Тест кейин узайтирилган бўлса, эски натижа янги саволлар сонига нисбатан олинади.
+    const pct = scorePct(stats.last.correct, Math.max(stats.last.total, spec.total));
+    setLevel(el, pct);
+    el.textContent = `${pct}%`;
   });
 
   // Аралаш машқларнинг бир қисми (№-1 …): `data-pack="mixed"`, `data-ids="id1 id2"`.
@@ -79,8 +81,10 @@ export function hydrateProgress(root: ParentNode = document): void {
     if (!badge) return;
     badge.classList.remove('rt-badge--todo');
     badge.classList.add('rt-badge--lvl');
-    setLevel(badge, (correct / done.length) * 100);
-    badge.textContent = `${correct}/${done.length}`;
+    // Фоиз ҳамма машққа нисбатан: ишланмагани ҳали бажарилмаган ҳисобланади.
+    const pct = scorePct(correct, ids.length);
+    setLevel(badge, pct);
+    badge.textContent = `${pct}%`;
   });
 
   // Бир нечта тўплам ёки тест йиғиндиси: `data-sum-kind="test"`, `data-sum-ids="a b"`

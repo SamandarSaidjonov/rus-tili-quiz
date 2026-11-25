@@ -5,7 +5,7 @@
  */
 import { useCallback, useEffect, useMemo, useState } from 'preact/hooks';
 import type { JSX } from 'preact';
-import { levelClass } from '../lib/level.ts';
+import { levelClass, scorePct } from '../lib/level.ts';
 import type { ExerciseItem, ExerciseSet, ExerciseType } from '../lib/types.ts';
 import {
   TYPE_INFO, answerSpeech, canMask, checkExercise, dealByType, fullAnswer, maskWords, resolveAsk,
@@ -206,9 +206,9 @@ export default function ExerciseRunner({
           <h2 class="rt-item__title">Натижа</h2>
           <div class="rt-score">
             <span class={`rt-score__num ${levelClass((correct / session.qs.length) * 100)}`}>
-              {correct}/{session.qs.length}
+              {scorePct(correct, session.qs.length)}%
             </span>
-            <span class="rt-score__of">{title} бўйича машқлар</span>
+            <span class="rt-score__of">{session.qs.length} та машқдан {correct} таси тўғри</span>
           </div>
           <div class="rt-item__actions">
             {wrongIds.length > 0 ? (

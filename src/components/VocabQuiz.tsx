@@ -279,9 +279,9 @@ export default function VocabQuiz({
           <h2 class="rt-item__title">Натижа</h2>
           <div class="rt-score">
             <span class={`rt-score__num ${levelClass(pct)}`}>
-              {correct}/{session.qs.length}
+              {pct}%
             </span>
-            <span class="rt-score__of">{pct}% тўғри</span>
+            <span class="rt-score__of">{session.qs.length} та сўздан {correct} таси тўғри</span>
           </div>
           <p class="rt-item__meta">
             {pct >= 90

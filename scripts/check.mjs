@@ -339,7 +339,7 @@ function checkTests() {
       err(f, 'questions рўйхати йўқ');
       continue;
     }
-    if (data.questions.length !== 10) err(f, `${data.questions.length} та савол бор, 10 та бўлиши керак`);
+    if (data.questions.length < 20) err(f, `${data.questions.length} та савол бор, камида 20 та бўлиши керак`);
 
     for (const q of data.questions) {
       if (!q.id) {

@@ -1,11 +1,11 @@
 /**
- * Тест: 10 та савол, ҳаммаси 4 вариантли.
+ * Тест: камида 20 та савол, ҳаммаси 4 вариантли.
  * Тест давомида жавоб тўғри ёки хатолиги кўрсатилмайди — натижа охирида чиқади.
  * Саволлар тартиби қатъий (ҳамма бир хил саволни ечади), фақат вариантлар аралашади.
  */
 import { useCallback, useEffect, useState } from 'preact/hooks';
 import type { JSX } from 'preact';
-import { levelClass } from '../lib/level.ts';
+import { levelClass, scorePct } from '../lib/level.ts';
 import type { TestFile } from '../lib/types.ts';
 import { shuffle } from '../lib/text.ts';
 import {
@@ -121,9 +121,12 @@ export default function TestRunner({ test, homeHref, listHref }: Props): JSX.Ele
           <h2 class="rt-item__title">Натижа</h2>
           <div class="rt-score">
             <span class={`rt-score__num ${levelClass((correct / total) * 100)}`}>
-              {correct}/{total}
+              {scorePct(correct, total)}%
             </span>
-            {best && <span class="rt-score__of">Энг яхши натижа: {best.correct}/{best.total}</span>}
+            <span class="rt-score__of">
+              {total} та саволдан {correct} таси тўғри
+              {best && ` · энг яхши натижа: ${scorePct(best.correct, Math.max(best.total, total))}%`}
+            </span>
           </div>
           <div class="rt-item__actions">
             <button class="rt-btn rt-btn--secondary" type="button" onClick={restart}>

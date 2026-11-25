@@ -7,7 +7,7 @@
  * (GitHub Pages'да 10 дақиқа) эски HTML'ни бермасин. Эски HTML янги йиғилишда
  * ўчиб кетган CSS файлини сўрайди ва саҳифа услубсиз чиқади.
  */
-const VERSION = 'rt2-v8';
+const VERSION = 'rt2-v9';
 const CACHE = `${VERSION}-assets`;
 const OFFLINE_URL = '/rus-tili-quiz/';
 

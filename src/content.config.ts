@@ -83,7 +83,7 @@ const vocab = defineCollection({
   }),
 });
 
-/** Тестлар: ҳар бир тест алоҳида файл, 10 та савол, фақат 4 вариантли. */
+/** Тестлар: ҳар бир тест алоҳида файл, камида 20 та савол, фақат 4 вариантли. */
 const tests = defineCollection({
   loader: glob({ pattern: ['*.json', '!_*.json'], base: './src/content/tests' }),
   schema: z.object({
@@ -106,7 +106,7 @@ const tests = defineCollection({
         source: SOURCE.default('claude'),
         reviewed: z.boolean().default(false),
       }),
-    ).length(10),
+    ).min(20),
   }),
 });
 

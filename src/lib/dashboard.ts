@@ -179,7 +179,7 @@ export function computeDashboard(
   // Тестлар
   const testRows: TestRow[] = cat.tests.map((t) => {
     const best = read('test', t.id).best;
-    const ratio = best && best.total ? best.correct / best.total : null;
+    const ratio = best && best.total ? best.correct / Math.max(best.total, t.n) : null;
     return { id: t.id, title: t.title, group: t.group, best: ratio === null ? null : ratio * 100, passed: ratio !== null && ratio >= PASS };
   });
   const taken = testRows.filter((t) => t.best !== null);
