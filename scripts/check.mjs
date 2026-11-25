@@ -85,7 +85,11 @@ const splitWords = (text) =>
     .split(/[\s,.;:!?()«»"'\-–—/]+/)
     .filter((w) => /[а-яёА-ЯЁ]/.test(w));
 
+/** Урғу олмайдиган предлоглар: день ото дня́. */
+const UNSTRESSED = ['ото', 'изо', 'передо'];
+
 const needsAccent = (word) =>
+  !UNSTRESSED.includes(word.toLowerCase()) &&
   (word.match(VOWELS) ?? []).length >= 2 && !word.includes(ACCENT) && !/[ёЁ]/.test(word);
 
 /**

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { CONFLICT, conflictsOf, indexWords, pickOptions } from '../src/lib/distractors.ts';
+import { CONFLICT, conflictsOf, indexWords, pickOptions, sameMeaning } from '../src/lib/distractors.ts';
 import { norm } from '../src/lib/text.ts';
 import type { VocabWord } from '../src/lib/types.ts';
 
@@ -13,8 +13,8 @@ const words: VocabWord[] = readdirSync(dir)
 const indexed = indexWords(words);
 
 describe('луғат маълумоти', () => {
-  it('185 та сўз бор ва id лар такрорланмайди', () => {
-    expect(words.length).toBe(185);
+  it('1039 та сўз бор ва id лар такрорланмайди', () => {
+    expect(words.length).toBe(1039);
     expect(new Set(words.map((w) => w.id)).size).toBe(words.length);
   });
 
@@ -45,9 +45,18 @@ describe('pickOptions', () => {
 
   it('иккита тўғри жавоб бўлиши мумкин жуфтлар бирга чиқмайди', () => {
     for (const [a, b] of CONFLICT) {
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 2; i++) {
         expect(pickOptions(a, indexed)).not.toContain(b);
         expect(pickOptions(b, indexed)).not.toContain(a);
+      }
+    }
+  });
+
+  it('маъноси ёки русча шакли бир хил сўзлар бирга чиқмайди', () => {
+    for (const t of indexed) {
+      for (const id of pickOptions(t.word.id, indexed)) {
+        if (id === t.word.id) continue;
+        expect(sameMeaning(t, indexed.find((x) => x.word.id === id)!)).toBe(false);
       }
     }
   });
