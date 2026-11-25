@@ -1,6 +1,6 @@
 /* ============================================================
-   Рус тили — дизайн тизими (design/tokens.css + design/components/bundle.css).
-   Ўзгартиришдан олдин `design/README.md` ни ўқинг: ранг, шрифт ва оралиқ
+   Рус тили — дизайн тизими.
+   Ўзгартиришдан олдин `CLAUDE.md` нинг 7-бўлимини ўқинг: ранг, шрифт ва оралиқ
    қоидалари ўша ерда. Шрифт оилалари (`--font-uz`, `--font-ru`,
    `--font-display`) `astro.config.mjs` да эълон қилинади.
    ============================================================ */
@@ -25,6 +25,12 @@
   --bad-soft: #fbe9e7;
   --warn: #8a5800;
   --warn-soft: #fdf2d8;
+  --lvl-low: #d0342c;
+  --lvl-mid: #f0b400;
+  --lvl-high: #15803d;
+  --on-lvl-low: #ffffff;
+  --on-lvl-mid: #1c1e22;
+  --on-lvl-high: #ffffff;
   --focus: var(--accent);
   --shadow-card: 0 1px 2px rgba(28, 30, 34, 0.06);
   color-scheme: light;
@@ -49,6 +55,12 @@
   --bad-soft: #3a1c19;
   --warn: #f2c46b;
   --warn-soft: #33280f;
+  --lvl-low: #ff6b5e;
+  --lvl-mid: #ffcc33;
+  --lvl-high: #45d483;
+  --on-lvl-low: #16181d;
+  --on-lvl-mid: #16181d;
+  --on-lvl-high: #16181d;
   --focus: var(--accent);
   --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4);
   color-scheme: dark;
@@ -73,6 +85,12 @@
     --bad-soft: #3a1c19;
     --warn: #f2c46b;
     --warn-soft: #33280f;
+    --lvl-low: #ff6b5e;
+    --lvl-mid: #ffcc33;
+    --lvl-high: #45d483;
+    --on-lvl-low: #16181d;
+    --on-lvl-mid: #16181d;
+    --on-lvl-high: #16181d;
     --focus: var(--accent);
     --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4);
     color-scheme: dark;
@@ -412,7 +430,7 @@ a {
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: var(--accent);
+  background: var(--lvl, var(--accent));
   transition: width 0.3s ease;
 }
 .rt-tally {
@@ -1245,6 +1263,29 @@ textarea.rt-input {
   background: var(--bad-soft);
   color: var(--bad);
 }
+/* Натижа даражаси: 0–59% қизил, 60–88% сариқ, 89–100% яшил (src/lib/level.ts). */
+.rt-lvl--low {
+  --lvl: var(--lvl-low);
+  --on-lvl: var(--on-lvl-low);
+}
+.rt-lvl--mid {
+  --lvl: var(--lvl-mid);
+  --on-lvl: var(--on-lvl-mid);
+}
+.rt-lvl--high {
+  --lvl: var(--lvl-high);
+  --on-lvl: var(--on-lvl-high);
+}
+.rt-badge--lvl {
+  background: var(--lvl);
+  color: var(--on-lvl);
+}
+.rt-score__num[class*='rt-lvl--'] {
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--lvl);
+  color: var(--on-lvl);
+}
 .rt-review {
   list-style: none;
   margin: 0;
@@ -1578,7 +1619,7 @@ a.rt-item:hover {
   stroke: var(--surface-sunk);
 }
 .rt-ring__fill {
-  stroke: var(--accent);
+  stroke: var(--lvl, var(--accent));
   stroke-linecap: round;
   transition: stroke-dasharray 0.4s ease;
 }

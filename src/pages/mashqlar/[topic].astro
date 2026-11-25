@@ -10,7 +10,7 @@ import type { ExerciseSet } from '../../lib/types.ts';
 
 export const getStaticPaths = (async () => {
   const entries = await getCollection('exercises');
-  const topics = [...new Set(entries.map((e) => e.data.topic))];
+  const topics = [...new Set(entries.map((e) => e.data.topic))].filter((t) => t !== 'mixed');
   return topics.map((topic) => ({
     params: { topic },
     props: {
@@ -33,7 +33,7 @@ const hasTopicPage = (await getCollection('topics')).some((t) => t.id === topic)
     slot="topbar"
     title={meta.title}
     sub={`${groups.length} тур · ${count} та машқ`}
-    backHref={url('mashqlar')}
+    backHref={url('mashqlar/mavzu')}
     backLabel="Машқлар рўйхатига қайтиш"
   />
 
@@ -42,7 +42,7 @@ const hasTopicPage = (await getCollection('topics')).some((t) => t.id === topic)
     title={meta.title}
     groups={groups}
     homeHref={url()}
-    listHref={url('mashqlar')}
+    listHref={url('mashqlar/mavzu')}
     topicHref={hasTopicPage ? url(`mavzular/${topic}`) : undefined}
     client:only="preact"
   />

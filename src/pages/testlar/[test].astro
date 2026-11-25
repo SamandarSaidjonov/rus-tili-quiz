@@ -16,16 +16,18 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { test } = Astro.props as { test: TestFile };
+const list = url(test.group === 'mixed' ? 'testlar/mixed' : 'testlar/mavzu');
+const groupName = { mixed: 'Аралаш мавзулар', grammar: 'Грамматика', vocab: 'Луғат' }[test.group];
 ---
 
-<Base title={test.title} section="testlar">
+<Base title={`${groupName} · ${test.title}`} section="testlar">
   <TopBar
     slot="topbar"
     title={test.title}
-    sub={`${test.questions.length} та савол · ҳар бирида 4 та вариант`}
-    backHref={url('testlar')}
+    sub={`${groupName} · ${test.questions.length} та савол · ҳар бирида 4 та вариант`}
+    backHref={list}
     backLabel="Тестлар рўйхатига қайтиш"
   />
 
-  <TestRunner test={test} homeHref={url()} listHref={url('testlar')} client:only="preact" />
+  <TestRunner test={test} homeHref={url()} listHref={list} client:only="preact" />
 </Base>

@@ -39,7 +39,7 @@ test('луғат квизи: жавобдан кейин ўзи ўтиб кет�
 });
 
 test('машқ: бўш жавобда огоҳлантиради, хато жавобда тўғрисини кўрсатади', async ({ page }) => {
-  await page.goto('./mashqlar/mixed/');
+  await page.goto('./mashqlar/mixed/1/');
   await expect(page.locator('.rt-exercise')).toBeVisible();
 
   await page.getByRole('button', { name: 'Текшириш' }).click();
@@ -69,7 +69,7 @@ test('«Падежни топинг» да тўғри жавоб гап эмас
 });
 
 test('машқда «Билмайман» хато деб ҳисобланади', async ({ page }) => {
-  await page.goto('./mashqlar/mixed/');
+  await page.goto('./mashqlar/mixed/1/');
   await page.getByRole('button', { name: /Билмайман/ }).click();
   await expect(page.locator('.rt-feedback.is-wrong')).toBeVisible();
   await expect(page.locator('.rt-tally__no')).toContainText('1');
@@ -88,7 +88,7 @@ test('қоронғи тема танлови сақланади', async ({ page 
 
 test('тест: натижа охирида чиқади ва изоҳлар кўринади', async ({ page }) => {
   await page.goto('./testlar/test-001/');
-  await expect(page.getByRole('heading', { level: 1, name: 'Тест 1' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: '№-1' })).toBeVisible();
 
   for (let i = 0; i < 10; i++) {
     await page.locator('.rt-option').first().click();
@@ -104,8 +104,20 @@ test('тест: натижа охирида чиқади ва изоҳлар к�
   await expect(page.locator('.rt-score__num')).toContainText('/10');
 
   // Рўйхатда натижа кўринади
-  await page.goto('./testlar/');
+  await page.goto('./testlar/mixed/');
   await expect(page.locator('[data-prog-badge="test:test-001:10"]')).toContainText('/10');
+  await expect(page.locator('[data-prog-badge="test:test-001:10"]')).toHaveClass(/rt-lvl--(low|mid|high)/);
+});
+
+test('машқ ва тестлар икки бўлимга бўлинган', async ({ page }) => {
+  for (const s of ['mashqlar', 'testlar']) {
+    await page.goto(`./${s}/`);
+    await page.getByRole('link', { name: /Аралаш мавзулар/ }).click();
+    await expect(page.locator('.rt-test b').first()).toHaveText('№-1');
+    await page.goto(`./${s}/`);
+    await page.getByRole('link', { name: /Танланган мавзу/ }).click();
+    await expect(page.getByText('Родительный падеж')).toBeVisible();
+  }
 });
 
 test('телефонда навигация пастда туради', async ({ page }) => {

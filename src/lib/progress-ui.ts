@@ -7,6 +7,7 @@
  * `<span data-prog-badge="test:test-001:10">`, `<span data-prog-seen="predlozhnyy">`.
  */
 import { ICONS } from './icons.ts';
+import { setLevel } from './level.ts';
 import { answeredCount, readStats, type Kind } from './progress.ts';
 
 function parse(spec: string): { kind: Kind; id: string; total: number } | null {
@@ -49,6 +50,7 @@ export function hydrateProgress(root: ParentNode = document): void {
     const pct = Math.min(100, Math.round((answered / spec.total) * 100));
     const fill = el.querySelector<HTMLElement>('i');
     if (fill) fill.style.width = `${pct}%`;
+    setLevel(el, pct);
     el.setAttribute('aria-valuenow', String(answered));
   });
 
@@ -59,8 +61,56 @@ export function hydrateProgress(root: ParentNode = document): void {
     const stats = readStats(spec.kind, spec.id);
     if (!stats.last) return;
     el.classList.remove('rt-badge--todo');
-    el.classList.add('rt-badge--score');
+    el.classList.add('rt-badge--lvl');
+    setLevel(el, (stats.last.correct / stats.last.total) * 100);
     el.textContent = `${stats.last.correct}/${stats.last.total}`;
+  });
+
+  // Аралаш машқларнинг бир қисми (№-1 …): `data-pack="mixed"`, `data-ids="id1 id2"`.
+  root.querySelectorAll<HTMLElement>('[data-pack]').forEach((el) => {
+    const { items } = readStats('ex', el.dataset.pack ?? '');
+    const ids = (el.dataset.ids ?? '').split(' ').filter(Boolean);
+    const done = ids.filter((id) => items[id]);
+    if (!done.length) return;
+    const correct = done.filter((id) => items[id]!.ok).length;
+    const meta = el.querySelector('[data-pack-meta]');
+    if (meta) meta.textContent = `${done.length} / ${ids.length} та машқ ишланган`;
+    const badge = el.querySelector('[data-pack-badge]');
+    if (!badge) return;
+    badge.classList.remove('rt-badge--todo');
+    badge.classList.add('rt-badge--lvl');
+    setLevel(badge, (correct / done.length) * 100);
+    badge.textContent = `${correct}/${done.length}`;
+  });
+
+  // Бир нечта тўплам ёки тест йиғиндиси: `data-sum-kind="test"`, `data-sum-ids="a b"`
+  // ёки `data-sum-kind="ex"`, `data-sum-ids="mixed:150"`.
+  root.querySelectorAll<HTMLElement>('[data-sum-kind]').forEach((el) => {
+    const kind = el.dataset.sumKind as Kind;
+    let done = 0;
+    let total = 0;
+    for (const part of (el.dataset.sumIds ?? '').split(' ').filter(Boolean)) {
+      const [id = '', n = '0'] = part.split(':');
+      const stats = readStats(kind, id);
+      if (kind === 'test') {
+        total += 1;
+        if (stats.best) done += 1;
+      } else {
+        total += Number(n);
+        done += Math.min(answeredCount(stats).answered, Number(n));
+      }
+    }
+    if (!done) return;
+    const pct = (done / total) * 100;
+    const meta = el.querySelector('[data-sum-meta]');
+    if (meta) {
+      meta.textContent =
+        kind === 'test' ? `${done} / ${total} та тест топширилган` : `${done} / ${total} та машқ ишланган`;
+    }
+    const bar = el.querySelector<HTMLElement>('.rt-bar');
+    setLevel(bar, pct);
+    const fill = bar?.querySelector<HTMLElement>('i');
+    if (fill) fill.style.width = `${Math.round(pct)}%`;
   });
 
   // Мавзу ўқилганми.

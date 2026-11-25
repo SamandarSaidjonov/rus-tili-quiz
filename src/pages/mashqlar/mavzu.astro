@@ -1,0 +1,94 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import { url } from '../../lib/url.ts';
+import { TOPIC_GROUPS, topicMeta, type TopicKind } from '../../lib/topics.ts';
+
+const entries = await getCollection('exercises');
+
+interface Group {
+  slug: string;
+  title: string;
+  kind: TopicKind;
+  order: number;
+  items: number;
+}
+
+const groups = new Map<string, Group>();
+for (const e of entries) {
+  // Аралаш машқлар алоҳида саҳифада: /mashqlar/mixed/
+  if (e.data.topic === 'mixed') continue;
+  const meta = topicMeta(e.data.topic);
+  const g = groups.get(e.data.topic) ?? {
+    slug: e.data.topic,
+    title: meta.title,
+    kind: meta.kind,
+    order: meta.order,
+    items: 0,
+  };
+  g.items += e.data.items.length;
+  groups.set(e.data.topic, g);
+}
+
+const list = [...groups.values()].sort((a, b) => a.order - b.order);
+// Карточкалар гуруҳларда: Падежлар, Феъллар.
+const sections = TOPIC_GROUPS.map((g) => ({
+  ...g,
+  sets: list.filter((s) => s.kind === g.kind),
+})).filter((g) => g.sets.length > 0);
+---
+
+<Base title="Мавзу бўйича машқлар" section="mashqlar" wide>
+  <div class="rt-pagehead">
+    <a class="rt-back" href={url('mashqlar')} aria-label="Машқларга қайтиш">
+      <Icon name="arrow-left" />
+    </a>
+    <h1>Танланган мавзу бўйича</h1>
+  </div>
+
+  <p class="rt-muted">
+    Жавобни рус ҳарфларида ўзингиз ёзасиз. Катта-кичик ҳарф, тиниш белгилари, ё/е фарқи ва
+    урғу белгиси хато ҳисобланмайди
+  </p>
+
+  {
+    list.length === 0 && (
+      <div class="rt-card">
+        <p style="margin:0">Машқлар ҳозир тайёрланмоқда.</p>
+      </div>
+    )
+  }
+
+  {
+    sections.map((sec) => (
+      <>
+        <h2>{sec.title}</h2>
+        <div class="rt-stack--tight rt-grid">
+          {sec.sets.map((g) => (
+            <div class="rt-item">
+              <div class="rt-item__head">
+                <h3 class="rt-item__title">{g.title}</h3>
+                <span class="rt-badge rt-badge--score">{g.items} та машқ</span>
+              </div>
+              <p class="rt-item__meta" data-prog={`ex:${g.slug}:${g.items}`}>Ҳали бошланмаган</p>
+              <span class="rt-bar" data-prog-bar={`ex:${g.slug}:${g.items}`}>
+                <i style="width:0%" />
+              </span>
+              <div class="rt-item__actions">
+                <a class="rt-btn rt-btn--primary" href={url(`mashqlar/${g.slug}`)}>
+                  Машқни бошлаш
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </>
+    ))
+  }
+
+  <script>
+    import { hydrateProgress } from '../../lib/progress-ui.ts';
+    hydrateProgress();
+  </script>
+</Base>

@@ -71,10 +71,14 @@ export interface TestQuestion {
   reviewed: boolean;
 }
 
+export type TestGroup = 'mixed' | 'grammar' | 'vocab';
+
 export interface TestFile {
   id: string;
   no: number;
   title: string;
   date?: string;
+  group: TestGroup;
+  topic?: string;
   questions: TestQuestion[];
 }

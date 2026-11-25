@@ -1,0 +1,33 @@
+---
+// Тестлар рўйхати: ном, саволлар сони ва охирги натижа (progress-ui.ts тўлдиради).
+import type { CollectionEntry } from 'astro:content';
+import { url } from '../lib/url.ts';
+
+interface Props {
+  tests: Array<CollectionEntry<'tests'>>;
+}
+const { tests } = Astro.props;
+---
+
+<ul class="rt-tests rt-grid">
+  {
+    tests.map((t) => (
+      <li>
+        <a class="rt-test" href={url(`testlar/${t.id}`)}>
+          <span>
+            <b>{t.data.title}</b>
+            <small data-prog={`test:${t.id}:${t.data.questions.length}`}>
+              {t.data.questions.length} та савол
+            </small>
+          </span>
+          <span
+            class="rt-badge rt-badge--todo"
+            data-prog-badge={`test:${t.id}:${t.data.questions.length}`}
+          >
+            Топширилмаган
+          </span>
+        </a>
+      </li>
+    ))
+  }
+</ul>

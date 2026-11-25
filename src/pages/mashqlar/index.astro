@@ -3,38 +3,33 @@ import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import { url } from '../../lib/url.ts';
-import { TOPIC_GROUPS, topicMeta, type TopicKind } from '../../lib/topics.ts';
 
 const entries = await getCollection('exercises');
+const counts = new Map<string, number>();
+for (const e of entries) counts.set(e.data.topic, (counts.get(e.data.topic) ?? 0) + e.data.items.length);
+const mixed = [...counts].filter(([id]) => id === 'mixed');
+const byTopic = [...counts].filter(([id]) => id !== 'mixed');
+const ids = (list: Array<[string, number]>): string => list.map(([id, n]) => `${id}:${n}`).join(' ');
+const sum = (list: Array<[string, number]>): number => list.reduce((a, [, n]) => a + n, 0);
 
-interface Group {
-  slug: string;
-  title: string;
-  kind: TopicKind;
-  order: number;
-  items: number;
-}
-
-const groups = new Map<string, Group>();
-for (const e of entries) {
-  const meta = topicMeta(e.data.topic);
-  const g = groups.get(e.data.topic) ?? {
-    slug: e.data.topic,
-    title: meta.title,
-    kind: meta.kind,
-    order: meta.order,
-    items: 0,
-  };
-  g.items += e.data.items.length;
-  groups.set(e.data.topic, g);
-}
-
-const list = [...groups.values()].sort((a, b) => a.order - b.order);
-// Карточкалар учта гуруҳда: Падежлар, Феъллар, Аралаш.
-const sections = TOPIC_GROUPS.map((g) => ({
-  ...g,
-  sets: list.filter((s) => s.kind === g.kind),
-})).filter((g) => g.sets.length > 0);
+const cards = [
+  {
+    path: 'mashqlar/mixed',
+    icon: 'pencil' as const,
+    title: 'Аралаш мавзулар',
+    hint: 'Ҳамма мавзудан аралаш машқлар',
+    count: `${sum(mixed)} та машқ`,
+    ids: ids(mixed),
+  },
+  {
+    path: 'mashqlar/mavzu',
+    icon: 'book' as const,
+    title: 'Танланган мавзу бўйича',
+    hint: `${byTopic.length} та мавзу`,
+    count: `${sum(byTopic)} та машқ`,
+    ids: ids(byTopic),
+  },
+];
 ---
 
 <Base title="Машқлар" section="mashqlar" wide>
@@ -50,40 +45,32 @@ const sections = TOPIC_GROUPS.map((g) => ({
     урғу белгиси хато ҳисобланмайди
   </p>
 
-  {
-    list.length === 0 && (
-      <div class="rt-card">
-        <p style="margin:0">Машқлар ҳозир тайёрланмоқда.</p>
-      </div>
-    )
-  }
-
-  {
-    sections.map((sec) => (
-      <>
-        <h2>{sec.title}</h2>
-        <div class="rt-stack--tight rt-grid">
-          {sec.sets.map((g) => (
-            <div class="rt-item">
-              <div class="rt-item__head">
-                <h3 class="rt-item__title">{g.title}</h3>
-                <span class="rt-badge rt-badge--score">{g.items} та машқ</span>
-              </div>
-              <p class="rt-item__meta" data-prog={`ex:${g.slug}:${g.items}`}>Ҳали бошланмаган</p>
-              <span class="rt-bar" data-prog-bar={`ex:${g.slug}:${g.items}`}>
-                <i style="width:0%" />
-              </span>
-              <div class="rt-item__actions">
-                <a class="rt-btn rt-btn--primary" href={url(`mashqlar/${g.slug}`)}>
-                  Машқни бошлаш
-                </a>
-              </div>
-            </div>
-          ))}
-        </div>
-      </>
-    ))
-  }
+  <div class="rt-stack rt-stack--tight rt-grid rt-grid--2">
+    {
+      cards.map((c) => (
+        <a class="rt-section" href={url(c.path)} data-sum-kind="ex" data-sum-ids={c.ids}>
+          <span class="rt-section__icon">
+            <Icon name={c.icon} />
+          </span>
+          <span>
+            <span class="rt-section__title" role="heading" aria-level="2">
+              {c.title}
+            </span>
+            <span class="rt-section__meta">{c.hint}</span>
+            <span class="rt-section__meta" data-sum-meta>
+              {c.count}
+            </span>
+            <span class="rt-bar">
+              <i style="width:0%" />
+            </span>
+          </span>
+          <span class="rt-section__go">
+            <Icon name="chevron-right" />
+          </span>
+        </a>
+      ))
+    }
+  </div>
 
   <script>
     import { hydrateProgress } from '../../lib/progress-ui.ts';

@@ -2,10 +2,10 @@
  * Машқлар: жавоб клавиатурадан ёзилади (`choose` туридан ташқари).
  * Текшириш юмшоқ: катта-кичик ҳарф, тиниш белгилари, ё/е ва урғу белгиси хато ҳисобланмайди.
  * Автоматик ўтиш йўқ; «← Олдинги» ўтган машқни фақат кўриш учун очади.
- * Кўриниши: design/components/ExerciseScreen.
  */
 import { useCallback, useEffect, useMemo, useState } from 'preact/hooks';
 import type { JSX } from 'preact';
+import { levelClass } from '../lib/level.ts';
 import type { ExerciseItem, ExerciseSet, ExerciseType } from '../lib/types.ts';
 import {
   TYPE_INFO, answerSpeech, canMask, checkExercise, dealByType, fullAnswer, maskWords, resolveAsk,
@@ -45,12 +45,14 @@ interface Props {
   listHref: string;
   /** Шу мавзунинг тушунтириш саҳифаси (бўлса). */
   topicHref?: string;
+  /** Аралаш машқларнинг рақами (№-1 …): ҳамма машқ бир йўла келади, созламалар кўринмайди. */
+  pack?: number;
 }
 
 export default function ExerciseRunner({
-  topic, title, groups, homeHref, listHref, topicHref,
+  topic, title, groups, homeHref, listHref, topicHref, pack,
 }: Props): JSX.Element {
-  const SESSION = sessionKey('ex', topic);
+  const SESSION = sessionKey('ex', pack ? `${topic}-${pack}` : topic);
 
   const byId = useMemo(() => {
     const m = new Map<string, { item: ExerciseItem; type: ExerciseType; ask?: string }>();
@@ -60,7 +62,7 @@ export default function ExerciseRunner({
     return m;
   }, [groups]);
 
-  const [cfg, setCfg] = useState<Cfg>({ type: 'all', count: 20 });
+  const [cfg, setCfg] = useState<Cfg>({ type: 'all', count: pack ? 'all' : 20 });
   const [session, setSession] = useState<Session | null>(null);
   const [view, setView] = useState<number | null>(null);
   const [input, setInput] = useState('');
@@ -203,7 +205,7 @@ export default function ExerciseRunner({
         <div class="rt-card">
           <h2 class="rt-item__title">Натижа</h2>
           <div class="rt-score">
-            <span class="rt-score__num">
+            <span class={`rt-score__num ${levelClass((correct / session.qs.length) * 100)}`}>
               {correct}/{session.qs.length}
             </span>
             <span class="rt-score__of">{title} бўйича машқлар</span>
@@ -219,12 +221,12 @@ export default function ExerciseRunner({
               </button>
             ) : (
               <button class="rt-btn rt-btn--primary" type="button" onClick={() => start(session.cfg)}>
-                Янги машқни бошлаш
+                {pack ? 'Қайта ишлаш' : 'Янги машқни бошлаш'}
               </button>
             )}
             {wrongIds.length > 0 && (
               <button class="rt-btn rt-btn--secondary" type="button" onClick={() => start(session.cfg)}>
-                Янги машқни бошлаш
+                {pack ? 'Қайта ишлаш' : 'Янги машқни бошлаш'}
               </button>
             )}
           </div>
@@ -239,6 +241,9 @@ export default function ExerciseRunner({
             >
               Машқларни қайта кўриш
             </button>
+            <a class="rt-link" href={listHref}>
+              ← Машқлар рўйхати
+            </a>
             <a class="rt-link" href={homeHref}>
               Барча бўлимлар
             </a>
@@ -279,14 +284,16 @@ export default function ExerciseRunner({
         wrong={wrong}
       />
 
-      <Settings
-        groups={groups}
-        cfg={cfg}
-        onStart={start}
-        sessionKeyName={SESSION}
-        title={title}
-        topicHref={topicHref}
-      />
+      {!pack && (
+        <Settings
+          groups={groups}
+          cfg={cfg}
+          onStart={start}
+          sessionKeyName={SESSION}
+          title={title}
+          topicHref={topicHref}
+        />
+      )}
 
       <article class="rt-card">
         <div class="rt-exercise">

@@ -2,10 +2,10 @@
  * Тест: 10 та савол, ҳаммаси 4 вариантли.
  * Тест давомида жавоб тўғри ёки хатолиги кўрсатилмайди — натижа охирида чиқади.
  * Саволлар тартиби қатъий (ҳамма бир хил саволни ечади), фақат вариантлар аралашади.
- * Кўриниши: design/components/TestResult.
  */
 import { useCallback, useEffect, useState } from 'preact/hooks';
 import type { JSX } from 'preact';
+import { levelClass } from '../lib/level.ts';
 import type { TestFile } from '../lib/types.ts';
 import { shuffle } from '../lib/text.ts';
 import {
@@ -18,6 +18,8 @@ interface Session {
   /** Ҳар бир савол учун вариантлар тартиби (асл рўйхатдаги ўринлар). */
   order: number[][];
   answers: Array<number | null>;
+  /** Савол id'лари: тест саволлари алмашса, эски сессия ташланади. */
+  ids?: string[];
   i: number;
   finished: boolean;
 }
@@ -40,6 +42,7 @@ export default function TestRunner({ test, homeHref, listHref }: Props): JSX.Ele
       v: 1,
       order: test.questions.map((q) => shuffle(q.options.map((_, i) => i))),
       answers: test.questions.map(() => null),
+      ids: test.questions.map((q) => q.id),
       i: 0,
       finished: false,
     }),
@@ -51,6 +54,7 @@ export default function TestRunner({ test, homeHref, listHref }: Props): JSX.Ele
       Boolean(
         s && s.v === 1 && Array.isArray(s.order) && s.order.length === total &&
         Array.isArray(s.answers) && s.answers.length === total &&
+        (s.ids ? s.ids.join() === test.questions.map((q) => q.id).join() : test.group !== 'grammar') &&
         s.order.every((o) => Array.isArray(o) && o.length === 4),
       ),
     [total],
@@ -116,7 +120,7 @@ export default function TestRunner({ test, homeHref, listHref }: Props): JSX.Ele
         <div class="rt-card">
           <h2 class="rt-item__title">Натижа</h2>
           <div class="rt-score">
-            <span class="rt-score__num">
+            <span class={`rt-score__num ${levelClass((correct / total) * 100)}`}>
               {correct}/{total}
             </span>
             {best && <span class="rt-score__of">Энг яхши натижа: {best.correct}/{best.total}</span>}

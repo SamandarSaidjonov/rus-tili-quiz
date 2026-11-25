@@ -4,8 +4,10 @@
  */
 import { ICONS, type IconName } from './icons.ts';
 import {
-  PASS, WEAK_MIN, computeDashboard, type DashCatalog, type Dashboard, type TopicRow,
+  PASS, WEAK_MIN, computeDashboard, type DashCatalog, type Dashboard, type TestRow, type TopicRow,
 } from './dashboard.ts';
+import { level, levelClass, setLevel } from './level.ts';
+import { TEST_GROUPS } from './tests.ts';
 import { TOPIC_GROUPS } from './topics.ts';
 import { url } from './url.ts';
 
@@ -17,7 +19,10 @@ const esc = (s: string): string => s.replace(/[&<>"']/g, (c) => ESC[c] ?? c);
 const icon = (name: IconName): string =>
   `<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false">${ICONS[name]}</svg>`;
 
-const badge = (kind: 'ok' | 'no' | 'warn' | 'todo' | 'score', text: string, ic?: IconName): string =>
+const lvlBadge = (pct: number, text: string, ic?: IconName): string =>
+  `<span class="rt-badge rt-badge--lvl ${levelClass(pct)}">${ic ? icon(ic) : ''}${esc(text)}</span>`;
+
+const badge = (kind: 'ok' | 'todo', text: string, ic?: IconName): string =>
   `<span class="rt-badge rt-badge--${kind}">${ic ? icon(ic) : ''}${esc(text)}</span>`;
 
 /** Бўлим карточкаларидаги икки қатор матн ва фоиз. */
@@ -68,6 +73,7 @@ function fillRing(root: ParentNode, value: number): void {
   const v = Math.max(0, Math.min(100, round(value)));
   root.querySelectorAll<HTMLElement>('[data-ring]').forEach((el) => {
     el.querySelector('.rt-ring__fill')?.setAttribute('stroke-dasharray', `${v} 100`);
+    setLevel(el, v);
     const num = el.querySelector('.rt-ring__num');
     if (num) num.textContent = `${v}%`;
     el.setAttribute('aria-valuenow', String(v));
@@ -110,6 +116,7 @@ export function hydrateHomeDashboard(cat: DashCatalog, root: ParentNode = docume
     if (el && short[key]) el.textContent = short[key];
     const fill = root.querySelector<HTMLElement>(`[data-sum-bar="${key}"] i`);
     if (fill) fill.style.width = `${round(s.pct)}%`;
+    setLevel(fill?.parentElement, s.pct);
   }
 }
 
@@ -117,9 +124,9 @@ function accBadge(r: TopicRow): string {
   const p = r.ex;
   if (!p || p.acc === null) return badge('todo', 'Бошланмаган');
   const text = `${round(p.acc)}% тўғри`;
-  if (r.weak) return badge('warn', text, 'alert');
-  if (p.done < WEAK_MIN) return badge('score', text);
-  return badge('ok', text, 'check');
+  if (r.weak) return lvlBadge(p.acc, text, 'alert');
+  if (p.done < WEAK_MIN || level(p.acc) !== 'high') return lvlBadge(p.acc, text);
+  return lvlBadge(p.acc, text, 'check');
 }
 
 function rowHtml(r: TopicRow): string {
@@ -128,7 +135,7 @@ function rowHtml(r: TopicRow): string {
     r.read === null ? '' : r.read ? badge('ok', 'Ўқилди', 'check') : badge('todo', 'Ўқилмаган');
   const p = r.ex;
   const progress = p
-    ? `<span class="rt-bar" role="progressbar" aria-label="Бажарилган машқлар" aria-valuemin="0" aria-valuemax="${p.total}" aria-valuenow="${p.done}"><i style="width:${round(p.pct)}%"></i></span>
+    ? `<span class="rt-bar ${levelClass(p.pct)}" role="progressbar" aria-label="Бажарилган машқлар" aria-valuemin="0" aria-valuemax="${p.total}" aria-valuenow="${p.done}"><i style="width:${round(p.pct)}%"></i></span>
        <span class="rt-drow__count">${p.done} / ${p.total}</span>`
     : '<span class="rt-drow__count rt-muted">Машқ йўқ</span>';
   return `<li><a class="rt-drow${r.weak ? ' rt-drow--weak' : ''}" href="${href}">
@@ -155,22 +162,29 @@ export function hydrateResults(cat: DashCatalog, root: ParentNode = document): v
     if (main) main.textContent = s.main;
     if (sub) sub.textContent = s.sub;
     if (fill) fill.style.width = `${round(s.pct)}%`;
+    setLevel(fill?.parentElement, s.pct);
   }
 
   // Тестлар: ҳар бир тест битта белги.
   const testsBox = root.querySelector<HTMLElement>('[data-dtests]');
   if (testsBox) {
-    testsBox.innerHTML = d.tests.rows
-      .map((t) => {
+    const item = (t: TestRow): string => {
         const b =
           t.best === null
-            ? badge('todo', `Тест ${t.no}`)
+            ? badge('todo', t.title)
             : t.passed
-              ? badge('ok', `Тест ${t.no} · ${round(t.best)}%`, 'check')
-              : badge('no', `Тест ${t.no} · ${round(t.best)}%`, 'cross');
+              ? lvlBadge(t.best, `${t.title} · ${round(t.best)}%`, 'check')
+              : lvlBadge(t.best, `${t.title} · ${round(t.best)}%`, 'cross');
         return `<li><a class="rt-dtest" href="${url(`testlar/${t.id}`)}">${b}</a></li>`;
-      })
-      .join('');
+    };
+    testsBox.innerHTML = TEST_GROUPS.map((g) => {
+      const rows = d.tests.rows.filter((t) => t.group === g.group);
+      if (!rows.length) return '';
+      return `<section class="rt-stack--tight rt-stack">
+        <h3 class="rt-label">${g.title}</h3>
+        <ul class="rt-dtests">${rows.map(item).join('')}</ul>
+      </section>`;
+    }).join('');
   }
 
   // Мавзулар бўйича: Падежлар, Феъллар, Аралаш.

@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import Base from '../../../layouts/Base.astro';
+import TopBar from '../../../components/TopBar.astro';
+import ExerciseRunner from '../../../components/ExerciseRunner.tsx';
+import { makePacks, type Pack } from '../../../lib/packs.ts';
+import { url } from '../../../lib/url.ts';
+
+export const getStaticPaths = (async () => {
+  const sets = (await getCollection('exercises'))
+    .filter((e) => e.data.topic === 'mixed')
+    .map((e) => ({ topic: e.data.topic, type: e.data.type, title: e.data.title, ask: e.data.ask, items: e.data.items }));
+  return makePacks(sets).map((pack) => ({ params: { no: String(pack.no) }, props: { pack } }));
+}) satisfies GetStaticPaths;
+
+const { pack } = Astro.props as { pack: Pack };
+---
+
+<Base title={`Аралаш машқлар №-${pack.no}`} section="mashqlar">
+  <TopBar
+    slot="topbar"
+    title={`№-${pack.no}`}
+    sub={`Аралаш мавзулар · ${pack.ids.length} та машқ`}
+    backHref={url('mashqlar/mixed')}
+    backLabel="Аралаш машқлар рўйхатига қайтиш"
+  />
+
+  <ExerciseRunner
+    topic="mixed"
+    pack={pack.no}
+    title={`Аралаш мавзулар №-${pack.no}`}
+    groups={pack.groups}
+    homeHref={url()}
+    listHref={url('mashqlar/mixed')}
+    client:only="preact"
+  />
+</Base>

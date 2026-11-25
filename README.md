@@ -29,9 +29,7 @@ npm run build
 Технологиялар: Astro + TypeScript, Preact оролчалари, контент — `src/content` ичидаги
 JSON ва MDX файлларда. Деплой: GitHub Actions → GitHub Pages.
 
-Дизайн тизими: [`design/`](design/) — ранг, шрифт ва оралиқ қоидалари
-([`design/README.md`](design/README.md)), токенлар ва ҳар бир компонентнинг тайёр намунаси
-(`design/components/<ном>/preview.html`). Сайт услублари шундан кўчирилган.
+Дизайн токенлари ва услублар: `src/styles/global.css`, қоидалар — `CLAUDE.md` нинг 7-бўлимида.
 
 Контент қўшиш ва лойиҳа қоидалари: [`CLAUDE.md`](CLAUDE.md).
 Батафсил ҳужжатлар: [`docs/`](docs/).

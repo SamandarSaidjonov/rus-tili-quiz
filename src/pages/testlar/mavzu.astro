@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import TestList from '../../components/TestList.astro';
+import { compareTests } from '../../lib/tests.ts';
+import { TOPIC_GROUPS, topicMeta } from '../../lib/topics.ts';
+import { url } from '../../lib/url.ts';
+
+const tests = (await getCollection('tests')).sort(compareTests);
+const sections = [
+  ...TOPIC_GROUPS.map((g) => ({
+    title: g.title,
+    tests: tests.filter((t) => t.data.topic && topicMeta(t.data.topic).kind === g.kind),
+  })),
+  { title: 'Луғатлар', tests: tests.filter((t) => t.data.group === 'vocab') },
+].filter((s) => s.tests.length > 0);
+---
+
+<Base title="Мавзу бўйича тестлар" section="testlar" wide>
+  <div class="rt-pagehead">
+    <a class="rt-back" href={url('testlar')} aria-label="Тестларга қайтиш">
+      <Icon name="arrow-left" />
+    </a>
+    <h1>Танланган мавзу бўйича</h1>
+  </div>
+
+  {
+    sections.map((s) => (
+      <>
+        <h2>{s.title}</h2>
+        <TestList tests={s.tests} />
+      </>
+    ))
+  }
+
+  <script>
+    import { hydrateProgress } from '../../lib/progress-ui.ts';
+    hydrateProgress();
+  </script>
+</Base>

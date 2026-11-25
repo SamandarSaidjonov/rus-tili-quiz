@@ -81,17 +81,7 @@ const icons: Record<string, IconName> = {
   </div>
 
   <h2>Тестлар</h2>
-  <ul class="rt-dtests" data-dtests>
-    {
-      catalog.tests.map((t) => (
-        <li>
-          <a class="rt-dtest" href={url(`testlar/${t.id}`)}>
-            <span class="rt-badge rt-badge--todo">Тест {t.no}</span>
-          </a>
-        </li>
-      ))
-    }
-  </ul>
+  <div class="rt-stack" data-dtests></div>
 
   <h2>Мавзулар бўйича</h2>
   <div class="rt-stack" data-drows></div>

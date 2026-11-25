@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import Icon from '../../../components/Icon.astro';
+import { makePacks } from '../../../lib/packs.ts';
+import { url } from '../../../lib/url.ts';
+
+const sets = (await getCollection('exercises'))
+  .filter((e) => e.data.topic === 'mixed')
+  .map((e) => ({ topic: e.data.topic, type: e.data.type, title: e.data.title, ask: e.data.ask, items: e.data.items }));
+const packs = makePacks(sets);
+---
+
+<Base title="Аралаш машқлар" section="mashqlar" wide>
+  <div class="rt-pagehead">
+    <a class="rt-back" href={url('mashqlar')} aria-label="Машқларга қайтиш">
+      <Icon name="arrow-left" />
+    </a>
+    <h1>Аралаш мавзулар</h1>
+  </div>
+
+  <ul class="rt-tests rt-grid">
+    {
+      packs.map((p) => (
+        <li>
+          <a class="rt-test" href={url(`mashqlar/mixed/${p.no}`)} data-pack="mixed" data-ids={p.ids.join(' ')}>
+            <span>
+              <b>№-{p.no}</b>
+              <small data-pack-meta>{p.ids.length} та машқ</small>
+            </span>
+            <span class="rt-badge rt-badge--todo" data-pack-badge>
+              Ишланмаган
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <script>
+    import { hydrateProgress } from '../../../lib/progress-ui.ts';
+    hydrateProgress();
+  </script>
+</Base>

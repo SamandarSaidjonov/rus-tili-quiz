@@ -4,7 +4,29 @@ import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import { url } from '../../lib/url.ts';
 
-const tests = (await getCollection('tests')).sort((a, b) => b.data.no - a.data.no);
+const tests = await getCollection('tests');
+const mixed = tests.filter((t) => t.data.group === 'mixed');
+const byTopic = tests.filter((t) => t.data.group !== 'mixed');
+const ids = (list: typeof tests): string => list.map((t) => t.id).join(' ');
+
+const cards = [
+  {
+    path: 'testlar/mixed',
+    icon: 'test' as const,
+    title: 'Аралаш мавзулар',
+    hint: 'Грамматика ва луғат бирга',
+    count: `${mixed.length} та тест`,
+    ids: ids(mixed),
+  },
+  {
+    path: 'testlar/mavzu',
+    icon: 'book' as const,
+    title: 'Танланган мавзу бўйича',
+    hint: 'Грамматика мавзулари ва луғатлар',
+    count: `${byTopic.length} та тест`,
+    ids: ids(byTopic),
+  },
+];
 ---
 
 <Base title="Тестлар" section="testlar" wide>
@@ -16,41 +38,36 @@ const tests = (await getCollection('tests')).sort((a, b) => b.data.no - a.data.n
   </div>
 
   <p class="rt-muted">
-    Ҳар бир тестда 10 та савол: мавзулардан, луғатдан ва машқлардан. «Клуб луғати» тестларида
-    Разговорный клуб сўзлари аралаш тартибда келади. Саволлар ҳамма учун бир хил,
-    фақат вариантлар тартиби аралашади. Натижа охирида чиқади.
+    Ҳар бир тестда 10 та савол. Саволлар ҳамма учун бир хил, фақат вариантлар тартиби аралашади.
+    Натижа охирида чиқади.
   </p>
 
-  {
-    tests.length === 0 && (
-      <div class="rt-card">
-        <p style="margin:0">Тестлар ҳозир тайёрланмоқда.</p>
-      </div>
-    )
-  }
-
-  <ul class="rt-tests rt-grid">
+  <div class="rt-stack rt-stack--tight rt-grid rt-grid--2">
     {
-      tests.map((t) => (
-        <li>
-          <a class="rt-test" href={url(`testlar/${t.id}`)}>
-            <span>
-              <b>{t.data.title}</b>
-              <small data-prog={`test:${t.id}:${t.data.questions.length}`}>
-                {t.data.questions.length} та савол
-              </small>
+      cards.map((c) => (
+        <a class="rt-section" href={url(c.path)} data-sum-kind="test" data-sum-ids={c.ids}>
+          <span class="rt-section__icon">
+            <Icon name={c.icon} />
+          </span>
+          <span>
+            <span class="rt-section__title" role="heading" aria-level="2">
+              {c.title}
             </span>
-            <span
-              class="rt-badge rt-badge--todo"
-              data-prog-badge={`test:${t.id}:${t.data.questions.length}`}
-            >
-              Топширилмаган
+            <span class="rt-section__meta">{c.hint}</span>
+            <span class="rt-section__meta" data-sum-meta>
+              {c.count}
             </span>
-          </a>
-        </li>
+            <span class="rt-bar">
+              <i style="width:0%" />
+            </span>
+          </span>
+          <span class="rt-section__go">
+            <Icon name="chevron-right" />
+          </span>
+        </a>
       ))
     }
-  </ul>
+  </div>
 
   <script>
     import { hydrateProgress } from '../../lib/progress-ui.ts';

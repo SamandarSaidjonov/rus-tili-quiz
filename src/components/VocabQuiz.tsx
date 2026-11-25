@@ -2,10 +2,10 @@
  * Луғат сўраш режими.
  * Савол фақат ўзбекча, 4 та вариант русча. Автоматик ўтиш йўқ,
  * «← Олдинги» ўтган саволни фақат кўриш учун очади.
- * Кўриниши: design/components/OptionList ва VocabCard.
  */
 import { useCallback, useEffect, useMemo, useState } from 'preact/hooks';
 import type { JSX } from 'preact';
+import { levelClass } from '../lib/level.ts';
 import type { VocabSet, VocabWord } from '../lib/types.ts';
 import { indexWords, pickOptions } from '../lib/distractors.ts';
 import { shuffle } from '../lib/text.ts';
@@ -278,7 +278,7 @@ export default function VocabQuiz({
         <div class="rt-card">
           <h2 class="rt-item__title">Натижа</h2>
           <div class="rt-score">
-            <span class="rt-score__num">
+            <span class={`rt-score__num ${levelClass(pct)}`}>
               {correct}/{session.qs.length}
             </span>
             <span class="rt-score__of">{pct}% тўғри</span>

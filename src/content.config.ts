@@ -89,6 +89,10 @@ const tests = defineCollection({
   schema: z.object({
     no: z.number().int().positive(),
     title: z.string().min(1),
+    /** Аралаш мавзулар (`mixed`) ёки танланган мавзу: грамматика (`grammar`), луғат (`vocab`). */
+    group: z.enum(['mixed', 'grammar', 'vocab']),
+    /** Фақат `grammar`: мавзу slug'и. */
+    topic: z.string().optional(),
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
     questions: z.array(
       z.object({

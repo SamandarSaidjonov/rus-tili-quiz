@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import TestList from '../../components/TestList.astro';
+import { compareTests } from '../../lib/tests.ts';
+import { url } from '../../lib/url.ts';
+
+const tests = (await getCollection('tests')).sort(compareTests);
+const list = tests.filter((t) => t.data.group === 'mixed');
+---
+
+<Base title="Аралаш тестлар" section="testlar" wide>
+  <div class="rt-pagehead">
+    <a class="rt-back" href={url('testlar')} aria-label="Тестларга қайтиш">
+      <Icon name="arrow-left" />
+    </a>
+    <h1>Аралаш мавзулар</h1>
+  </div>
+
+  <p class="rt-muted">Грамматика ва луғат саволлари бирга келади</p>
+
+  <TestList tests={list} />
+
+  <script>
+    import { hydrateProgress } from '../../lib/progress-ui.ts';
+    hydrateProgress();
+  </script>
+</Base>

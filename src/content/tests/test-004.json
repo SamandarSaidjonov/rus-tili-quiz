@@ -1,6 +1,7 @@
 {
   "no": 4,
-  "title": "Тест 4",
+  "title": "№-4",
+  "group": "mixed",
   "questions": [
     {
       "id": "t004-q01",

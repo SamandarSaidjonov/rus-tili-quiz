@@ -331,6 +331,10 @@ function checkTests() {
     const f = rel(file);
     if (typeof data.no !== 'number') err(f, 'no (рақам) йўқ');
     if (!data.title) err(f, 'title йўқ');
+    if (!['mixed', 'grammar', 'vocab'].includes(data.group)) err(f, 'group нотўғри (mixed, grammar, vocab)');
+    if ((data.group === 'grammar') !== Boolean(data.topic)) err(f, 'topic фақат grammar тестида бўлади ва у ерда шарт');
+    if (data.group === 'grammar' && data.questions?.some((q) => q.kind === 'vocab')) err(f, 'грамматика тестида луғат саволи бор');
+    if (data.group === 'vocab' && data.questions?.some((q) => q.kind !== 'vocab')) err(f, 'луғат тестида бошқа турдаги савол бор');
     if (!Array.isArray(data.questions)) {
       err(f, 'questions рўйхати йўқ');
       continue;

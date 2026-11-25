@@ -19,8 +19,8 @@ const cat: DashCatalog = {
   ],
   vocab: [{ id: 'v1', n: 50 }],
   tests: [
-    { id: 'test-001', no: 1, n: 10 },
-    { id: 'test-002', no: 2, n: 10 },
+    { id: 'test-001', title: '№-1', group: 'mixed', n: 10 },
+    { id: 'test-002', title: '№-2', group: 'mixed', n: 10 },
   ],
 };
 

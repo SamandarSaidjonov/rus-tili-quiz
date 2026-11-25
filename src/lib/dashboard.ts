@@ -8,6 +8,7 @@
  */
 import { answeredCount, dayKey, readDays, readStats, type Kind, type SetStats } from './progress.ts';
 import type { TopicKind } from './topics.ts';
+import type { TestGroup } from './types.ts';
 
 /** Тестдан ўтиш чегараси. */
 export const PASS = 0.7;
@@ -21,7 +22,7 @@ export interface DashCatalog {
   topics: Array<{ id: string; title: string; kind: TopicKind; ex: string | null }>;
   exSets: Array<{ id: string; title: string; kind: TopicKind; n: number }>;
   vocab: Array<{ id: string; n: number }>;
-  tests: Array<{ id: string; no: number; n: number }>;
+  tests: Array<{ id: string; title: string; group: TestGroup; n: number }>;
 }
 
 export type Reader = (kind: Kind, id: string) => SetStats;
@@ -43,7 +44,8 @@ export interface Practice extends Part {
 
 export interface TestRow {
   id: string;
-  no: number;
+  title: string;
+  group: TestGroup;
   /** Энг яхши натижа (0–100); топширилмаган бўлса `null`. */
   best: number | null;
   passed: boolean;
@@ -151,7 +153,7 @@ function nextStep(rows: TopicRow[], tests: TestRow[]): NextStep | null {
   if (practiceLeft) return { path: `mashqlar/${practiceLeft.id}`, text: `Машқ: ${practiceLeft.title}` };
 
   const test = tests.find((t) => !t.passed);
-  if (test) return { path: `testlar/${test.id}`, text: `Тест ${test.no}` };
+  if (test) return { path: `testlar/${test.id}`, text: test.group === 'mixed' ? `Аралаш тест ${test.title}` : `Тест: ${test.title}` };
 
   return null;
 }
@@ -178,7 +180,7 @@ export function computeDashboard(
   const testRows: TestRow[] = cat.tests.map((t) => {
     const best = read('test', t.id).best;
     const ratio = best && best.total ? best.correct / best.total : null;
-    return { id: t.id, no: t.no, best: ratio === null ? null : ratio * 100, passed: ratio !== null && ratio >= PASS };
+    return { id: t.id, title: t.title, group: t.group, best: ratio === null ? null : ratio * 100, passed: ratio !== null && ratio >= PASS };
   });
   const taken = testRows.filter((t) => t.best !== null);
   const passed = testRows.filter((t) => t.passed).length;
